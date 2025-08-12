@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Views;
 

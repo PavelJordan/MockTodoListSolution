@@ -2,8 +2,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Avalonia to-do list tracker and visualizer">
+        Height="600"
+        Width="1000"
+        Title="Avalonia to-do list tracker and visualizer"
+        WindowStartupLocation="CenterScreen"
+        >
+        
+        <Design.DataContext>
+                <vm:MockMainWindowViewModel/>
+        </Design.DataContext>
+        
+        <DockPanel>
+                <Border DockPanel.Dock="Left" Classes="main_menu">
+                <Grid RowDefinitions="* * * * * * * * *" ColumnDefinitions="* *" Background="LightGray">
+                        <Button Content="Home" Command="{Binding GoHomeCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" />
+                        <Button Content="Tree view" Command="{Binding GoTreeViewCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        <Button Content="Profile" Command="{Binding GoProfileCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
+                        <Button Content="Settings" Command="{Binding GoSettingsCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"/>
+                        <Button Content="Add task" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
+                        <Button Content="Add event" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"/>
+                        <Button Content="Start session" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
+                        <Button Content="EN" Classes="main_menu" Grid.Column="0" Grid.Row="7"/>
+                        <Button Content="CZ" Classes="main_menu" Grid.Column="1" Grid.Row="7"/>
+                        <Border Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" Background="DarkGray" CornerRadius="3">
+                                <Panel>
+                                
+                                </Panel>
+                        </Border>
+                </Grid>
+                </Border>
+                <Border Classes="main_menu" Padding="10" Background="LightGray">
+                        <TransitioningContentControl Content="{Binding CurrentPage}"/>
+                </Border>
+        </DockPanel>
 </Window>

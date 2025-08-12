@@ -4,4 +4,5 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {
+    
 }

@@ -1,11 +1,14 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views;
+using DynamicData;
 
 namespace AvaloniaToDoListTrackerAndVisualizer;
 
@@ -23,7 +26,11 @@ public partial class App : Application
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow();
+            desktop.MainWindow = new MainWindow()
+            {
+                DataContext = new MainWindowViewModel()
+            };
+            
         }
 
         base.OnFrameworkInitializationCompleted();

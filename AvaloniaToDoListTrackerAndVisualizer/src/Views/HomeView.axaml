@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.HomeView"
+             x:DataType="vm:HomeViewModel"
+             >
+    <Panel Classes="right_hand_content" x:Name="ParentPanel">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Button Content="Ready" Command="{Binding showReadyCommand}"></Button>
+                <Button Content="Done" Command="{Binding showCompletedCommand}"></Button>
+                <Button Content="All" Command="{Binding showAllCommand}"></Button>
+            </StackPanel>
+            <Border>
+                <ScrollViewer>
+                    <ScrollViewer.Resources>
+                    </ScrollViewer.Resources>
+                    <ItemsControl ItemsSource="{Binding CurrentTaskList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TaskModel.Name}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Border>
+        </DockPanel>
+    </Panel>
+</UserControl>
