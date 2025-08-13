@@ -10,4 +10,5 @@ public interface ICompletable: INotifyPropertyChanged
 {
     // TODO consider adding completed by / completed at
     public bool IsCompleted { get; set; }
+    public bool CanChangeCompleteness { get; }
 }

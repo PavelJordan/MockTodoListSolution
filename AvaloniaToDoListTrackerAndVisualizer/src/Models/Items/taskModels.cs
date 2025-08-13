@@ -57,6 +57,7 @@ public abstract partial class TaskBaseModel: ObservableObject, ICompletable
     /// // TODO implement that invariant (not needed now)
     /// </summary>
     public readonly ReadOnlyObservableCollection<SubTaskModel> Subtasks;
+    
 
     protected TaskBaseModel(string name)
     {
@@ -94,7 +95,11 @@ public abstract partial class TaskBaseModel: ObservableObject, ICompletable
             SubtaskFor = subtaskFor;
             SubtaskFor.AddSubtask(this);
         }
+
+        public override bool CanChangeCompleteness { get; } = true; // TODO manage correctly
     }
+
+    public abstract bool CanChangeCompleteness { get; }
 }
 
 /// <summary>
@@ -131,22 +136,28 @@ public sealed partial class TaskModel : TaskBaseModel, IHasId, IDisposable
         Prerequisites.ChildrenPropertyChanged += OnChildChange;
         PrecedingEvents.ChildrenPropertyChanged += OnChildChange;
 
-        PropertyChanged += CheckIfReadyShouldChange;
+        PropertyChanged += CheckIfPropertiesShouldChange;
     }
 
     /// <summary>
-    /// If "IsCompleted" property change, Ready can change too. Notify subscribers
+    /// If "IsCompleted" property change, Ready and CanChangeCompleteness can change too. Notify subscribers
     /// </summary>
-    private void CheckIfReadyShouldChange(object? sender, PropertyChangedEventArgs e)
+    private void CheckIfPropertiesShouldChange(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(IsCompleted))
         {
             OnPropertyChanged(nameof(Ready));
         }
+
+        if (e.PropertyName == nameof(Ready))
+        {
+            OnPropertyChanged(nameof(CanChangeCompleteness));
+        }
     }
     
     /// <summary>
-    /// If prerequisites/preceding events are added or removed, ready property can change. Notify subscribers
+    /// If prerequisites/preceding events are added or removed, ready property can change.
+    /// Notify subscribers
     /// </summary>
     private void OnCollectionChange(object? sender, NotifyCollectionChangedEventArgs e)
     {
@@ -170,9 +181,17 @@ public sealed partial class TaskModel : TaskBaseModel, IHasId, IDisposable
         PrecedingEvents.Collection.CollectionChanged -= OnCollectionChange;
         Prerequisites.ChildrenPropertyChanged -= OnChildChange;
         PrecedingEvents.ChildrenPropertyChanged -= OnChildChange;
-        PropertyChanged -= CheckIfReadyShouldChange;
+        PropertyChanged -= CheckIfPropertiesShouldChange;
         Prerequisites.Dispose();
         PrecedingEvents.Dispose();
+    }
+
+    public override bool CanChangeCompleteness
+    {
+        get
+        {
+            return Ready || IsCompleted; // TODO manage correctly (what if future tasks are already completed?)
+        }
     }
 }
 

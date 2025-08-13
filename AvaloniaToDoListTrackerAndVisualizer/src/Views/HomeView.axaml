@@ -15,13 +15,19 @@
                 <Button Content="All" Command="{Binding showAllCommand}"></Button>
             </StackPanel>
             <Border>
-                <ScrollViewer>
+                <ScrollViewer Background="DarkGray">
                     <ScrollViewer.Resources>
                     </ScrollViewer.Resources>
                     <ItemsControl ItemsSource="{Binding CurrentTaskList}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding TaskModel.Name}" />
+                                <Border Background="Gray" Margin="0 5" CornerRadius="5">
+                                    <Grid ColumnDefinitions="Auto, *, Auto" >
+                                        <Button Command="{Binding CompleteButtonClickedCommand}" Foreground="{Binding CompleteButtonColor}" FontWeight="DemiBold" Content="{Binding CompleteButtonText}"  Grid.Column="0" Background="DimGray" Margin="2 2 4 2" />
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding TaskModel.Name}" Grid.Column="1" />
+                                        <Button Content="Details"  Grid.Column="2" Margin="4 2 2 2"/>
+                                    </Grid>
+                                </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

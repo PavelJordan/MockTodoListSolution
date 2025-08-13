@@ -1,5 +1,6 @@
 
 using System.Collections.ObjectModel;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
