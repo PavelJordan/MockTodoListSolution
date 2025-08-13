@@ -1,9 +1,11 @@
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
+/// <summary>
+/// The main window view model. The CurrentPage property is what is displayed.
+/// </summary>
 public partial class MainWindowViewModel: ViewModelBase
 {
     [ObservableProperty]
@@ -30,9 +32,9 @@ public partial class MainWindowViewModel: ViewModelBase
 
     public MainWindowViewModel()
     {
-        _home = new HomeViewModel(_tasks);
+        _home = new HomeViewModel(Tasks);
         _treeView = new TreeViewModel();
         _profile = new ProfileViewModel();
-        _currentPage = _home;
+        CurrentPage = _home;
     }
 }
