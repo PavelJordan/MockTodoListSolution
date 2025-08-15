@@ -57,4 +57,16 @@
     <data name="AllButton" xml:space="preserve">
         <value>Všechny</value>
     </data>
+    <data name="EditTaskWindowName" xml:space="preserve">
+        <value>Úprava úlohy</value>
+    </data>
+    <data name="GoBackButton" xml:space="preserve">
+        <value>Zpět</value>
+    </data>
+    <data name="TaskDefaultName" xml:space="preserve">
+        <value>Nová úloha</value>
+    </data>
+    <data name="SaveAndBackButton" xml:space="preserve">
+        <value>Uložit a zpět</value>
+    </data>
 </root>

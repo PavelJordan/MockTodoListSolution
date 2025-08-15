@@ -21,7 +21,7 @@ public partial class MainWindow : Window
         {
             var dialog = new TaskEditView()
             {
-                DataContext = new TaskEditViewModel(message.TaskToEdit)
+                DataContext = new TaskEditViewModel(message.TaskToEdit, message.NewTask)
             };
             
             message.Reply(dialog.ShowDialog<TaskViewModel?>(window));

@@ -49,8 +49,12 @@ public partial class MainWindowViewModel: ViewModelBase
     {
         TaskViewModel? result =
             await WeakReferenceMessenger.Default.Send(
-                new EditTaskMessage(new TaskViewModel(new TaskModel("Untitled"), Localization))
+                new EditTaskMessage(new TaskViewModel(new TaskModel(Localization.TaskDefaultName), Localization), true)
                 );
+        if (result is not null)
+        {
+            Tasks.AllTasks.Collection.Add(result);
+        }
     }
 
     public MainWindowViewModel()

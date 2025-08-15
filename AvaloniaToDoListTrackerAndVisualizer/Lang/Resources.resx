@@ -60,4 +60,16 @@
     <data name="AllButton" xml:space="preserve">
         <value>All</value>
     </data>
+    <data name="EditTaskWindowName" xml:space="preserve">
+        <value>Edit task</value>
+    </data>
+    <data name="GoBackButton" xml:space="preserve">
+        <value>Go back</value>
+    </data>
+    <data name="TaskDefaultName" xml:space="preserve">
+        <value>Untitled</value>
+    </data>
+    <data name="SaveAndBackButton" xml:space="preserve">
+        <value>Save and go back</value>
+    </data>
 </root>

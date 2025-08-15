@@ -20,6 +20,12 @@ public class LocalizationProvider: ObservableObject
     public string StartSessionButton => Resources.StartSessionButton;
     public string TreeButton => Resources.TreeButton;
     public string UnCompleteButton => Resources.UnCompleteButton;
+    
+    public string EditTaskWindowName => Resources.EditTaskWindowName;
+    
+    public string GoBackButton => Resources.GoBackButton;
+    public string SaveAndBackButton => Resources.SaveAndBackButton;
+    public string TaskDefaultName => Resources.TaskDefaultName;
 
     public void SetCulture(CultureInfo culture)
     {

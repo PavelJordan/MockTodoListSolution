@@ -11,15 +11,21 @@
         Width="650"
         WindowStartupLocation="CenterOwner"
         Background="Gray"
-        Title="Edit task">
+        Title="{Binding Localization.EditTaskWindowName}">
     
     <Design.DataContext>
         <vm:MockTaskEditViewModel/>
     </Design.DataContext>
     
     <Border Margin="5" Background="DarkGray" CornerRadius="5">
-        <Grid RowDefinitions="*" ColumnDefinitions="*">
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding TaskToEdit.TaskModel.Name}" />
+        <Grid RowDefinitions="Auto * Auto" >
+            <Border>
+                <TextBox Text="{Binding TaskToEdit.TaskModel.Name}"/>
+            </Border>
+            <Border Grid.Row="1">
+                <TextBox Text="{Binding TaskToEdit.TaskModel.Description}"/>
+            </Border>
+            <Button Grid.Row="2" Command="{Binding SaveAndExitCommand}" Content="{Binding BackButtonText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10 10 5 10"/>
         </Grid>
     </Border>
 </Window>

@@ -26,7 +26,7 @@
                                     <Grid ColumnDefinitions="Auto, *, Auto" >
                                         <Button Command="{Binding CompleteButtonClickedCommand}" Foreground="{Binding CompleteButtonColor}" FontWeight="DemiBold" Content="{Binding CompleteButtonText}"  Grid.Column="0" Background="DimGray" Margin="2 2 4 2" />
                                         <TextBlock VerticalAlignment="Center" Text="{Binding TaskModel.Name}" Grid.Column="1" />
-                                        <Button Content="{Binding Localization.DetailsButton}"  Grid.Column="2" Margin="4 2 2 2"/>
+                                        <Button Command="{Binding DetailsCommand}" Content="{Binding Localization.DetailsButton}"  Grid.Column="2" Margin="4 2 2 2"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

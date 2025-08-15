@@ -1,10 +1,13 @@
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Avalonia.Media;
+using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -100,4 +103,10 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     {
         TaskModel.PropertyChanged -= ForwardPropertyChanged;
     }
+
+    [RelayCommand]
+    private async Task Details()
+    {
+        await WeakReferenceMessenger.Default.Send(new EditTaskMessage(this, false));
+    } 
 }

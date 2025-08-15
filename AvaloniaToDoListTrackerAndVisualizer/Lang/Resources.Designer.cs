@@ -122,5 +122,29 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("AllButton", resourceCulture);
             }
         }
+        
+        public static string EditTaskWindowName {
+            get {
+                return ResourceManager.GetString("EditTaskWindowName", resourceCulture);
+            }
+        }
+        
+        public static string GoBackButton {
+            get {
+                return ResourceManager.GetString("GoBackButton", resourceCulture);
+            }
+        }
+        
+        public static string TaskDefaultName {
+            get {
+                return ResourceManager.GetString("TaskDefaultName", resourceCulture);
+            }
+        }
+        
+        public static string SaveAndBackButton {
+            get {
+                return ResourceManager.GetString("SaveAndBackButton", resourceCulture);
+            }
+        }
     }
 }
