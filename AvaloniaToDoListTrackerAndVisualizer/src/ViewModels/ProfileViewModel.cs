@@ -1,4 +1,4 @@
-using AvaloniaToDoListTrackerAndVisualizer.Lang;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 

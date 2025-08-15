@@ -9,19 +9,20 @@
              >
     <Panel Classes="right_hand_content" x:Name="ParentPanel">
         <DockPanel>
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <Button Content="{Binding Localization.ReadyButton}" Command="{Binding showReadyCommand}"></Button>
-                <Button Content="{Binding Localization.DoneButton}" Command="{Binding showCompletedCommand}"></Button>
-                <Button Content="{Binding Localization.AllButton}" Command="{Binding showAllCommand}"></Button>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Background="{Binding ReadyButtonBackground}" Content="{Binding Localization.ReadyButton}" Command="{Binding showReadyCommand}"></Button>
+                <Button Background="{Binding CompletedButtonBackground}" Content="{Binding Localization.DoneButton}" Command="{Binding showCompletedCommand}"></Button>
+                <Button Background="{Binding AllButtonBackground}" Content="{Binding Localization.AllButton}" Command="{Binding showAllCommand}"></Button>
             </StackPanel>
-            <Border>
+            
+            <Border BorderBrush="DarkGray" BorderThickness="3" CornerRadius="5">
                 <ScrollViewer Background="DarkGray">
                     <ScrollViewer.Resources>
                     </ScrollViewer.Resources>
                     <ItemsControl ItemsSource="{Binding CurrentTaskList}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="Gray" Margin="0 5" CornerRadius="5">
+                                <Border Background="Gray" Margin="0 5 0 5" CornerRadius="5">
                                     <Grid ColumnDefinitions="Auto, *, Auto" >
                                         <Button Command="{Binding CompleteButtonClickedCommand}" Foreground="{Binding CompleteButtonColor}" FontWeight="DemiBold" Content="{Binding CompleteButtonText}"  Grid.Column="0" Background="DimGray" Margin="2 2 4 2" />
                                         <TextBlock VerticalAlignment="Center" Text="{Binding TaskModel.Name}" Grid.Column="1" />

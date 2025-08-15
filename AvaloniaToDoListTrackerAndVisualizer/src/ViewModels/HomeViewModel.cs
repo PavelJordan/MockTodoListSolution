@@ -1,7 +1,7 @@
 
 using System.Collections.ObjectModel;
 using Avalonia.Media;
-using AvaloniaToDoListTrackerAndVisualizer.Lang;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
@@ -17,12 +17,35 @@ public partial class HomeViewModel : ViewModelBase
         
         public ReadOnlyObservableCollection<TaskViewModel> CurrentTaskList { get; private set; }
 
+        public IBrush ReadyButtonBackground
+        {
+                get { return CurrentTaskList == Tasks.ReadyTasks ? Brushes.DarkGray : Brushes.LightGray; }
+        }
+        
+        public IBrush CompletedButtonBackground
+        {
+                get { return CurrentTaskList == Tasks.CompletedTasks ? Brushes.DarkGray : Brushes.LightGray; }
+        }
+        
+        public IBrush AllButtonBackground
+        {
+                get { return CurrentTaskList == Tasks.AllTasksReadOnly ? Brushes.DarkGray : Brushes.LightGray; }
+        }
+
         public HomeViewModel(TaskListViewModel tasks, LocalizationProvider localization)
         {
                 Tasks = tasks;
                 CurrentTaskList = Tasks.ReadyTasks;
                 Localization = localization;
+        }
+
+        private void updateCurrentTaskList()
+        {
                 OnPropertyChanged(nameof(CurrentTaskList));
+                OnPropertyChanged(nameof(ReadyButtonBackground));
+                OnPropertyChanged(nameof(CompletedButtonBackground));
+                OnPropertyChanged(nameof(AllButtonBackground));
+                
         }
         
         /// <summary>
@@ -32,7 +55,7 @@ public partial class HomeViewModel : ViewModelBase
         private void showReady()
         {
                 CurrentTaskList = Tasks.ReadyTasks;
-                OnPropertyChanged(nameof(CurrentTaskList));
+                updateCurrentTaskList();
         }
 
         /// <summary>
@@ -42,7 +65,7 @@ public partial class HomeViewModel : ViewModelBase
         private void showCompleted()
         {
                 CurrentTaskList = Tasks.CompletedTasks;
-                OnPropertyChanged(nameof(CurrentTaskList));
+                updateCurrentTaskList();
         }
 
         /// <summary>
@@ -52,7 +75,7 @@ public partial class HomeViewModel : ViewModelBase
         private void showAll()
         {
                 CurrentTaskList = Tasks.AllTasksReadOnly;
-                OnPropertyChanged(nameof(CurrentTaskList));
+                updateCurrentTaskList();
         }
 }
 

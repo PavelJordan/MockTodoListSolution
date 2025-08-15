@@ -1,8 +1,9 @@
 using System.ComponentModel;
 using System.Globalization;
+using AvaloniaToDoListTrackerAndVisualizer.Lang;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Lang;
+namespace AvaloniaToDoListTrackerAndVisualizer.Providers;
 
 public class LocalizationProvider: ObservableObject
 {

@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.TaskEditView"
+        x:DataType="vm:TaskEditViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Height="400"
+        Width="650"
+        WindowStartupLocation="CenterOwner"
+        Background="Gray"
+        Title="Edit task">
+    
+    <Design.DataContext>
+        <vm:MockTaskEditViewModel/>
+    </Design.DataContext>
+    
+    <Border Margin="5" Background="DarkGray" CornerRadius="5">
+        <Grid RowDefinitions="*" ColumnDefinitions="*">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding TaskToEdit.TaskModel.Name}" />
+        </Grid>
+    </Border>
+</Window>

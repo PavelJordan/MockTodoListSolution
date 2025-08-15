@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 using Avalonia.Media;
-using AvaloniaToDoListTrackerAndVisualizer.Lang;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

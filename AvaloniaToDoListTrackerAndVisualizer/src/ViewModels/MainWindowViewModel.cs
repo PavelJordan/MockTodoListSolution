@@ -1,7 +1,11 @@
 using System.Globalization;
-using AvaloniaToDoListTrackerAndVisualizer.Lang;
+using System.Threading.Tasks;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
+using AvaloniaToDoListTrackerAndVisualizer.Messages;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -38,6 +42,15 @@ public partial class MainWindowViewModel: ViewModelBase
     private void SetLocalization(string cultureInfoString)
     {
         Localization.SetCulture(new CultureInfo(cultureInfoString));
+    }
+
+    [RelayCommand]
+    private async Task AddNewTask()
+    {
+        TaskViewModel? result =
+            await WeakReferenceMessenger.Default.Send(
+                new EditTaskMessage(new TaskViewModel(new TaskModel("Untitled"), Localization))
+                );
     }
 
     public MainWindowViewModel()
