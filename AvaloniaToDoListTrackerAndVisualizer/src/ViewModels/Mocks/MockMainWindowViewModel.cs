@@ -1,4 +1,5 @@
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Services;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -7,7 +8,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 /// </summary>
 public class MockMainWindowViewModel: MainWindowViewModel
 {
-    public MockMainWindowViewModel()
+    public MockMainWindowViewModel(): base(new TaskModelFileService())
     {
         Tasks.AllTasks.Collection.Add(new TaskViewModel(new TaskModel("Hello, World 0!"), Localization));
         Tasks.AllTasks.Collection.Add(new TaskViewModel(new TaskModel("Hello, World 1!"), Localization));

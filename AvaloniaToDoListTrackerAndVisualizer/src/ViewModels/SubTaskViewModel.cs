@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel;
-using SubTaskModel = AvaloniaToDoListTrackerAndVisualizer.Models.Items.TaskBaseModel.SubTaskModel;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 

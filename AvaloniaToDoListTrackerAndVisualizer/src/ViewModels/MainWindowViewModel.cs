@@ -1,8 +1,10 @@
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -16,6 +18,8 @@ public partial class MainWindowViewModel: ViewModelBase
 {
     [ObservableProperty]
     private TaskListViewModel _tasks =  new();
+    
+    public ITaskModelFileService  TaskModelFileService { get; }
 
     private readonly ViewModelBase _home;
     private readonly ViewModelBase _settings = new SettingsViewModel();
@@ -57,11 +61,32 @@ public partial class MainWindowViewModel: ViewModelBase
         }
     }
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(ITaskModelFileService taskModelFileService)
     {
         _home = new HomeViewModel(Tasks, Localization);
         _treeView = new TreeViewModel(Localization);
         _profile = new ProfileViewModel(Localization);
         CurrentPage = _home;
+        
+        TaskModelFileService = taskModelFileService;
+        
+    }
+    
+    public async Task LoadFiles()
+    {
+        var items = await TaskModelFileService.LoadFromFileAsync();
+        if (items is not null)
+        {
+            foreach (var item in items)
+            {
+                Tasks.AllTasks.Collection.Add(new TaskViewModel(item, Localization));
+            }
+        }
+        
+    }
+
+    public async Task SaveFiles()
+    {
+        await TaskModelFileService.SaveToFileAsync(Tasks.AllTasks.Collection.Select(item => item.TaskModel));
     }
 }

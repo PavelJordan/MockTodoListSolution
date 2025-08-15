@@ -38,7 +38,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
-        <PackageReference Include="DynamicData" Version="9.4.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
     </ItemGroup>
 
     <ItemGroup>
@@ -50,9 +50,5 @@
         <DependentUpon>App.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="src\Services\" />
     </ItemGroup>
 </Project>

@@ -8,8 +8,9 @@ using Avalonia.Markup.Xaml;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views;
-using DynamicData;
 using System.Globalization;
+using AvaloniaToDoListTrackerAndVisualizer.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaToDoListTrackerAndVisualizer;
 
@@ -19,10 +20,22 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
     }
+    
+    private MainWindowViewModel? _mainWindowViewModel = null;
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         Lang.Resources.Culture = new CultureInfo("en-US");
+        
+        BindingPlugins.DataValidators.RemoveAt(0);
+        
+        var collection = new ServiceCollection();
+        collection.AddCommonServices();
+        
+        var services = collection.BuildServiceProvider();
+        
+        _mainWindowViewModel = services.GetService<MainWindowViewModel>()!;
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -30,9 +43,11 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow()
             {
-                DataContext = new MockMainWindowViewModel()
+                DataContext = _mainWindowViewModel
             };
-            
+
+            desktop.ShutdownRequested += DesktopOnShutDownRequested;
+            await _mainWindowViewModel.LoadFiles();
         }
 
         base.OnFrameworkInitializationCompleted();
@@ -49,5 +64,38 @@ public partial class App : Application
         {
             BindingPlugins.DataValidators.Remove(plugin);
         }
+    }
+    
+    private bool _canClose = false;
+    
+    private async void DesktopOnShutDownRequested(object? sender, ShutdownRequestedEventArgs e)
+    {
+        try
+        {
+            e.Cancel = !_canClose;
+            if (!_canClose)
+            {
+                await _mainWindowViewModel!.SaveFiles();
+                _canClose = true;
+                if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    desktop.Shutdown();
+                }
+            }
+        }
+        catch (Exception)
+        {
+            _canClose = true;
+        }
+    }
+}
+
+
+public static class ServiceCollectionExtensions
+{
+    public static void AddCommonServices(this IServiceCollection collection)
+    {
+        collection.AddSingleton<ITaskModelFileService, TaskModelFileService>();
+        collection.AddTransient<MainWindowViewModel>();
     }
 }
