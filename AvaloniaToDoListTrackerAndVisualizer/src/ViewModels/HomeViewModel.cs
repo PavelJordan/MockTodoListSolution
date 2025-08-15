@@ -1,6 +1,7 @@
 
 using System.Collections.ObjectModel;
 using Avalonia.Media;
+using AvaloniaToDoListTrackerAndVisualizer.Lang;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
@@ -11,13 +12,16 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 public partial class HomeViewModel : ViewModelBase
 {
         public TaskListViewModel Tasks { get; }
+
+        public LocalizationProvider Localization { get; }
         
         public ReadOnlyObservableCollection<TaskViewModel> CurrentTaskList { get; private set; }
 
-        public HomeViewModel(TaskListViewModel tasks)
+        public HomeViewModel(TaskListViewModel tasks, LocalizationProvider localization)
         {
                 Tasks = tasks;
                 CurrentTaskList = Tasks.ReadyTasks;
+                Localization = localization;
                 OnPropertyChanged(nameof(CurrentTaskList));
         }
         

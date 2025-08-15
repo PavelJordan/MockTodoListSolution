@@ -1,3 +1,5 @@
+using System.Globalization;
+using AvaloniaToDoListTrackerAndVisualizer.Lang;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -15,6 +17,8 @@ public partial class MainWindowViewModel: ViewModelBase
     private readonly ViewModelBase _settings = new SettingsViewModel();
     private readonly ViewModelBase _profile;
     private readonly ViewModelBase _treeView;
+
+    public LocalizationProvider Localization { get; } = new();
     
     [ObservableProperty] private ViewModelBase _currentPage;
     
@@ -30,11 +34,17 @@ public partial class MainWindowViewModel: ViewModelBase
     [RelayCommand]
     private void GoTreeView () => CurrentPage = _treeView;
 
+    [RelayCommand]
+    private void SetLocalization(string cultureInfoString)
+    {
+        Localization.SetCulture(new CultureInfo(cultureInfoString));
+    }
+
     public MainWindowViewModel()
     {
-        _home = new HomeViewModel(Tasks);
-        _treeView = new TreeViewModel();
-        _profile = new ProfileViewModel();
+        _home = new HomeViewModel(Tasks, Localization);
+        _treeView = new TreeViewModel(Localization);
+        _profile = new ProfileViewModel(Localization);
         CurrentPage = _home;
     }
 }

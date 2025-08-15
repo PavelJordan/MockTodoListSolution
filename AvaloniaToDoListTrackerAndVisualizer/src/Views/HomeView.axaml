@@ -10,9 +10,9 @@
     <Panel Classes="right_hand_content" x:Name="ParentPanel">
         <DockPanel>
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <Button Content="Ready" Command="{Binding showReadyCommand}"></Button>
-                <Button Content="Done" Command="{Binding showCompletedCommand}"></Button>
-                <Button Content="All" Command="{Binding showAllCommand}"></Button>
+                <Button Content="{Binding Localization.ReadyButton}" Command="{Binding showReadyCommand}"></Button>
+                <Button Content="{Binding Localization.DoneButton}" Command="{Binding showCompletedCommand}"></Button>
+                <Button Content="{Binding Localization.AllButton}" Command="{Binding showAllCommand}"></Button>
             </StackPanel>
             <Border>
                 <ScrollViewer Background="DarkGray">
@@ -25,7 +25,7 @@
                                     <Grid ColumnDefinitions="Auto, *, Auto" >
                                         <Button Command="{Binding CompleteButtonClickedCommand}" Foreground="{Binding CompleteButtonColor}" FontWeight="DemiBold" Content="{Binding CompleteButtonText}"  Grid.Column="0" Background="DimGray" Margin="2 2 4 2" />
                                         <TextBlock VerticalAlignment="Center" Text="{Binding TaskModel.Name}" Grid.Column="1" />
-                                        <Button Content="Details"  Grid.Column="2" Margin="4 2 2 2"/>
+                                        <Button Content="{Binding Localization.DetailsButton}"  Grid.Column="2" Margin="4 2 2 2"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

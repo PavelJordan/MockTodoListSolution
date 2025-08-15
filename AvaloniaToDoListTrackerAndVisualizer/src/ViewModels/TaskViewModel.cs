@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using Avalonia.Media;
+using AvaloniaToDoListTrackerAndVisualizer.Lang;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,6 +17,8 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 public partial class TaskViewModel: ViewModelBase, IDisposable
 {
     public TaskModel TaskModel { get; }
+
+    public LocalizationProvider Localization { get; }
 
     public IBrush CompleteButtonColor
     {
@@ -38,11 +41,11 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         {
             if (!TaskModel.IsCompleted)
             {
-                return "Mark done";
+                return Localization.CompleteButton;
             }
             else
             {
-                return "Mark not done";
+                return Localization.UnCompleteButton;
             }
         }
     }
@@ -56,16 +59,23 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         TaskModel.IsCompleted = !TaskModel.IsCompleted;
     }
 
-    public TaskViewModel(TaskModel taskModel)
+    public TaskViewModel(TaskModel taskModel, LocalizationProvider localization)
     {
         TaskModel = taskModel;
+        Localization = localization;
         TaskModel.PropertyChanged += ForwardPropertyChanged;
         TaskModel.PropertyChanged += UpdateViewModelProperties;
+        Localization.PropertyChanged += UpdateLocal;
     }
 
     private void ForwardPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
             OnPropertyChanged(e.PropertyName);
+    }
+    
+    private void UpdateLocal(object? sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(CompleteButtonText));
     }
 
     /// <summary>

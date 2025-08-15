@@ -9,6 +9,7 @@ using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views;
 using DynamicData;
+using System.Globalization;
 
 namespace AvaloniaToDoListTrackerAndVisualizer;
 
@@ -21,6 +22,7 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        Lang.Resources.Culture = new CultureInfo("en-US");
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
