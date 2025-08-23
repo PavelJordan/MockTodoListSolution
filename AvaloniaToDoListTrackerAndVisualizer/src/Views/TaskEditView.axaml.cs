@@ -1,6 +1,5 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+using Avalonia.Input;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
@@ -24,6 +23,11 @@ public partial class TaskEditView : Window
             {
                 e.Cancel = true;
             }
+        };
+
+        Loaded += (sender, e) =>
+        {
+            NameTextBox.Focus(NavigationMethod.Tab);
         };
     }
 }

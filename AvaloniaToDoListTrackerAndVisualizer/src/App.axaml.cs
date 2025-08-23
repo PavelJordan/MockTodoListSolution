@@ -1,11 +1,9 @@
 using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views;
 using System.Globalization;
@@ -14,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AvaloniaToDoListTrackerAndVisualizer;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {

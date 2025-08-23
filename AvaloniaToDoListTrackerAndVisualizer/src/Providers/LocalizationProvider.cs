@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Globalization;
 using AvaloniaToDoListTrackerAndVisualizer.Lang;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,6 +11,9 @@ public class LocalizationProvider: ObservableObject
     public string AllButton => Resources.AllButton;
     public string CompleteButton => Resources.CompleteButton;
     public string DetailsButton => Resources.DetailsButton;
+    public string DeleteButton => Resources.DeleteButton;
+    public string DeleteSwitchOff => Resources.DeleteSwitchOff;
+    public string DeleteSwitchOn => Resources.DeleteSwitchOn;
     public string DoneButton => Resources.DoneButton;
     public string HomeButton => Resources.HomeButton;
     public string ProfileButton => Resources.ProfileButton;
@@ -26,10 +28,17 @@ public class LocalizationProvider: ObservableObject
     public string GoBackButton => Resources.GoBackButton;
     public string SaveAndBackButton => Resources.SaveAndBackButton;
     public string TaskDefaultName => Resources.TaskDefaultName;
+    public string BeginDateText => Resources.BeginDateText;
+    public string SoftDeadlineText => Resources.SoftDeadlineText;
+    public string HardDeadlineText => Resources.HardDeadlineText;
 
     public void SetCulture(CultureInfo culture)
     {
         Resources.Culture = culture;
+        CultureInfo.CurrentCulture = culture;
+        CultureInfo.CurrentUICulture = culture;
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
         OnPropertyChanged(string.Empty);
     }
 }

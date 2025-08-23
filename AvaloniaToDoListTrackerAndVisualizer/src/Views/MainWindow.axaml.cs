@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 

@@ -146,5 +146,41 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("SaveAndBackButton", resourceCulture);
             }
         }
+        
+        public static string DeleteButton {
+            get {
+                return ResourceManager.GetString("DeleteButton", resourceCulture);
+            }
+        }
+        
+        public static string DeleteSwitchOff {
+            get {
+                return ResourceManager.GetString("DeleteSwitchOff", resourceCulture);
+            }
+        }
+        
+        public static string DeleteSwitchOn {
+            get {
+                return ResourceManager.GetString("DeleteSwitchOn", resourceCulture);
+            }
+        }
+        
+        public static string BeginDateText {
+            get {
+                return ResourceManager.GetString("BeginDateText", resourceCulture);
+            }
+        }
+        
+        public static string SoftDeadlineText {
+            get {
+                return ResourceManager.GetString("SoftDeadlineText", resourceCulture);
+            }
+        }
+        
+        public static string HardDeadlineText {
+            get {
+                return ResourceManager.GetString("HardDeadlineText", resourceCulture);
+            }
+        }
     }
 }

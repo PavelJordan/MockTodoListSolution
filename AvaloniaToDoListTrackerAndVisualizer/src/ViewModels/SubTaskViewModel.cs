@@ -10,7 +10,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 /// because the collection keeps track of those events in its items.
 /// All extra properties used for view will be here.
 /// </summary>
-public partial class SubTaskViewModel: ViewModelBase, IDisposable
+public class SubTaskViewModel: ViewModelBase, IDisposable
 {
     public SubTaskModel SubTask { get; }
     

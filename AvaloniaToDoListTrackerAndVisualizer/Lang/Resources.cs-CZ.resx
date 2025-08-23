@@ -69,4 +69,22 @@
     <data name="SaveAndBackButton" xml:space="preserve">
         <value>Uložit a zpět</value>
     </data>
+    <data name="DeleteButton" xml:space="preserve">
+        <value>Smazat</value>
+    </data>
+    <data name="DeleteSwitchOff" xml:space="preserve">
+        <value>Mazání vypnuto</value>
+    </data>
+    <data name="DeleteSwitchOn" xml:space="preserve">
+        <value>Mazání zapnuto</value>
+    </data>
+    <data name="BeginDateText" xml:space="preserve">
+        <value>Začít</value>
+    </data>
+    <data name="HardDeadlineText" xml:space="preserve">
+        <value>Druhý deadline</value>
+    </data>
+    <data name="SoftDeadlineText" xml:space="preserve">
+        <value>První interní deadline</value>
+    </data>
 </root>

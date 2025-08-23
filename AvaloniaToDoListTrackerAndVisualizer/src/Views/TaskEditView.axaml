@@ -11,21 +11,35 @@
         Width="650"
         WindowStartupLocation="CenterOwner"
         Background="Gray"
-        Title="{Binding Localization.EditTaskWindowName}">
+        Title="{Binding Localization.EditTaskWindowName}"
+        >
     
     <Design.DataContext>
         <vm:MockTaskEditViewModel/>
     </Design.DataContext>
     
     <Border Margin="5" Background="DarkGray" CornerRadius="5">
-        <Grid RowDefinitions="Auto * Auto" >
-            <Border>
-                <TextBox Text="{Binding TaskToEdit.TaskModel.Name}"/>
+        <Grid RowDefinitions="Auto * Auto" ColumnDefinitions=" * *" >
+            <Border Grid.ColumnSpan="2">
+                <TextBox x:Name="NameTextBox" Text="{Binding TaskToEdit.TaskModel.Name}"/>
             </Border>
-            <Border Grid.Row="1">
+            <Border Grid.Row="1" Grid.Column="0" >
                 <TextBox Text="{Binding TaskToEdit.TaskModel.Description}"/>
             </Border>
-            <Button Grid.Row="2" Command="{Binding SaveAndExitCommand}" Content="{Binding BackButtonText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10 10 5 10"/>
+            <Border Grid.Row="1" Grid.Column="1">
+                <StackPanel>
+                    <Label Target="BeginDatePicker" Content="{Binding Localization.BeginDateText}"></Label>
+                    <CalendarDatePicker SelectedDateFormat="Custom" CustomDateFormatString="d.M.yyyy" SelectedDate="{Binding TaskToEdit.TaskModel.BeginDate}" x:Name="BeginDatePicker" ></CalendarDatePicker>
+                    <Label Target="SoftDeadlineDatePicker" Content="{Binding Localization.SoftDeadlineText}"></Label>
+                    <CalendarDatePicker SelectedDateFormat="Custom" CustomDateFormatString="d.M.yyyy" SelectedDate="{Binding TaskToEdit.TaskModel.SoftDeadline}" x:Name="SoftDeadlineDatePicker"></CalendarDatePicker>
+                    <Label Target="HardDeadlineDatePicker" Content="{Binding Localization.HardDeadlineText}"></Label>
+                    <CalendarDatePicker SelectedDateFormat="Custom" CustomDateFormatString="d.M.yyyy" SelectedDate="{Binding TaskToEdit.TaskModel.HardDeadline}" x:Name="HardDeadlineDatePicker"></CalendarDatePicker>
+                </StackPanel>
+            </Border>
+            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SaveAndExitCommand}" Content="{Binding BackButtonText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10 10 5 10"/>
         </Grid>
     </Border>
+    <Window.KeyBindings>
+        <KeyBinding Command="{Binding SaveAndExitCommand}" Gesture="Enter"/>
+    </Window.KeyBindings>
 </Window>

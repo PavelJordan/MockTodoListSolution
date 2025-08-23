@@ -1,9 +1,6 @@
-using System;
 using System.ComponentModel;
-using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -33,7 +30,7 @@ public partial class TaskEditViewModel: ViewModelBase
     [RelayCommand(CanExecute = nameof(CanCloseAndSave))]
     private void SaveAndExit()
     {
-        WeakReferenceMessenger.Default.Send<CloseEditMessage>(new CloseEditMessage());
+        WeakReferenceMessenger.Default.Send(new CloseEditMessage());
     }
 
     public TaskEditViewModel(TaskViewModel taskToEdit, bool newTask)

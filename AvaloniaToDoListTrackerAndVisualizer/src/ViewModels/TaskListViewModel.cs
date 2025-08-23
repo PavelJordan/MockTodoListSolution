@@ -5,7 +5,9 @@ using System.Collections.Specialized;
 using System.Linq;
 using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
 using AvaloniaToDoListTrackerAndVisualizer.Extensions;
+using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -49,6 +51,14 @@ public class TaskListViewModel: ViewModelBase, IDisposable
 
         AllTasks.Collection.CollectionChanged += OnAllTasksManipulation;
         AllTasks.ChildrenPropertyChanged += OnTaskManipulation;
+        
+        WeakReferenceMessenger.Default.Register<TaskListViewModel, DeleteTaskViewModelRequest>(this, static (w, m) =>
+        {
+            if (w.AllTasks.Collection.Remove(m.TaskToDelete))
+            {
+                m.TaskToDelete.Dispose();
+            }
+        });
     }
     
     /// <summary>
@@ -145,6 +155,7 @@ public class TaskListViewModel: ViewModelBase, IDisposable
             _completedTasks.Remove(item);
         }
     }
+    
 
     // TODO: Dispose when window closes
     public void Dispose()

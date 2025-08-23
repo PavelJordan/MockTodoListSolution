@@ -11,6 +11,8 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
+
+
 /// <summary>
 /// Wrapper for tasks which exposes its properties.
 /// It also forwards property changed event for use in observable children collections,
@@ -19,6 +21,11 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 /// </summary>
 public partial class TaskViewModel: ViewModelBase, IDisposable
 {
+    
+    public enum ActionButtonMode {
+        Details, Delete
+    }
+    
     public TaskModel TaskModel { get; }
 
     public LocalizationProvider Localization { get; }
@@ -52,6 +59,51 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
             }
         }
     }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ActionButtonColor))]
+    [NotifyPropertyChangedFor(nameof(ActionButtonText))]
+    private ActionButtonMode _actionMode = ActionButtonMode.Details;
+
+    public IBrush ActionButtonColor
+    {
+        get
+        {
+            switch (ActionMode)
+            {
+                case ActionButtonMode.Details: return Brushes.DimGray;
+                case ActionButtonMode.Delete: return Brushes.Red;
+                default: return Brushes.Gray;
+            }
+        }
+    }
+
+    public string ActionButtonText
+    {
+        get
+        {
+            switch (ActionMode)
+            {
+                case ActionButtonMode.Details: return Localization.DetailsButton;
+                case ActionButtonMode.Delete: return Localization.DeleteButton;
+                default: return "Action";
+            }
+        }
+    }
+    
+    [RelayCommand]
+    private async Task ActionButtonPress()
+    {
+        switch (ActionMode)
+        {
+            case ActionButtonMode.Details:
+                await WeakReferenceMessenger.Default.Send(new EditTaskMessage(this, false));
+                break;
+            case ActionButtonMode.Delete:
+                WeakReferenceMessenger.Default.Send(new DeleteTaskViewModelRequest(this));
+                break;
+        }
+    }
     
     public bool CanChangeCompleteness => TaskModel.CanChangeCompleteness;
     
@@ -79,6 +131,7 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     private void UpdateLocal(object? sender, PropertyChangedEventArgs e)
     {
         OnPropertyChanged(nameof(CompleteButtonText));
+        OnPropertyChanged(nameof(ActionButtonText));
     }
 
     /// <summary>
@@ -103,10 +156,4 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     {
         TaskModel.PropertyChanged -= ForwardPropertyChanged;
     }
-
-    [RelayCommand]
-    private async Task Details()
-    {
-        await WeakReferenceMessenger.Default.Send(new EditTaskMessage(this, false));
-    } 
 }

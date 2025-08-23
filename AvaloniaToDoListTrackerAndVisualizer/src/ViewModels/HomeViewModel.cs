@@ -77,5 +77,24 @@ public partial class HomeViewModel : ViewModelBase
                 CurrentTaskList = Tasks.AllTasksReadOnly;
                 updateCurrentTaskList();
         }
+
+        [RelayCommand]
+        private void ActionSwitched(bool deletionOn)
+        {
+                if (deletionOn)
+                {
+                        foreach (var task in Tasks.AllTasksReadOnly)
+                        {
+                                task.ActionMode = TaskViewModel.ActionButtonMode.Delete;
+                        }
+                }
+                else
+                {
+                        foreach (var task in Tasks.AllTasksReadOnly)
+                        {
+                                task.ActionMode = TaskViewModel.ActionButtonMode.Details;
+                        }
+                }
+        }
 }
 

@@ -69,4 +69,22 @@
     <data name="SaveAndBackButton" xml:space="preserve">
         <value>Save and go back</value>
     </data>
+    <data name="DeleteButton" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="DeleteSwitchOff" xml:space="preserve">
+        <value>Deletion disabled</value>
+    </data>
+    <data name="DeleteSwitchOn" xml:space="preserve">
+        <value>Deletion enabled</value>
+    </data>
+    <data name="SoftDeadlineText" xml:space="preserve">
+        <value>Soft deadline date</value>
+    </data>
+    <data name="HardDeadlineText" xml:space="preserve">
+        <value>Hard deadline date</value>
+    </data>
+    <data name="BeginDateText" xml:space="preserve">
+        <value>Begin date</value>
+    </data>
 </root>

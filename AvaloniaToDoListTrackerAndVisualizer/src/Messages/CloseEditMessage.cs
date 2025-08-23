@@ -1,4 +1,3 @@
-using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Messages;
 
