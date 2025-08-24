@@ -1,3 +1,4 @@
+using System;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Services;
 
@@ -18,5 +19,6 @@ public class MockMainWindowViewModel: MainWindowViewModel
         Tasks.AllTasks.Collection[3].TaskModel.IsCompleted = true;
         Tasks.AllTasks.Collection.Add(new TaskViewModel(new TaskModel("Hello, World 4!"), Localization));
         Tasks.AllTasks.Collection[4].TaskModel.Prerequisites.Collection.Add(Tasks.AllTasks.Collection[3].TaskModel);
+        Tasks.AllTasks.Collection[4].TaskModel.SoftDeadline = DateTime.Today.AddDays(1).Date;
     }
 }

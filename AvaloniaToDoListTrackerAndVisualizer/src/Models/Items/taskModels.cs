@@ -128,7 +128,7 @@ public sealed partial class TaskModel : TaskBaseModel, IDisposable
     
     public ObservableChildrenCollectionWrapper<PrecedingEvent> PrecedingEvents { get; } = new();
     
-    public bool Ready => Prerequisites.Collection.All(x => x.IsCompleted) && PrecedingEvents.Collection.All(x => x.IsCompleted) && !IsCompleted;
+    public bool Ready => Prerequisites.Collection.All(x => x.IsCompleted) && PrecedingEvents.Collection.All(x => x.IsCompleted) && !IsCompleted && AfterBeginDate();
     
     public TaskModel(string name): this(name, Guid.NewGuid())
     { }
@@ -148,12 +148,12 @@ public sealed partial class TaskModel : TaskBaseModel, IDisposable
     /// </summary>
     private void CheckIfPropertiesShouldChange(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(IsCompleted))
+        if (e.PropertyName is nameof(IsCompleted) or nameof(BeginDate))
         {
             OnPropertyChanged(nameof(Ready));
         }
 
-        if (e.PropertyName == nameof(Ready))
+        if (e.PropertyName is nameof(Ready))
         {
             OnPropertyChanged(nameof(CanChangeCompleteness));
         }
@@ -195,6 +195,18 @@ public sealed partial class TaskModel : TaskBaseModel, IDisposable
         get
         {
             return Ready || IsCompleted; // TODO manage correctly (what if future tasks are already completed?)
+        }
+    }
+
+    private bool AfterBeginDate()
+    {
+        if (BeginDate is null)
+        {
+            return true;
+        }
+        else
+        {
+            return BeginDate.Value.Date <= DateTime.Now.Date;
         }
     }
     

@@ -90,4 +90,25 @@
     <data name="HardDeadlineText" xml:space="preserve">
         <value>Hard deadline date</value>
     </data>
+    <data name="NoDeadlineSet" xml:space="preserve">
+        <value>No deadline set</value>
+    </data>
+    <data name="DaysUntilSoftDeadline" xml:space="preserve">
+        <value>days until soft deadline</value>
+    </data>
+    <data name="DaysUntilHardDeadline" xml:space="preserve">
+        <value>days until hard deadline</value>
+    </data>
+    <data name="DaysUntilBeginDate" xml:space="preserve">
+        <value>days until begin date</value>
+    </data>
+    <data name="DaysAfterBeginNoDeadline" xml:space="preserve">
+        <value>days after begin date, no deadline</value>
+    </data>
+    <data name="DaysAfterSoft" xml:space="preserve">
+        <value>days after soft deadline</value>
+    </data>
+    <data name="DaysAfterHard" xml:space="preserve">
+        <value>days after hard deadline</value>
+    </data>
 </root>

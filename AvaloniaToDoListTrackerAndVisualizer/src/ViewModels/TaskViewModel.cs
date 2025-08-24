@@ -44,6 +44,83 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
             }
         }
     }
+
+    public IBrush DeadlineInfoBackgroundColor
+    {
+        get
+        {
+            if (TaskModel.BeginDate is not null && TaskModel.BeginDate.Value.Date > DateTime.Now.Date)
+            {
+                return Brushes.LightGray;
+            }
+            
+            if (TaskModel.SoftDeadline is not null && TaskModel.SoftDeadline.Value.Date >= DateTime.Now.Date)
+            {
+                return Brushes.LightGreen;
+            }
+            
+            if (TaskModel.HardDeadline is not null && TaskModel.HardDeadline.Value.Date >= DateTime.Now.Date)
+            {
+                return Brushes.Orange;
+            }
+
+            if (TaskModel.HardDeadline is not null)
+            {
+                return Brushes.Red;
+            }
+            
+            if (TaskModel.SoftDeadline is not null)
+            {
+                return Brushes.Yellow;
+            }
+            
+            if (TaskModel.BeginDate is not null)
+            {
+                return Brushes.YellowGreen;
+            }
+
+            return Brushes.Gray;
+        }
+    }
+
+    public string DeadlineInfoText
+    {
+        get
+        {
+            if (TaskModel.BeginDate is not null && TaskModel.BeginDate.Value.Date > DateTime.Now.Date)
+            {
+                return (TaskModel.BeginDate.Value.Date - DateTime.Now.Date).Days + " " + Localization.DaysUntilBeginDate;
+            }
+            
+            if (TaskModel.SoftDeadline is not null && TaskModel.SoftDeadline.Value.Date >= DateTime.Now.Date)
+            {
+                return (TaskModel.SoftDeadline.Value.Date - DateTime.Now.Date).Days + " " + Localization.DaysUntilSoftDeadline;
+            }
+            
+            if (TaskModel.HardDeadline is not null && TaskModel.HardDeadline.Value.Date >= DateTime.Now.Date)
+            {
+                return (TaskModel.HardDeadline.Value.Date - DateTime.Now.Date).Days + " " + Localization.DaysUntilHardDeadline;
+            }
+
+            if (TaskModel.HardDeadline is not null)
+            {
+                return (DateTime.Now.Date - TaskModel.HardDeadline.Value.Date).Days + " " + Localization.DaysAfterHard;
+            }
+            
+            if (TaskModel.SoftDeadline is not null)
+            {
+                return (DateTime.Now.Date - TaskModel.SoftDeadline.Value.Date).Days + " " + Localization.DaysAfterSoft;
+            }
+
+            if (TaskModel.BeginDate is not null)
+            {
+                return (DateTime.Now.Date - TaskModel.BeginDate.Value.Date).Days + " " + Localization.DaysAfterBeginDateNoDeadline;
+            }
+
+            return Localization.NoDeadlineSet;
+        }
+    }
+    
     
     public string CompleteButtonText
     {
@@ -132,6 +209,7 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     {
         OnPropertyChanged(nameof(CompleteButtonText));
         OnPropertyChanged(nameof(ActionButtonText));
+        OnPropertyChanged(nameof(DeadlineInfoText));
     }
 
     /// <summary>
@@ -139,15 +217,21 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     /// </summary>
     private void UpdateViewModelProperties(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(TaskModel.IsCompleted))
+        if (e.PropertyName is nameof(TaskModel.IsCompleted))
         {
             OnPropertyChanged(nameof(CompleteButtonText));
             OnPropertyChanged(nameof(CompleteButtonColor));
         }
 
-        if (e.PropertyName == nameof(TaskModel.CanChangeCompleteness))
+        if (e.PropertyName is nameof(TaskModel.CanChangeCompleteness))
         {
             CompleteButtonClickedCommand.NotifyCanExecuteChanged();
+        }
+
+        if (e.PropertyName is nameof(TaskModel.SoftDeadline) or nameof(TaskModel.HardDeadline) or nameof(TaskModel.BeginDate))
+        {
+            OnPropertyChanged(nameof(DeadlineInfoBackgroundColor));
+            OnPropertyChanged(nameof(DeadlineInfoText));
         }
     }
     

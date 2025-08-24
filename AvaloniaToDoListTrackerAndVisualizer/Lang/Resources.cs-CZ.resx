@@ -87,4 +87,25 @@
     <data name="SoftDeadlineText" xml:space="preserve">
         <value>První interní deadline</value>
     </data>
+    <data name="NoDeadlineSet" xml:space="preserve">
+        <value>Bez nastaveného deadline</value>
+    </data>
+    <data name="DaysAfterBeginNoDeadline" xml:space="preserve">
+        <value>dní od začátku úlohy, bez deadlinu</value>
+    </data>
+    <data name="DaysAfterHard" xml:space="preserve">
+        <value>dní po hard deadline</value>
+    </data>
+    <data name="DaysAfterSoft" xml:space="preserve">
+        <value>dní po interním soft deadline</value>
+    </data>
+    <data name="DaysUntilBeginDate" xml:space="preserve">
+        <value>dní do začátku úlohy</value>
+    </data>
+    <data name="DaysUntilHardDeadline" xml:space="preserve">
+        <value>dní zbývá do hard deadline</value>
+    </data>
+    <data name="DaysUntilSoftDeadline" xml:space="preserve">
+        <value>dní zbývá do interního soft deadline</value>
+    </data>
 </root>

@@ -182,5 +182,47 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("HardDeadlineText", resourceCulture);
             }
         }
+        
+        public static string NoDeadlineSet {
+            get {
+                return ResourceManager.GetString("NoDeadlineSet", resourceCulture);
+            }
+        }
+        
+        public static string DaysUntilSoftDeadline {
+            get {
+                return ResourceManager.GetString("DaysUntilSoftDeadline", resourceCulture);
+            }
+        }
+        
+        public static string DaysUntilHardDeadline {
+            get {
+                return ResourceManager.GetString("DaysUntilHardDeadline", resourceCulture);
+            }
+        }
+        
+        public static string DaysUntilBeginDate {
+            get {
+                return ResourceManager.GetString("DaysUntilBeginDate", resourceCulture);
+            }
+        }
+        
+        public static string DaysAfterBeginNoDeadline {
+            get {
+                return ResourceManager.GetString("DaysAfterBeginNoDeadline", resourceCulture);
+            }
+        }
+        
+        public static string DaysAfterSoft {
+            get {
+                return ResourceManager.GetString("DaysAfterSoft", resourceCulture);
+            }
+        }
+        
+        public static string DaysAfterHard {
+            get {
+                return ResourceManager.GetString("DaysAfterHard", resourceCulture);
+            }
+        }
     }
 }
