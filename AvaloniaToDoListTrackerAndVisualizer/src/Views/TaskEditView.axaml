@@ -7,8 +7,8 @@
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.TaskEditView"
         x:DataType="vm:TaskEditViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Height="400"
-        Width="650"
+        Height="500"
+        Width="900"
         WindowStartupLocation="CenterOwner"
         Background="Gray"
         Title="{Binding Localization.EditTaskWindowName}"
@@ -21,7 +21,7 @@
     <Border Margin="5" Background="DarkGray" CornerRadius="5">
         <Grid RowDefinitions="Auto * Auto" ColumnDefinitions=" * *" >
             <Border Grid.ColumnSpan="2">
-                <TextBox x:Name="NameTextBox" Text="{Binding TaskToEdit.TaskModel.Name}"/>
+                <TextBox TextWrapping="Wrap" x:Name="NameTextBox" Text="{Binding TaskToEdit.TaskModel.Name}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="0" >
                 <TextBox Text="{Binding TaskToEdit.TaskModel.Description}"/>
@@ -34,6 +34,15 @@
                     <CalendarDatePicker SelectedDateFormat="Custom" CustomDateFormatString="d.M.yyyy" SelectedDate="{Binding TaskToEdit.TaskModel.SoftDeadline}" x:Name="SoftDeadlineDatePicker"></CalendarDatePicker>
                     <Label Target="HardDeadlineDatePicker" Content="{Binding Localization.HardDeadlineText}"></Label>
                     <CalendarDatePicker SelectedDateFormat="Custom" CustomDateFormatString="d.M.yyyy" SelectedDate="{Binding TaskToEdit.TaskModel.HardDeadline}" x:Name="HardDeadlineDatePicker"></CalendarDatePicker>
+                    <Label Target="SpentTimeText" Content="{Binding Localization.TimeSpentText}"/>
+                    <TextBlock Margin="10 1" Name="SpentTimeText" Text="{Binding TaskToEdit.TaskModel.TimeSpent}"/>
+                    <Label Content="{Binding Localization.TimeExpectedText}" Target="TimeExpectedPanel"/>
+                    <StackPanel Margin="10 1" Name="TimeExpectedPanel" Orientation="Horizontal">
+                        <Label VerticalAlignment="Center" Target="ExpectedHours" Content="{Binding Localization.HoursText}"/>
+                        <NumericUpDown Value="{Binding ExpectedHoursPicker}" Name="ExpectedHours" Minimum="0" Watermark="{Binding Localization.HoursText}" VerticalContentAlignment="Center" Padding="15 0"/>
+                        <Label VerticalAlignment="Center" Target="ExpectedMinutes" Content="{Binding Localization.MinutesText}"/>
+                        <NumericUpDown Value="{Binding ExpectedMinutesPicker}" Name="ExpectedMinutes" Minimum="0" Watermark="{Binding Localization.MinutesText}" VerticalContentAlignment="Center" Maximum="59" Padding="10 0" Text="Minutes"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
             <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SaveAndExitCommand}" Content="{Binding BackButtonText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10 10 5 10"/>

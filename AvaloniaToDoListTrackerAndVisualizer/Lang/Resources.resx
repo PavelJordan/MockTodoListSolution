@@ -111,4 +111,19 @@
     <data name="DaysAfterHard" xml:space="preserve">
         <value>days after hard deadline</value>
     </data>
+    <data name="TimeSpentText" xml:space="preserve">
+        <value>Time spent:</value>
+    </data>
+    <data name="HoursText" xml:space="preserve">
+        <value>Hours</value>
+    </data>
+    <data name="MinutesText" xml:space="preserve">
+        <value>Minutes</value>
+    </data>
+    <data name="TimeExpectedText" xml:space="preserve">
+        <value>Time expected:</value>
+    </data>
+    <data name="NotSetText" xml:space="preserve">
+        <value>not set</value>
+    </data>
 </root>

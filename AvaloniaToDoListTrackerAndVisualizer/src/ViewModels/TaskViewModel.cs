@@ -120,6 +120,26 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
             return Localization.NoDeadlineSet;
         }
     }
+
+    public string TimeLeftText
+    {
+        get
+        {
+            return formatTimeSpan(TaskModel.TimeSpent) + "/" + formatTimeSpan(TaskModel.TimeExpected);
+        }
+    }
+
+    private string formatTimeSpan(TimeSpan? timeSpan)
+    {
+        if (timeSpan is null)
+        {
+            return Localization.NotSetText;
+        }
+        else
+        {
+            return timeSpan.Value.ToString(@"hh\:mm");
+        }
+    }
     
     
     public string CompleteButtonText
@@ -232,6 +252,11 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         {
             OnPropertyChanged(nameof(DeadlineInfoBackgroundColor));
             OnPropertyChanged(nameof(DeadlineInfoText));
+        }
+
+        if (e.PropertyName is nameof(TaskModel.TimeExpected))
+        {
+            OnPropertyChanged(nameof(TimeLeftText));
         }
     }
     

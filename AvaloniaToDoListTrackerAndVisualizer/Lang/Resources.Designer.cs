@@ -224,5 +224,35 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("DaysAfterHard", resourceCulture);
             }
         }
+        
+        public static string TimeSpentText {
+            get {
+                return ResourceManager.GetString("TimeSpentText", resourceCulture);
+            }
+        }
+        
+        public static string HoursText {
+            get {
+                return ResourceManager.GetString("HoursText", resourceCulture);
+            }
+        }
+        
+        public static string MinutesText {
+            get {
+                return ResourceManager.GetString("MinutesText", resourceCulture);
+            }
+        }
+        
+        public static string TimeExpectedText {
+            get {
+                return ResourceManager.GetString("TimeExpectedText", resourceCulture);
+            }
+        }
+        
+        public static string NotSetText {
+            get {
+                return ResourceManager.GetString("NotSetText", resourceCulture);
+            }
+        }
     }
 }

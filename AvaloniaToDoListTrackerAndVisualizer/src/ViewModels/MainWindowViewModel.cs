@@ -82,7 +82,6 @@ public partial class MainWindowViewModel: ViewModelBase
                 Tasks.AllTasks.Collection.Add(new TaskViewModel(item, Localization));
             }
         }
-        
     }
 
     public async Task SaveFiles()

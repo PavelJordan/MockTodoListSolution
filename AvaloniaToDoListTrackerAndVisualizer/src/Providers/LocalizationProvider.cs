@@ -39,6 +39,11 @@ public class LocalizationProvider: ObservableObject
     public string DaysUntilHardDeadline => Resources.DaysUntilHardDeadline;
     public string DaysUntilSoftDeadline => Resources.DaysUntilSoftDeadline;
     public string NoDeadlineSet => Resources.NoDeadlineSet;
+    public string HoursText => Resources.HoursText;
+    public string MinutesText => Resources.MinutesText;
+    public string NotSetText => Resources.NotSetText;
+    public string TimeExpectedText => Resources.TimeExpectedText;
+    public string TimeSpentText => Resources.TimeSpentText;
 
     public void SetCulture(CultureInfo culture)
     {

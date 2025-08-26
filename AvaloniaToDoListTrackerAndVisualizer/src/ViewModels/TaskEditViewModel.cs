@@ -1,6 +1,8 @@
+using System;
 using System.ComponentModel;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -8,6 +10,10 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 public partial class TaskEditViewModel: ViewModelBase
 {
+    [ObservableProperty] private int? _expectedHoursPicker;
+
+    [ObservableProperty] private int? _expectedMinutesPicker;
+    
     public TaskViewModel TaskToEdit { get; }
     
     public LocalizationProvider Localization { get; }
@@ -30,6 +36,16 @@ public partial class TaskEditViewModel: ViewModelBase
     [RelayCommand(CanExecute = nameof(CanCloseAndSave))]
     private void SaveAndExit()
     {
+        if (ExpectedHoursPicker is not null || ExpectedMinutesPicker is not null)
+        {
+            ExpectedHoursPicker ??= 0;
+            ExpectedMinutesPicker ??= 0;
+            TaskToEdit.TaskModel.TimeExpected = new TimeSpan(ExpectedHoursPicker.Value, ExpectedMinutesPicker.Value, 0);
+        }
+        else
+        {
+            TaskToEdit.TaskModel.TimeExpected = null;
+        }
         WeakReferenceMessenger.Default.Send(new CloseEditMessage());
     }
 
@@ -39,6 +55,11 @@ public partial class TaskEditViewModel: ViewModelBase
         NewTask = newTask;
         TaskToEdit.TaskModel.PropertyChanged += NotifySaveAndExitChange;
         Localization = TaskToEdit.Localization;
+        if (taskToEdit.TaskModel.TimeExpected is TimeSpan editTaskExpectedTime)
+        {
+            ExpectedHoursPicker = (int)editTaskExpectedTime.TotalHours;
+            ExpectedMinutesPicker = editTaskExpectedTime.Minutes;
+        }
     }
 
     private void NotifySaveAndExitChange(object? sender, PropertyChangedEventArgs e)

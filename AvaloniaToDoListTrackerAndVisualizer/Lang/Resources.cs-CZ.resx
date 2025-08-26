@@ -108,4 +108,19 @@
     <data name="DaysUntilSoftDeadline" xml:space="preserve">
         <value>dní zbývá do interního soft deadline</value>
     </data>
+    <data name="HoursText" xml:space="preserve">
+        <value>Hodin</value>
+    </data>
+    <data name="MinutesText" xml:space="preserve">
+        <value>Minut</value>
+    </data>
+    <data name="TimeExpectedText" xml:space="preserve">
+        <value>Očekávaná doba práce:</value>
+    </data>
+    <data name="TimeSpentText" xml:space="preserve">
+        <value>Uplynulá doba práce:</value>
+    </data>
+    <data name="NotSetText" xml:space="preserve">
+        <value>nenastaven</value>
+    </data>
 </root>
