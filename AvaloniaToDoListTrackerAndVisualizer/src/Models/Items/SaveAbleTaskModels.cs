@@ -72,8 +72,6 @@ public class SaveAbleTask: SaveAbleTaskBase
             newTask.BeginDate = task.BeginDate;
             newTask.SoftDeadline = task.SoftDeadline;
             newTask.HardDeadline = task.HardDeadline;
-            newTask.SoftDeadline = task.SoftDeadline;
-            newTask.HardDeadline = task.HardDeadline;
             newTask.TimeSpent = task.TimeSpent;
             newTask.TimeExpected = task.TimeExpected;
             taskDictionary.Add(task.Id, newTask);

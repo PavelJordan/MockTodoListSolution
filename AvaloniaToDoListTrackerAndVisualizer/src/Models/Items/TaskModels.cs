@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -185,11 +184,15 @@ public sealed partial class TaskModel : TaskBaseModel, IDisposable, IHasId
     {
         Prerequisites.Collection.CollectionChanged -= OnCollectionChange;
         PrecedingEvents.Collection.CollectionChanged -= OnCollectionChange;
+        _subtasks.Collection.CollectionChanged -= OnCollectionChange;
         Prerequisites.ChildrenPropertyChanged -= OnChildChange;
         PrecedingEvents.ChildrenPropertyChanged -= OnChildChange;
+        _subtasks.ChildrenPropertyChanged -= OnChildChange;
+
         PropertyChanged -= CheckIfPropertiesShouldChange;
         Prerequisites.Dispose();
         PrecedingEvents.Dispose();
+        _subtasks.Dispose();
     }
 
     public override bool CanChangeCompleteness
@@ -211,5 +214,4 @@ public sealed partial class TaskModel : TaskBaseModel, IDisposable, IHasId
             return BeginDate.Value.Date <= DateTime.Now.Date;
         }
     }
-    
 }

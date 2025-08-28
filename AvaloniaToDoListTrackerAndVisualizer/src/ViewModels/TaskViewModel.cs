@@ -281,6 +281,8 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     public void Dispose()
     {
         TaskModel.PropertyChanged -= ForwardPropertyChanged;
+        TaskModel.PropertyChanged -= UpdateViewModelProperties;
+        Localization.PropertyChanged -= UpdateLocal;
         _subTaskViewModelsPipeline.Dispose();
     }
 }

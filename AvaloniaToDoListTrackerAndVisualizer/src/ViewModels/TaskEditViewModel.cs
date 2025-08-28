@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
-public partial class TaskEditViewModel: ViewModelBase
+public partial class TaskEditViewModel: ViewModelBase, IDisposable
 {
     [ObservableProperty] private int? _expectedHoursPicker;
 
@@ -81,5 +81,10 @@ public partial class TaskEditViewModel: ViewModelBase
     private void RemoveSubtask(SubTaskViewModel subTask)
     {
         TaskToEdit.TaskModel.RemoveSubtask(subTask.SubTask);
+    }
+
+    public void Dispose()
+    {
+        TaskToEdit.TaskModel.PropertyChanged -= NotifySaveAndExitChange;
     }
 }
