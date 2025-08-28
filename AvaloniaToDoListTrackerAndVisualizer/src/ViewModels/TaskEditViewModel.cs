@@ -37,16 +37,6 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
     [RelayCommand(CanExecute = nameof(CanCloseAndSave))]
     private void SaveAndExit()
     {
-        if (ExpectedHoursPicker is not null || ExpectedMinutesPicker is not null)
-        {
-            ExpectedHoursPicker ??= 0;
-            ExpectedMinutesPicker ??= 0;
-            TaskToEdit.TaskModel.TimeExpected = new TimeSpan(ExpectedHoursPicker.Value, ExpectedMinutesPicker.Value, 0);
-        }
-        else
-        {
-            TaskToEdit.TaskModel.TimeExpected = null;
-        }
         WeakReferenceMessenger.Default.Send(new CloseTaskEditMessage());
     }
 
@@ -61,6 +51,8 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
             ExpectedHoursPicker = (int)editTaskExpectedTime.TotalHours;
             ExpectedMinutesPicker = editTaskExpectedTime.Minutes;
         }
+
+        PropertyChanged += UpdateUnderlyingModel;
     }
 
     private void NotifySaveAndExitChange(object? sender, PropertyChangedEventArgs e)
@@ -74,7 +66,7 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
     [RelayCommand]
     private void AddSubtask()
     {
-        TaskToEdit.TaskModel.AddSubtask(new SubTaskModel("New subtask"));
+        TaskToEdit.TaskModel.AddSubtask(new SubTaskModel(Localization.NewSubTaskName));
     }
 
     [RelayCommand]
@@ -86,5 +78,23 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
     public void Dispose()
     {
         TaskToEdit.TaskModel.PropertyChanged -= NotifySaveAndExitChange;
+        PropertyChanged -= UpdateUnderlyingModel;
+    }
+    
+    private void UpdateUnderlyingModel(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(ExpectedHoursPicker) or nameof(ExpectedMinutesPicker))
+        {
+            if (ExpectedHoursPicker is not null || ExpectedMinutesPicker is not null)
+            {
+                ExpectedHoursPicker ??= 0;
+                ExpectedMinutesPicker ??= 0;
+                TaskToEdit.TaskModel.TimeExpected = new TimeSpan(ExpectedHoursPicker.Value, ExpectedMinutesPicker.Value, 0);
+            }
+            else
+            {
+                TaskToEdit.TaskModel.TimeExpected = null;
+            }
+        }
     }
 }

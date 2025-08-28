@@ -25,5 +25,10 @@ public partial class MainWindow : Window
             
             message.Reply(dialog.ShowDialog<TaskViewModel?>(window));
         });
+        
+        Closed += (sender, e) =>
+        {
+            WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
+        };
     }
 }

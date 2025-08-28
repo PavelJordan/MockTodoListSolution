@@ -123,10 +123,13 @@
     <data name="NotSetText" xml:space="preserve">
         <value>not set</value>
     </data>
-    <data name="BackText" xml:space="preserve">
-        <value>Back</value>
-    </data>
     <data name="SubTaskEditWindowName" xml:space="preserve">
         <value>Edit subtask</value>
+    </data>
+    <data name="AddSubTaskButton" xml:space="preserve">
+        <value>Add subtask</value>
+    </data>
+    <data name="NewSubTaskName" xml:space="preserve">
+        <value>New subtask</value>
     </data>
 </root>

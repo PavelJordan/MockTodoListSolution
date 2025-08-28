@@ -224,23 +224,18 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     {
         TaskModel = taskModel;
         Localization = localization;
-        TaskModel.PropertyChanged += ForwardPropertyChanged;
         TaskModel.PropertyChanged += UpdateViewModelProperties;
         Localization.PropertyChanged += UpdateLocal;
 
         _subTaskViewModelsPipeline = taskModel.Subtasks
             .ToObservableChangeSet()
-            .Transform(subTaskModel => new SubTaskViewModel(subTaskModel))
+            .Transform(subTaskModel => new SubTaskViewModel(subTaskModel, Localization))
             .Bind(out _subTasksViewModels)
             .DisposeMany()
             .Subscribe();
         
     }
 
-    private void ForwardPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-            OnPropertyChanged(e.PropertyName);
-    }
     
     private void UpdateLocal(object? sender, PropertyChangedEventArgs e)
     {
@@ -280,7 +275,6 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
 
     public void Dispose()
     {
-        TaskModel.PropertyChanged -= ForwardPropertyChanged;
         TaskModel.PropertyChanged -= UpdateViewModelProperties;
         Localization.PropertyChanged -= UpdateLocal;
         _subTaskViewModelsPipeline.Dispose();

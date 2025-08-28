@@ -3,12 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SubTaskEditView"
         x:DataType="vm:SubTaskEditViewModel"
         Background="Gray"
-        Width="450"
-        Height="900"
+        Width="600"
+        Height="400"
         WindowStartupLocation="CenterOwner"
         Title="{Binding Localization.SubTaskEditWindowName}">
     
@@ -17,14 +17,14 @@
     </Design.DataContext>
     
     <Border Margin="5" Background="DarkGray" CornerRadius="5">
-        <Grid RowDefinitions="Auto * Auto" ColumnDefinitions=" * *" >
+        <Grid RowDefinitions="Auto * Auto" ColumnDefinitions=" * " >
             <Border Grid.ColumnSpan="2">
                 <TextBox TextWrapping="Wrap" x:Name="NameTextBox" Text="{Binding SubTaskToEdit.SubTask.Name}"/>
             </Border>
-            <Border Grid.Row="1" Grid.Column="0" >
+            <Border Grid.Row="1" >
                 <TextBox Text="{Binding SubTaskToEdit.SubTask.Description}"/>
             </Border>
-            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding ExitCommand}" Content="{Binding Localization.BackText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10 10 5 10"/>
+            <Button Grid.Row="2" Command="{Binding ExitCommand}" Content="{Binding Localization.GoBackButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10 10 5 10"/>
         </Grid>
     </Border>
     <Window.KeyBindings>

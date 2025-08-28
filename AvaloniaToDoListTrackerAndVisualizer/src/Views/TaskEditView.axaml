@@ -26,17 +26,17 @@
             <Border Grid.Row="1" Grid.Column="0" >
                 <Grid RowDefinitions="* Auto *">
                     <TextBox Text="{Binding TaskToEdit.TaskModel.Description}"/>
-                    <Button Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Content="Add subtask" Command="{Binding AddSubtaskCommand}" />
+                    <Button Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Content="{Binding Localization.AddSubTaskButton}" Command="{Binding AddSubtaskCommand}" />
                     <ScrollViewer Grid.Row="2">
                         <ItemsControl ItemsSource="{Binding TaskToEdit.SubTasksViewModels}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border Margin="3" Background="Gray" CornerRadius="5">
                                         <Grid ColumnDefinitions="Auto * Auto Auto">
-                                            <Button Content="Mark done" Foreground="LimeGreen"/>
+                                            <Button Command="{Binding DoneButtonClickedCommand}" Content="{Binding CompleteButtonText}" Foreground="{Binding CompleteButtonBackground}"/>
                                             <TextBlock TextWrapping="Wrap" Grid.Column="1" Text="{Binding SubTask.Name}" Margin="5" VerticalAlignment="Center"/>
-                                            <Button Command="{Binding #ParentBorder.((vm:TaskEditViewModel)DataContext).RemoveSubtaskCommand}" CommandParameter="{Binding .}" Content="Delete" Background="Red" Grid.Column="2" VerticalContentAlignment="Center" VerticalAlignment="Stretch"/>
-                                            <Button Content="Edit" Grid.Column="3" VerticalContentAlignment="Center" VerticalAlignment="Stretch"/>
+                                            <Button Command="{Binding #ParentBorder.((vm:TaskEditViewModel)DataContext).RemoveSubtaskCommand}" CommandParameter="{Binding .}" Content="{Binding Localization.DeleteButton}" Background="Red" Grid.Column="2" VerticalContentAlignment="Center" VerticalAlignment="Stretch"/>
+                                            <Button Command="{Binding EditSubtaskCommand}" Content="{Binding Localization.DetailsButton}" Grid.Column="3" VerticalContentAlignment="Center" VerticalAlignment="Stretch"/>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

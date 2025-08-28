@@ -255,15 +255,21 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
             }
         }
         
-        public static string BackText {
-            get {
-                return ResourceManager.GetString("BackText", resourceCulture);
-            }
-        }
-        
         public static string SubTaskEditWindowName {
             get {
                 return ResourceManager.GetString("SubTaskEditWindowName", resourceCulture);
+            }
+        }
+        
+        public static string AddSubTaskButton {
+            get {
+                return ResourceManager.GetString("AddSubTaskButton", resourceCulture);
+            }
+        }
+        
+        public static string NewSubTaskName {
+            get {
+                return ResourceManager.GetString("NewSubTaskName", resourceCulture);
             }
         }
     }
