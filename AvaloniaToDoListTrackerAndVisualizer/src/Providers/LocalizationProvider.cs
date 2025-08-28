@@ -44,6 +44,9 @@ public class LocalizationProvider: ObservableObject
     public string NotSetText => Resources.NotSetText;
     public string TimeExpectedText => Resources.TimeExpectedText;
     public string TimeSpentText => Resources.TimeSpentText;
+    
+    public string BackText => Resources.BackText;
+    public string SubTaskEditWindowName => Resources.SubTaskEditWindowName;
 
     public void SetCulture(CultureInfo culture)
     {

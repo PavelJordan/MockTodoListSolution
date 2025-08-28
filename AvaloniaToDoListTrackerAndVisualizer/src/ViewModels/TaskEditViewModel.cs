@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -46,7 +47,7 @@ public partial class TaskEditViewModel: ViewModelBase
         {
             TaskToEdit.TaskModel.TimeExpected = null;
         }
-        WeakReferenceMessenger.Default.Send(new CloseEditMessage());
+        WeakReferenceMessenger.Default.Send(new CloseTaskEditMessage());
     }
 
     public TaskEditViewModel(TaskViewModel taskToEdit, bool newTask)
@@ -68,5 +69,17 @@ public partial class TaskEditViewModel: ViewModelBase
         {
             SaveAndExitCommand.NotifyCanExecuteChanged();
         }
+    }
+
+    [RelayCommand]
+    private void AddSubtask()
+    {
+        TaskToEdit.TaskModel.AddSubtask(new SubTaskModel("New subtask"));
+    }
+
+    [RelayCommand]
+    private void RemoveSubtask(SubTaskViewModel subTask)
+    {
+        TaskToEdit.TaskModel.RemoveSubtask(subTask.SubTask);
     }
 }

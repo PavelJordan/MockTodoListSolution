@@ -18,6 +18,5 @@ public sealed partial class PrecedingEvent(string name): ObservableObject, IComp
     [ObservableProperty]
     private string _name = name;
     
-    // TODO maybe add Equals/GetHashCode overloads for better use
     public bool CanChangeCompleteness { get; } = true;
 }

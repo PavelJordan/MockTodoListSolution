@@ -45,7 +45,6 @@ public partial class HomeViewModel : ViewModelBase
                 OnPropertyChanged(nameof(ReadyButtonBackground));
                 OnPropertyChanged(nameof(CompletedButtonBackground));
                 OnPropertyChanged(nameof(AllButtonBackground));
-                
         }
         
         /// <summary>

@@ -126,4 +126,10 @@
     <data name="NotSetText" xml:space="preserve">
         <value>not set</value>
     </data>
+    <data name="BackText" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="SubTaskEditWindowName" xml:space="preserve">
+        <value>Edit subtask</value>
+    </data>
 </root>

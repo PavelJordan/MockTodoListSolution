@@ -254,5 +254,17 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("NotSetText", resourceCulture);
             }
         }
+        
+        public static string BackText {
+            get {
+                return ResourceManager.GetString("BackText", resourceCulture);
+            }
+        }
+        
+        public static string SubTaskEditWindowName {
+            get {
+                return ResourceManager.GetString("SubTaskEditWindowName", resourceCulture);
+            }
+        }
     }
 }

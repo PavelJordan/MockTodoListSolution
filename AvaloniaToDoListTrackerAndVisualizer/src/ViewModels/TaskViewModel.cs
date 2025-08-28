@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Avalonia.Media;
@@ -8,6 +9,8 @@ using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
+using DynamicData.Binding;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -27,6 +30,12 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     }
     
     public TaskModel TaskModel { get; }
+
+
+    private readonly IDisposable _subTaskViewModelsPipeline;
+
+    private readonly ReadOnlyObservableCollection<SubTaskViewModel> _subTasksViewModels;
+    public ReadOnlyObservableCollection<SubTaskViewModel> SubTasksViewModels => _subTasksViewModels;
 
     public LocalizationProvider Localization { get; }
 
@@ -218,6 +227,14 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         TaskModel.PropertyChanged += ForwardPropertyChanged;
         TaskModel.PropertyChanged += UpdateViewModelProperties;
         Localization.PropertyChanged += UpdateLocal;
+
+        _subTaskViewModelsPipeline = taskModel.Subtasks
+            .ToObservableChangeSet()
+            .Transform(subTaskModel => new SubTaskViewModel(subTaskModel))
+            .Bind(out _subTasksViewModels)
+            .DisposeMany()
+            .Subscribe();
+        
     }
 
     private void ForwardPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -264,5 +281,6 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     public void Dispose()
     {
         TaskModel.PropertyChanged -= ForwardPropertyChanged;
+        _subTaskViewModelsPipeline.Dispose();
     }
 }

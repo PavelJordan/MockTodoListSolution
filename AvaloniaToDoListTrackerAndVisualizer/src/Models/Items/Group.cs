@@ -17,45 +17,14 @@ public partial class Group: ObservableObject, IHasId
     [ObservableProperty]
     private Color _groupColor;
     
-    private readonly ObservableCollection<Group> _subGroups = new();
-    public readonly ReadOnlyObservableCollection<Group> SubGroups;
+    [ObservableProperty]
+    private string _groupName;
+    
+    // TODO subgroups (not in specification)
 
-    private Group? _parentGroup;
-
-    public Group(Color groupColor)
+    public Group(string groupName, Color groupColor)
     {
         _groupColor = groupColor;
-        SubGroups = new (_subGroups);
-    }
-
-    /// <summary>
-    /// Add newSubGroup to this group as subgroup
-    /// </summary>
-    /// <exception cref="InvalidOperationException"> If the subgroup is already subgroup of other group</exception>
-    public void AddSubgroup(Group newSubGroup)
-    {
-        if (newSubGroup._parentGroup is null)
-        {
-            newSubGroup._parentGroup = this;
-            _subGroups.Add(newSubGroup);
-        }
-        else
-        {
-            throw new InvalidOperationException("Subgroup is already subgroup of other groups");
-        }
-    }
-    
-    /// <summary>
-    /// Remove subgroup from this group.
-    /// </summary>
-    /// <exception cref="InvalidOperationException"> If the subgroup is subgroup of other group </exception>
-    public void RemoveSubgroup(Group oldSubGroup)
-    {
-        if (oldSubGroup._parentGroup != this)
-        {
-            throw new InvalidOperationException("Subgroup is subgroup of other group");
-        }
-        oldSubGroup._parentGroup = null;
-        _subGroups.Remove(oldSubGroup);
+        _groupName = groupName;
     }
 }

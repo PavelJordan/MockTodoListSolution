@@ -123,4 +123,10 @@
     <data name="NotSetText" xml:space="preserve">
         <value>nenastaven</value>
     </data>
+    <data name="BackText" xml:space="preserve">
+        <value>Zpět</value>
+    </data>
+    <data name="SubTaskEditWindowName" xml:space="preserve">
+        <value>Úprava podúlohy</value>
+    </data>
 </root>

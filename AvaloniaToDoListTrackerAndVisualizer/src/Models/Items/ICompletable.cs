@@ -8,7 +8,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 /// </summary>
 public interface ICompletable: INotifyPropertyChanged
 {
-    // TODO consider adding completed by / completed at
+    // TODO consider adding completed by / completed at (not in specification)
     public bool IsCompleted { get; set; }
     public bool CanChangeCompleteness { get; }
 }

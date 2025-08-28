@@ -12,7 +12,7 @@ public partial class TaskEditView : Window
     {
         InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<TaskEditView, CloseEditMessage>(this, static (window, message) =>
+        WeakReferenceMessenger.Default.Register<TaskEditView, CloseTaskEditMessage>(this, static (window, message) =>
         {
             window.Close(((TaskEditViewModel?)window.DataContext)?.TaskToEdit);
         });

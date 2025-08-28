@@ -37,7 +37,7 @@ public class TaskModelFileService: ITaskModelFileService
         try
         {
             await using var fs = File.OpenRead(_taskListJsonFilePath);
-            return SaveAbleTask.LinkSaveAbleTasksAndSubtasks(await JsonSerializer.DeserializeAsync<IEnumerable<SaveAbleTask>>(fs) ?? Enumerable.Empty<SaveAbleTask>(), []);
+            return SaveAbleTask.LinkSaveAbleTasks(await JsonSerializer.DeserializeAsync<IEnumerable<SaveAbleTask>>(fs) ?? Enumerable.Empty<SaveAbleTask>());
         }
         catch (Exception e) when (e is IOException or DirectoryNotFoundException)
         {
