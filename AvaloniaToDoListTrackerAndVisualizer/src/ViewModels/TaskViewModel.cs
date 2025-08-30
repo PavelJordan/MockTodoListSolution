@@ -202,7 +202,7 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
 
     public string GroupText
     {
-        get { return TaskModel.Group is null ? "Select group..." : TaskModel.Group.GroupName; }
+        get { return TaskModel.Group is null ? Localization.SelectGroupText : TaskModel.Group.GroupName; }
     }
     
     public ISolidColorBrush GroupColor
@@ -267,6 +267,7 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         OnPropertyChanged(nameof(ActionButtonText));
         OnPropertyChanged(nameof(DeadlineInfoText));
         OnPropertyChanged(nameof(GroupText));
+        OnPropertyChanged(nameof(TimeLeftText));
     }
 
     /// <summary>

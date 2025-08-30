@@ -1,5 +1,6 @@
 using System;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Services;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
@@ -11,7 +12,7 @@ public class MockMainWindowViewModel: MainWindowViewModel
 {
     public MockMainWindowViewModel(): base(new TaskApplicationFileService())
     {
-        var groups = new GroupListViewModel();
+        var groups = new GroupListViewModel(new LocalizationProvider());
         Tasks.AllTasks.Collection.Add(new TaskViewModel(new TaskModel("Hello, World 0!"), groups, Localization));
         Tasks.AllTasks.Collection.Add(new TaskViewModel(new TaskModel("Hello, World 1!"), groups, Localization));
         Tasks.AllTasks.Collection.Add(new TaskViewModel(new TaskModel("Hello, World 2!"), groups, Localization));

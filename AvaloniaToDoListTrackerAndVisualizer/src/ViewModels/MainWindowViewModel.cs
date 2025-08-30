@@ -18,7 +18,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 public partial class MainWindowViewModel: ViewModelBase
 {
     public TaskListViewModel Tasks { get; } =  new();
-    public GroupListViewModel Groups { get; } = new();
+    public GroupListViewModel Groups { get; }
     
     public ITaskApplicationFileService  TaskApplicationFileService { get; }
 
@@ -27,6 +27,8 @@ public partial class MainWindowViewModel: ViewModelBase
     private readonly ViewModelBase _profile;
     private readonly ViewModelBase _treeView;
 
+    private static bool FalseConstant { get; } = false;
+
     public LocalizationProvider Localization { get; } = new();
     
     [ObservableProperty] private ViewModelBase _currentPage;
@@ -34,13 +36,13 @@ public partial class MainWindowViewModel: ViewModelBase
     [RelayCommand]
     private void GoHome () => CurrentPage = _home;
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(FalseConstant))]
     private void GoSettings () => CurrentPage = _settings;
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(FalseConstant))]
     private void GoProfile () => CurrentPage = _profile;
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(FalseConstant))]
     private void GoTreeView () => CurrentPage = _treeView;
 
     [RelayCommand]
@@ -64,6 +66,7 @@ public partial class MainWindowViewModel: ViewModelBase
 
     public MainWindowViewModel(ITaskApplicationFileService taskApplicationFileService)
     {
+        Groups = new GroupListViewModel(Localization);
         _home = new HomeViewModel(Tasks, Groups, Localization);
         _treeView = new TreeViewModel(Localization);
         _profile = new ProfileViewModel(Localization);
@@ -94,5 +97,17 @@ public partial class MainWindowViewModel: ViewModelBase
     public async Task SaveFiles()
     {
         await TaskApplicationFileService.SaveToFileAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection));
+    }
+
+    [RelayCommand(CanExecute = nameof(FalseConstant))]
+    private void AddNewEvent()
+    {
+        
+    }
+
+    [RelayCommand]
+    private void StartSession()
+    {
+        
     }
 }

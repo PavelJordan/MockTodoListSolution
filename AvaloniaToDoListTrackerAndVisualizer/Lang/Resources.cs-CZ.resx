@@ -121,7 +121,7 @@
         <value>Uplynulá doba práce:</value>
     </data>
     <data name="NotSetText" xml:space="preserve">
-        <value>nenastaven</value>
+        <value>neznámo</value>
     </data>
     <data name="SubTaskEditWindowName" xml:space="preserve">
         <value>Úprava podúlohy</value>
@@ -136,6 +136,27 @@
         <value>popis</value>
     </data>
     <data name="NameText" xml:space="preserve">
-        <value>name</value>
+        <value>název</value>
+    </data>
+    <data name="SelectGroupText" xml:space="preserve">
+        <value>Vyberte skupinu...</value>
+    </data>
+    <data name="GroupSelectionWindowName" xml:space="preserve">
+        <value>Výběr skupiny</value>
+    </data>
+    <data name="SelectText" xml:space="preserve">
+        <value>Vybrat</value>
+    </data>
+    <data name="NewGroupButton" xml:space="preserve">
+        <value>Vytvořit skupinu</value>
+    </data>
+    <data name="AssignNoGroupButton" xml:space="preserve">
+        <value>Nastavit úlohu bez skupiny</value>
+    </data>
+    <data name="GroupNameWatermark" xml:space="preserve">
+        <value>Název skupiny</value>
+    </data>
+    <data name="NewGroupPlaceholderName" xml:space="preserve">
+        <value>Nová skupina</value>
     </data>
 </root>

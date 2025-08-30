@@ -51,6 +51,14 @@ public class LocalizationProvider: ObservableObject
     public string NewSubTaskName => Resources.NewSubTaskName;
     public string DescriptionText => Resources.DescriptionText;
     public string NameText => Resources.NameText;
+    
+    public string AssignNoGroupButton => Resources.AssignNoGroupButton;
+    public string GroupNameWatermark => Resources.GroupNameWatermark;
+    public string GroupSelectionWindowName => Resources.GroupSelectionWindowName;
+    public string NewGroupButton => Resources.NewGroupButton;
+    public string NewGroupPlaceholderName => Resources.NewGroupPlaceholderName;
+    public string SelectGroupText => Resources.SelectGroupText;
+    public string SelectText => Resources.SelectText;
 
     public void SetCulture(CultureInfo culture)
     {

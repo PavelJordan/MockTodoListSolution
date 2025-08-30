@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterOwner"
         Width="400"
         Height="400"
-        Title="Group selection"
+        Title="{Binding Groups.Localization.GroupSelectionWindowName}"
         Background="DarkGray">
     
     
@@ -24,17 +24,17 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="3*, *, Auto, Auto">
-                                <TextBox Grid.Column="0" Text="{Binding GroupName}" />
+                                <TextBox Grid.Column="0" Text="{Binding GroupName}" Watermark="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.GroupNameWatermark}"/>
                                 <ColorPicker Color="{Binding GroupColor, Mode=TwoWay}" Palette="" Grid.Column="1"/>
-                                <Button Grid.Column="2" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).SelectGroupCommand}" CommandParameter="{Binding}" Content="Select" />
-                                <Button Grid.Column="3" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).RemoveGroupCommand}" CommandParameter="{Binding}" Content="Delete" />
+                                <Button Grid.Column="2" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).SelectGroupCommand}" CommandParameter="{Binding}" Content="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.SelectText}" />
+                                <Button Grid.Column="3" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).RemoveGroupCommand}" CommandParameter="{Binding}" Content="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.DeleteButton}" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
         </Border>
-        <Button Command="{Binding AssignNoGroupCommand}" Margin="3" CornerRadius="3" Content="Assign no group" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-        <Button Command="{Binding NewGroupCommand}" Margin="3" CornerRadius="3" Content="New group" Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <Button Command="{Binding AssignNoGroupCommand}" Margin="3" CornerRadius="3" Content="{Binding Groups.Localization.AssignNoGroupButton}" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <Button Command="{Binding NewGroupCommand}" Margin="3" CornerRadius="3" Content="{Binding Groups.Localization.NewGroupButton}" Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
     </Grid>
 </Window>

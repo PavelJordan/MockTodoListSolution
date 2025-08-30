@@ -25,8 +25,8 @@
                         <Button Content="{Binding Localization.ProfileButton}" Command="{Binding GoProfileCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
                         <Button Content="{Binding Localization.SettingsButton}" Command="{Binding GoSettingsCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"/>
                         <Button Content="{Binding Localization.AddTaskButton}" Command="{Binding AddNewTaskCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
-                        <Button Content="{Binding Localization.AddEventButton}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"/>
-                        <Button Content="{Binding Localization.StartSessionButton}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
+                        <Button Content="{Binding Localization.AddEventButton}" Command="{Binding AddNewEventCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"/>
+                        <Button Content="{Binding Localization.StartSessionButton}" Command="{Binding StartSessionCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
                         <Button Content="EN" Command="{Binding SetLocalizationCommand}" CommandParameter="en-US" Classes="main_menu" Grid.Column="0" Grid.Row="7"/>
                         <Button Content="CZ" Command="{Binding SetLocalizationCommand}" CommandParameter="cs-CZ" Classes="main_menu" Grid.Column="1" Grid.Row="7"/>
                         <Border Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" Background="DarkGray" CornerRadius="3">

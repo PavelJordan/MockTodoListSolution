@@ -1,6 +1,7 @@
 using Avalonia.Media;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -19,7 +20,7 @@ public partial class GroupSelectionViewModel(GroupListViewModel groups): ViewMod
     [RelayCommand]
     private void NewGroup()
     {
-        Groups.AllGroups.Collection.Add(new Group("New Group", Colors.Gray));
+        Groups.AllGroups.Collection.Add(new Group(Groups.Localization.NewGroupPlaceholderName, Colors.Gray));
     }
 
     [RelayCommand]

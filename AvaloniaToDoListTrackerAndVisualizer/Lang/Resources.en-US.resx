@@ -136,6 +136,27 @@
         <value>description</value>
     </data>
     <data name="NameText" xml:space="preserve">
-        <value>název</value>
+        <value>name</value>
+    </data>
+    <data name="SelectGroupText" xml:space="preserve">
+        <value>Select group...</value>
+    </data>
+    <data name="GroupSelectionWindowName" xml:space="preserve">
+        <value>Group selection</value>
+    </data>
+    <data name="SelectText" xml:space="preserve">
+        <value>Select</value>
+    </data>
+    <data name="NewGroupButton" xml:space="preserve">
+        <value>New group</value>
+    </data>
+    <data name="AssignNoGroupButton" xml:space="preserve">
+        <value>Assign no group</value>
+    </data>
+    <data name="GroupNameWatermark" xml:space="preserve">
+        <value>Group name</value>
+    </data>
+    <data name="NewGroupPlaceholderName" xml:space="preserve">
+        <value>New group</value>
     </data>
 </root>

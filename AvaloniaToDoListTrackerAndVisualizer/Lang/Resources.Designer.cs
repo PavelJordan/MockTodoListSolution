@@ -284,5 +284,47 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("NameText", resourceCulture);
             }
         }
+        
+        public static string SelectGroupText {
+            get {
+                return ResourceManager.GetString("SelectGroupText", resourceCulture);
+            }
+        }
+        
+        public static string GroupSelectionWindowName {
+            get {
+                return ResourceManager.GetString("GroupSelectionWindowName", resourceCulture);
+            }
+        }
+        
+        public static string SelectText {
+            get {
+                return ResourceManager.GetString("SelectText", resourceCulture);
+            }
+        }
+        
+        public static string NewGroupButton {
+            get {
+                return ResourceManager.GetString("NewGroupButton", resourceCulture);
+            }
+        }
+        
+        public static string AssignNoGroupButton {
+            get {
+                return ResourceManager.GetString("AssignNoGroupButton", resourceCulture);
+            }
+        }
+        
+        public static string GroupNameWatermark {
+            get {
+                return ResourceManager.GetString("GroupNameWatermark", resourceCulture);
+            }
+        }
+        
+        public static string NewGroupPlaceholderName {
+            get {
+                return ResourceManager.GetString("NewGroupPlaceholderName", resourceCulture);
+            }
+        }
     }
 }
