@@ -1,6 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
@@ -12,8 +12,9 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 /// </summary>
 public partial class Group: ObservableObject, IHasId
 {
-    public Guid Id { get; } =  Guid.NewGuid();
+    public Guid Id { get; }
 
+    // TODO remove coupling with avalonia
     [ObservableProperty]
     private Color _groupColor;
     
@@ -22,9 +23,14 @@ public partial class Group: ObservableObject, IHasId
     
     // TODO subgroups (not in specification)
 
-    public Group(string groupName, Color groupColor)
+    public Group(string groupName, Color groupColor) :  this(groupName, groupColor, Guid.NewGuid())
+    { }
+
+    public Group(string groupName, Color groupColor, Guid id)
     {
         _groupColor = groupColor;
         _groupName = groupName;
+        Id = id;
     }
 }
+

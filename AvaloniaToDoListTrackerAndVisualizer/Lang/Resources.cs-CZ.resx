@@ -132,4 +132,10 @@
     <data name="NewSubTaskName" xml:space="preserve">
         <value>Nová podúloha</value>
     </data>
+    <data name="DescriptionText" xml:space="preserve">
+        <value>popis</value>
+    </data>
+    <data name="NameText" xml:space="preserve">
+        <value>name</value>
+    </data>
 </root>

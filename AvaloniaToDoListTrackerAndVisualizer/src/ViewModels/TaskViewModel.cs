@@ -1,11 +1,13 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Avalonia.Media;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -30,7 +32,8 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     }
     
     public TaskModel TaskModel { get; }
-
+    
+    public GroupListViewModel Groups { get; }
 
     private readonly IDisposable _subTaskViewModelsPipeline;
 
@@ -196,6 +199,16 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
             }
         }
     }
+
+    public string GroupText
+    {
+        get { return TaskModel.Group is null ? "Select group..." : TaskModel.Group.GroupName; }
+    }
+    
+    public ISolidColorBrush GroupColor
+    {
+        get { return TaskModel.Group is null ? Brushes.Gray : new SolidColorBrush(TaskModel.Group.GroupColor); }
+    }
     
     [RelayCommand]
     private async Task ActionButtonPress()
@@ -220,11 +233,14 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         TaskModel.IsCompleted = !TaskModel.IsCompleted;
     }
 
-    public TaskViewModel(TaskModel taskModel, LocalizationProvider localization)
+    public TaskViewModel(TaskModel taskModel, GroupListViewModel groups, LocalizationProvider localization)
     {
         TaskModel = taskModel;
+        Groups = groups;
         Localization = localization;
         TaskModel.PropertyChanged += UpdateViewModelProperties;
+        // For ObservableChildrenCollection
+        TaskModel.PropertyChanged += ForwardPropertyChangedEvent;
         Localization.PropertyChanged += UpdateLocal;
 
         _subTaskViewModelsPipeline = taskModel.Subtasks
@@ -233,7 +249,15 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
             .Bind(out _subTasksViewModels)
             .DisposeMany()
             .Subscribe();
-        
+
+        Groups.AllGroups.Collection.CollectionChanged += DeleteGroupAssignmentIfGroupDeleted;
+        Groups.AllGroups.ChildrenPropertyChanged += UpdateGroupProperties;
+
+    }
+
+    private void ForwardPropertyChangedEvent(object? sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(e.PropertyName);
     }
 
     
@@ -242,6 +266,7 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         OnPropertyChanged(nameof(CompleteButtonText));
         OnPropertyChanged(nameof(ActionButtonText));
         OnPropertyChanged(nameof(DeadlineInfoText));
+        OnPropertyChanged(nameof(GroupText));
     }
 
     /// <summary>
@@ -270,12 +295,36 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         {
             OnPropertyChanged(nameof(TimeLeftText));
         }
+        
+        if (e.PropertyName is nameof(TaskModel.Group))
+        {
+            OnPropertyChanged(nameof(GroupText));
+            OnPropertyChanged(nameof(GroupColor));
+        }
+    }
+
+    private void DeleteGroupAssignmentIfGroupDeleted(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (TaskModel.Group is Group group && !Groups.AllGroups.Collection.Contains(group))
+        {
+            TaskModel.Group = null;
+        }
+    }
+    
+    private void UpdateGroupProperties(object? sender, ChildrenPropertyChangedEventArgs e)
+    {
+        if (e.Child == TaskModel.Group)
+        {
+            OnPropertyChanged(nameof(GroupText));
+            OnPropertyChanged(nameof(GroupColor));
+        }
     }
     
 
     public void Dispose()
     {
         TaskModel.PropertyChanged -= UpdateViewModelProperties;
+        TaskModel.PropertyChanged -= ForwardPropertyChangedEvent;
         Localization.PropertyChanged -= UpdateLocal;
         _subTaskViewModelsPipeline.Dispose();
     }

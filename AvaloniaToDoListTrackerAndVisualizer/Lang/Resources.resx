@@ -135,4 +135,10 @@
     <data name="NewSubTaskName" xml:space="preserve">
         <value>New subtask</value>
     </data>
+    <data name="DescriptionText" xml:space="preserve">
+        <value>description</value>
+    </data>
+    <data name="NameText" xml:space="preserve">
+        <value>název</value>
+    </data>
 </root>

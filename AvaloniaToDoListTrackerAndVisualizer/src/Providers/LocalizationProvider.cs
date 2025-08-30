@@ -49,6 +49,8 @@ public class LocalizationProvider: ObservableObject
 
     public string AddSubTaskButton => Resources.AddSubTaskButton;
     public string NewSubTaskName => Resources.NewSubTaskName;
+    public string DescriptionText => Resources.DescriptionText;
+    public string NameText => Resources.NameText;
 
     public void SetCulture(CultureInfo culture)
     {

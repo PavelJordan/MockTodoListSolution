@@ -25,7 +25,6 @@ public class SaveAbleTask: SaveAbleTaskBase
     public Guid? GroupId { get; set; }
     public required HashSet<Guid> PrerequisitesIds { get; set; }
     
-    // TODO implement events (in specification)
     //public HashSet<Guid> PrecedingEventsIds { get; set; } = taskModel.PrecedingEvents.Collection.Select(x => x.Id).ToHashSet();
     
     public DateTime? BeginDate { get; set; }
@@ -56,45 +55,4 @@ public class SaveAbleTask: SaveAbleTaskBase
         
         return result;
     }
-
-    public static IEnumerable<TaskModel> LinkSaveAbleTasks(IEnumerable<SaveAbleTask> tasks)
-    {
-        Dictionary<Guid, TaskModel> taskDictionary = new();
-        
-        var saveAbleTasksList = tasks.ToList();
-        
-        
-        foreach (var task in saveAbleTasksList)
-        {
-            TaskModel newTask = new TaskModel(task.Name, task.Id);
-            newTask.Description = task.Description;
-            newTask.IsCompleted = task.IsCompleted;
-            newTask.BeginDate = task.BeginDate;
-            newTask.SoftDeadline = task.SoftDeadline;
-            newTask.HardDeadline = task.HardDeadline;
-            newTask.TimeSpent = task.TimeSpent;
-            newTask.TimeExpected = task.TimeExpected;
-            taskDictionary.Add(task.Id, newTask);
-            foreach (var subTask in task.SubTasks)
-            {
-                newTask.AddSubtask(new SubTaskModel(subTask.Name)
-                {
-                    Description = subTask.Description,
-                    IsCompleted = subTask.IsCompleted,
-                });
-            }
-        }
-
-        foreach (var task in saveAbleTasksList)
-        {
-            foreach (var prerequisiteId in task.PrerequisitesIds)
-            {
-                taskDictionary[task.Id].Prerequisites.Collection.Add(taskDictionary[prerequisiteId]);
-            }
-        }
-        
-        // TODO link events (in specification)
-
-        return taskDictionary.Values;
-    } 
 }

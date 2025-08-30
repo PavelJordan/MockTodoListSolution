@@ -272,5 +272,17 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("NewSubTaskName", resourceCulture);
             }
         }
+        
+        public static string DescriptionText {
+            get {
+                return ResourceManager.GetString("DescriptionText", resourceCulture);
+            }
+        }
+        
+        public static string NameText {
+            get {
+                return ResourceManager.GetString("NameText", resourceCulture);
+            }
+        }
     }
 }

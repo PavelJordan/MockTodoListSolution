@@ -93,7 +93,7 @@ public static class ServiceCollectionExtensions
 {
     public static void AddCommonServices(this IServiceCollection collection)
     {
-        collection.AddSingleton<ITaskModelFileService, TaskModelFileService>();
+        collection.AddSingleton<ITaskApplicationFileService, TaskApplicationFileService>();
         collection.AddTransient<MainWindowViewModel>();
     }
 }

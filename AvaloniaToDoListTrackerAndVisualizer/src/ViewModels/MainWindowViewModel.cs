@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,10 +17,10 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 /// </summary>
 public partial class MainWindowViewModel: ViewModelBase
 {
-    [ObservableProperty]
-    private TaskListViewModel _tasks =  new();
+    public TaskListViewModel Tasks { get; } =  new();
+    public GroupListViewModel Groups { get; } = new();
     
-    public ITaskModelFileService  TaskModelFileService { get; }
+    public ITaskApplicationFileService  TaskApplicationFileService { get; }
 
     private readonly ViewModelBase _home;
     private readonly ViewModelBase _settings = new SettingsViewModel();
@@ -53,7 +54,7 @@ public partial class MainWindowViewModel: ViewModelBase
     {
         TaskViewModel? result =
             await WeakReferenceMessenger.Default.Send(
-                new EditTaskMessage(new TaskViewModel(new TaskModel(Localization.TaskDefaultName), Localization), true)
+                new EditTaskMessage(new TaskViewModel(new TaskModel(Localization.TaskDefaultName), Groups, Localization), true)
                 );
         if (result is not null)
         {
@@ -61,31 +62,37 @@ public partial class MainWindowViewModel: ViewModelBase
         }
     }
 
-    public MainWindowViewModel(ITaskModelFileService taskModelFileService)
+    public MainWindowViewModel(ITaskApplicationFileService taskApplicationFileService)
     {
-        _home = new HomeViewModel(Tasks, Localization);
+        _home = new HomeViewModel(Tasks, Groups, Localization);
         _treeView = new TreeViewModel(Localization);
         _profile = new ProfileViewModel(Localization);
         CurrentPage = _home;
         
-        TaskModelFileService = taskModelFileService;
+        TaskApplicationFileService = taskApplicationFileService;
         
     }
     
     public async Task LoadFiles()
     {
-        var items = await TaskModelFileService.LoadFromFileAsync();
-        if (items is not null)
+        var taskApplicationStateFromFile = await TaskApplicationFileService.LoadFromFileAsync();
+        if (taskApplicationStateFromFile is TaskApplicationState taskApplicationState)
         {
-            foreach (var item in items)
+            // First add groups so tasks can find them (verify that they have actual group selected)
+            foreach (var item in taskApplicationState.Groups)
             {
-                Tasks.AllTasks.Collection.Add(new TaskViewModel(item, Localization));
+                Groups.AllGroups.Collection.Add(item);
+            }
+            
+            foreach (var item in taskApplicationState.Tasks)
+            {
+                Tasks.AllTasks.Collection.Add(new TaskViewModel(item, Groups, Localization));
             }
         }
     }
 
     public async Task SaveFiles()
     {
-        await TaskModelFileService.SaveToFileAsync(Tasks.AllTasks.Collection.Select(item => item.TaskModel));
+        await TaskApplicationFileService.SaveToFileAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection));
     }
 }

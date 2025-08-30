@@ -21,11 +21,11 @@
     <Border Margin="5" Background="DarkGray" CornerRadius="5" x:Name="ParentBorder">
         <Grid RowDefinitions="Auto * Auto" ColumnDefinitions=" * *" >
             <Border Grid.ColumnSpan="2">
-                <TextBox TextWrapping="Wrap" x:Name="NameTextBox" Text="{Binding TaskToEdit.TaskModel.Name}"/>
+                <TextBox TextWrapping="Wrap" Watermark="{Binding Localization.NameText}" x:Name="NameTextBox" Text="{Binding TaskToEdit.TaskModel.Name}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="0" >
                 <Grid RowDefinitions="* Auto *">
-                    <TextBox Text="{Binding TaskToEdit.TaskModel.Description}"/>
+                    <TextBox Text="{Binding TaskToEdit.TaskModel.Description}" Watermark="{Binding Localization.DescriptionText}"/>
                     <Button Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Content="{Binding Localization.AddSubTaskButton}" Command="{Binding AddSubtaskCommand}" />
                     <ScrollViewer Grid.Row="2">
                         <ItemsControl ItemsSource="{Binding TaskToEdit.SubTasksViewModels}">

@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.GroupSelectionWindow"
+        x:DataType="vm:GroupSelectionViewModel"
+        WindowStartupLocation="CenterOwner"
+        Width="400"
+        Height="400"
+        Title="Group selection"
+        Background="DarkGray">
+    
+    
+    <Design.DataContext>
+        <vm:MockGroupSelectionViewModel/>
+    </Design.DataContext>
+    
+    <Grid RowDefinitions="*, Auto, Auto" x:Name="ParentGrid">
+        <Border Margin="3 10" Grid.Row="0" Background="Gray" CornerRadius="5">
+            <ScrollViewer Margin="5">
+                <ItemsControl ItemsSource="{Binding Groups.AllGroups.Collection}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="3*, *, Auto, Auto">
+                                <TextBox Grid.Column="0" Text="{Binding GroupName}" />
+                                <ColorPicker Color="{Binding GroupColor, Mode=TwoWay}" Palette="" Grid.Column="1"/>
+                                <Button Grid.Column="2" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).SelectGroupCommand}" CommandParameter="{Binding}" Content="Select" />
+                                <Button Grid.Column="3" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).RemoveGroupCommand}" CommandParameter="{Binding}" Content="Delete" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+        <Button Command="{Binding AssignNoGroupCommand}" Margin="3" CornerRadius="3" Content="Assign no group" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <Button Command="{Binding NewGroupCommand}" Margin="3" CornerRadius="3" Content="New group" Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+    </Grid>
+</Window>

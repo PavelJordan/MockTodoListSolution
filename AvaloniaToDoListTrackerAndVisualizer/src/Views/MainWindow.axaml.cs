@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -26,9 +27,20 @@ public partial class MainWindow : Window
             message.Reply(dialog.ShowDialog<TaskViewModel?>(window));
         });
         
+        WeakReferenceMessenger.Default.Register<MainWindow, OpenGroupSelectionRequest>(this, static (window, message) =>
+        {
+            var dialog = new GroupSelectionWindow()
+            {
+                DataContext = new GroupSelectionViewModel(message.Groups)
+            };
+            
+            message.Reply(dialog.ShowDialog<Group?>(window));
+        });
+        
         Closed += (sender, e) =>
         {
             WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
+            WeakReferenceMessenger.Default.Unregister<OpenGroupSelectionRequest>(this);
         };
     }
 }

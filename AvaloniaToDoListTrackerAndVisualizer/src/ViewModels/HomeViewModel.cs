@@ -1,8 +1,12 @@
 
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Avalonia.Media;
+using AvaloniaToDoListTrackerAndVisualizer.Messages;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -12,6 +16,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 public partial class HomeViewModel : ViewModelBase
 {
         public TaskListViewModel Tasks { get; }
+        public GroupListViewModel Groups { get; }
 
         public LocalizationProvider Localization { get; }
         
@@ -32,9 +37,10 @@ public partial class HomeViewModel : ViewModelBase
                 get { return CurrentTaskList == Tasks.AllTasksReadOnly ? Brushes.DarkGray : Brushes.LightGray; }
         }
 
-        public HomeViewModel(TaskListViewModel tasks, LocalizationProvider localization)
+        public HomeViewModel(TaskListViewModel tasks, GroupListViewModel groups, LocalizationProvider localization)
         {
                 Tasks = tasks;
+                Groups = groups;
                 CurrentTaskList = Tasks.ReadyTasks;
                 Localization = localization;
         }
@@ -75,6 +81,12 @@ public partial class HomeViewModel : ViewModelBase
         {
                 CurrentTaskList = Tasks.AllTasksReadOnly;
                 updateCurrentTaskList();
+        }
+        
+        [RelayCommand]
+        private async Task GroupSelect(TaskViewModel taskToSelectGroupFor)
+        {
+                taskToSelectGroupFor.TaskModel.Group =  await WeakReferenceMessenger.Default.Send(new OpenGroupSelectionRequest(Groups));
         }
 
         [RelayCommand]

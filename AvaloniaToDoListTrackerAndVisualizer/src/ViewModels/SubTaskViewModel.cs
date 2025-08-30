@@ -26,11 +26,14 @@ public partial class SubTaskViewModel: ViewModelBase, IDisposable
         Localization = localization;
         SubTask = subTask;
         SubTask.PropertyChanged += UpdateViewModelProperties;
+        // For ObservableChildrenCollection
+        SubTask.PropertyChanged += ForwardPropertyChangedEvent;
     }
 
     public void Dispose()
     {
         SubTask.PropertyChanged -= UpdateViewModelProperties;
+        SubTask.PropertyChanged -= ForwardPropertyChangedEvent;
     }
 
     public string CompleteButtonText
@@ -61,6 +64,11 @@ public partial class SubTaskViewModel: ViewModelBase, IDisposable
                 return Brushes.LimeGreen;
             }
         }
+    }
+
+    private void ForwardPropertyChangedEvent(object? sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(e.PropertyName);
     }
 
     private void UpdateViewModelProperties(object? sender, PropertyChangedEventArgs e)
