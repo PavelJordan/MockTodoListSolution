@@ -29,8 +29,8 @@
                             <DataTemplate>
                                 <Border Margin="5" Background="{Binding GroupColor}" CornerRadius="5">
                                     <Grid ColumnDefinitions="Auto *">
-                                        <Button Margin="3" Content="Toggle selection" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).ToggleTaskSelectionCommand}" CommandParameter="{Binding}"/>
-                                        <TextBlock Margin="3" Grid.Column="1" Text="{Binding TaskModel.Name}" VerticalAlignment="Center"/>
+                                        <Button VerticalAlignment="Stretch" VerticalContentAlignment="Center" Margin="3" Content="Toggle selection" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).ToggleTaskSelectionCommand}" CommandParameter="{Binding}"/>
+                                        <TextBlock Margin="3" TextWrapping="Wrap" Grid.Column="1" Text="{Binding TaskModel.Name}" VerticalAlignment="Center"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -48,8 +48,8 @@
                             <DataTemplate>
                                 <Border Margin="5" Background="{Binding Group.GroupColor, FallbackValue='Gray', Converter={StaticResource ColorToBrushConverter}}" CornerRadius="5">
                                     <Grid ColumnDefinitions="Auto *">
-                                        <Button Content="Remove" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).RemoveFromTaskSelectionCommand}" CommandParameter="{Binding}"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                                        <Button VerticalAlignment="Stretch" VerticalContentAlignment="Center" Content="Remove" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).RemoveFromTaskSelectionCommand}" CommandParameter="{Binding}"/>
+                                        <TextBlock Margin="3" Grid.Column="1" Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>

@@ -29,6 +29,22 @@
           <DependentUpon>SessionWindow.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="src\Views\ItemEditViews\TaskEditView.axaml.cs">
+          <DependentUpon>TaskEditView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="src\Views\ItemEditViews\SubTaskEditView.axaml.cs">
+          <DependentUpon>SubTaskEditView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="src\Views\SelectionViewModels\GroupSelectionWindow.axaml.cs">
+          <DependentUpon>GroupSelectionWindow.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="src\Views\SelectionViewModels\PrerequisiteTaskSelectionDialog.axaml.cs">
+          <DependentUpon>PrerequisiteTaskSelectionDialog.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>

@@ -20,7 +20,7 @@ public partial class SubTaskEditView : Window
         
         Closed += (sender, e) =>
         {
-            WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
+            WeakReferenceMessenger.Default.Unregister<CloseSubTaskEditMessage>(this);
             Closing -= CheckIfCanClose;
         };
     }

@@ -9,7 +9,7 @@
         Icon="/Assets/avalonia-logo.ico"
         Height="500"
         Width="1000"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterScreen"
         Background="Gray"
         Title="{Binding Localization.EditTaskWindowName}"
         >

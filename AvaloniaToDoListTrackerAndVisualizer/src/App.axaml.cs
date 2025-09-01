@@ -7,6 +7,7 @@ using Avalonia.Markup.Xaml;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views;
 using System.Globalization;
+using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,6 +44,8 @@ public class App : Application
             {
                 DataContext = _mainWindowViewModel
             };
+            
+            desktop.ShutdownMode = ShutdownMode.OnMainWindowClose;
 
             desktop.ShutdownRequested += DesktopOnShutDownRequested;
             await _mainWindowViewModel.LoadFiles();

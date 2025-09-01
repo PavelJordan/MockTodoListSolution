@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+        xmlns:converters="clr-namespace:AvaloniaToDoListTrackerAndVisualizer.Converters"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
+        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SelectionViewModels.SessionTaskSelectionDialog"
+        x:DataType="vm:SessionTaskSelectionViewModel"
+        Title="SessionTaskSelectionDialog"
+        Width="600"
+        Height="500"
+        Icon="/Assets/avalonia-logo.ico"
+        WindowStartupLocation="CenterScreen"
+        Background="LightGray">
+    
+    <Window.Resources>
+        <converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+    </Window.Resources>
+    
+    <Design.DataContext>
+        <vm:MockSessionTaskSelectionViewModel/>
+    </Design.DataContext>
+    
+    <Grid RowDefinitions="Auto * Auto" x:Name="TopLevelGrid">
+        <Border Padding="5" Margin="5" Background="DarkGray" CornerRadius="5">
+            <TextBlock Text="Select one of the ready tasks to work on" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
+        <Border Grid.Row="1" Background="LightGray" CornerRadius="10" Margin="5">
+            <ScrollViewer>
+                <ItemsControl ItemsSource="{Binding AllTasks.ReadyTasks}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="Gray" Margin="5" CornerRadius="5">
+                                <Grid ColumnDefinitions="* Auto Auto">
+                                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding TaskModel.Name}" Margin="5"/>
+                                    <Border Grid.Column="1" CornerRadius="15" Padding="5" Margin="3" Background="{Binding TaskModel.Group.GroupColor, Converter={StaticResource ColorToBrushConverter}, FallbackValue='DimGray'}">
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding TaskModel.Group.GroupName, FallbackValue='No group'}"/>
+                                    </Border>
+                                    <Button Command="{Binding #TopLevelGrid.((vm:SessionTaskSelectionViewModel)DataContext).SelectTaskCommand}" CommandParameter="{Binding}" Grid.Column="2" Content="Select" Margin="3" CornerRadius="3"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+        <Button Command="{Binding CancelCommand}" Grid.Row="2" Content="Cancel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" CornerRadius="10" Margin="5"/>
+    </Grid>
+</Window>

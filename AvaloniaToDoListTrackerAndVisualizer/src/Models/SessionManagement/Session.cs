@@ -83,6 +83,17 @@ public sealed class Session
         _runningSessionPart = new RunningSessionPart(SessionTimeProvider.GetUtcNow(), this);
         return _runningSessionPart;
     }
+
+    public TimeSpan TotalSessionTime()
+    {
+        TimeSpan time = TimeSpan.Zero;
+        foreach (var part in SessionParts)
+        {
+            time += part.Duration;
+        }
+
+        return time + (_runningSessionPart?.TimeSoFar ?? TimeSpan.Zero);
+    }
     
     public sealed class RunningSessionPart: IDisposable
     {

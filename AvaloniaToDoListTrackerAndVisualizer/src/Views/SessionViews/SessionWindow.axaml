@@ -3,18 +3,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="75"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="50"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionWindow"
         x:DataType="vm:SessionViewModel"
-        Width="250"
-        Height="75"
+        Width="500"
+        Height="80"
         Title="Session window"
-        Background="LightGray"
+        Background="Gray"
         WindowStartupLocation="CenterScreen"
         Icon="/Assets/avalonia-logo.ico"
+        CanResize="False"
         >
-    <StackPanel>
-        <TextBlock Margin="10 5" HorizontalAlignment="Center" Text="{Binding TimeInformationText}"/>
-        <TransitioningContentControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding CurrentSessionPage}"/>
-    </StackPanel>
+    <Grid ColumnDefinitions="Auto *">
+        <TextBlock VerticalAlignment="Center" FontSize="19" Margin="5 10" HorizontalAlignment="Center" Text="{Binding TimeInformationText}"/>
+        <TransitioningContentControl Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding CurrentSessionPage}"/>
+    </Grid>
 </Window>

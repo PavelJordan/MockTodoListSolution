@@ -49,7 +49,7 @@ public partial class MainWindow : Window
         
         Closed += (sender, e) =>
         {
-            WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
+            WeakReferenceMessenger.Default.Unregister<EditTaskMessage>(this);
             WeakReferenceMessenger.Default.Unregister<OpenGroupSelectionRequest>(this);
             WeakReferenceMessenger.Default.Unregister<StartSessionMessage>(this);
         };
