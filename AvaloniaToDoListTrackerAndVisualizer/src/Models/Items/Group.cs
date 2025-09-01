@@ -1,5 +1,5 @@
 using System;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -10,7 +10,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 /// Task assignment to group is inside task class. Each group can be
 /// a subgroup of only one group, and each group can have multiple subgroups.
 /// </summary>
-public partial class Group: ObservableObject, IHasId
+public partial class Group: ObservableValidator, IHasId
 {
     public Guid Id { get; }
 
@@ -19,6 +19,7 @@ public partial class Group: ObservableObject, IHasId
     private Color _groupColor;
     
     [ObservableProperty]
+    [Required]
     private string _groupName;
     
     // TODO subgroups (not in specification)

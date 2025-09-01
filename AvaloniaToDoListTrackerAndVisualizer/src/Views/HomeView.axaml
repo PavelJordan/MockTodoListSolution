@@ -36,7 +36,7 @@
                                             <TextBlock VerticalAlignment="Center" Text="{Binding DeadlineInfoText}" TextWrapping="Wrap" />
                                         </Border>
                                         <Button Margin="5" Grid.Column="4" CommandParameter="{Binding}" Command="{Binding #ParentPanel.((vm:HomeViewModel)DataContext).GroupSelectCommand }" Background="{Binding GroupColor}" BorderThickness="2" CornerRadius="5" BorderBrush="DimGray" Content="{Binding GroupText}" VerticalAlignment="Stretch" VerticalContentAlignment="Center" />
-                                        <Button Background="{Binding ActionButtonColor}" Command="{Binding ActionButtonPressCommand}" Content="{Binding ActionButtonText}" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Column="5" Margin="4 2 2 2"/>
+                                        <Button Background="{Binding ActionButtonColor}" CommandParameter="{Binding}" Command="{Binding #ParentPanel.((vm:HomeViewModel)DataContext).ActionButtonPressCommand}" Content="{Binding ActionButtonText}" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Grid.Column="5" Margin="4 2 2 2"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

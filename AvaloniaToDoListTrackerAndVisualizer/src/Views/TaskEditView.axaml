@@ -21,7 +21,7 @@
     <Border Margin="5" Background="DarkGray" CornerRadius="5" x:Name="ParentBorder">
         <Grid RowDefinitions="Auto * Auto" ColumnDefinitions=" * *" >
             <Border Grid.ColumnSpan="2">
-                <TextBox TextWrapping="Wrap" Watermark="{Binding Localization.NameText}" x:Name="NameTextBox" Text="{Binding TaskToEdit.TaskModel.Name}"/>
+                <TextBox TextWrapping="Wrap" Watermark="{Binding Localization.NameText}" x:Name="NameTextBox" Text="{Binding TaskToEdit.TaskModel.Name, UpdateSourceTrigger=PropertyChanged}"/>
             </Border>
             <Border Grid.Row="1" Grid.Column="0" >
                 <Grid RowDefinitions="* Auto *">
@@ -62,6 +62,7 @@
                         <Label VerticalAlignment="Center" Target="ExpectedMinutes" Content="{Binding Localization.MinutesText}"/>
                         <NumericUpDown Value="{Binding ExpectedMinutesPicker}" Name="ExpectedMinutes" Minimum="0" Watermark="{Binding Localization.MinutesText}" VerticalContentAlignment="Center" Maximum="59" Padding="10 0" Text="Minutes"/>
                     </StackPanel>
+                    <Button Command="{Binding ManagePrerequisitesCommand}" CornerRadius="10" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10" Content="Manage prerequisites" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Border>
             <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SaveAndExitCommand}" Content="{Binding BackButtonText}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10 10 5 10"/>

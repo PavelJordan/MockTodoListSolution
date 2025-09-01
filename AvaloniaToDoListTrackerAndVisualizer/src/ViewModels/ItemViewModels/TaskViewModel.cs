@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -210,20 +211,6 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         get { return TaskModel.Group is null ? Brushes.Gray : new SolidColorBrush(TaskModel.Group.GroupColor); }
     }
     
-    [RelayCommand]
-    private async Task ActionButtonPress()
-    {
-        switch (ActionMode)
-        {
-            case ActionButtonMode.Details:
-                await WeakReferenceMessenger.Default.Send(new EditTaskMessage(this, false));
-                break;
-            case ActionButtonMode.Delete:
-                WeakReferenceMessenger.Default.Send(new DeleteTaskViewModelRequest(this));
-                break;
-        }
-    }
-    
     public bool CanChangeCompleteness => TaskModel.CanChangeCompleteness;
     
 
@@ -328,5 +315,11 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         TaskModel.PropertyChanged -= ForwardPropertyChangedEvent;
         Localization.PropertyChanged -= UpdateLocal;
         _subTaskViewModelsPipeline.Dispose();
+    }
+
+    public List<TaskViewModel> FindCyclingNeighbors()
+    {
+        // TODO implement
+        return [];
     }
 }

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Input;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
+using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -25,6 +27,15 @@ public partial class TaskEditView : Window
             };
             subTaskEditDialog.ShowDialog(window);
         });
+        
+        WeakReferenceMessenger.Default.Register<TaskEditView, PrerequisiteTaskSelectionRequest>(this, static (window, message) =>
+        {
+            var prerequisiteSelectDialog = new PrerequisiteTaskSelectionDialog()
+            {
+                DataContext = new PrerequisiteTaskSelectionViewModel(message.Task, message.AllTasks)
+            };
+            message.Reply(prerequisiteSelectDialog.ShowDialog<IEnumerable<TaskModel>?>(window));
+        });
 
         Closing += (sender, e) =>
         {
@@ -43,6 +54,7 @@ public partial class TaskEditView : Window
         {
             WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
             WeakReferenceMessenger.Default.Unregister<EditSubTaskMessage>(this);
+            WeakReferenceMessenger.Default.Unregister<PrerequisiteTaskSelectionRequest>(this);
         };
     }
 }

@@ -19,7 +19,7 @@
     <Border Margin="5" Background="DarkGray" CornerRadius="5">
         <Grid RowDefinitions="Auto * Auto" ColumnDefinitions=" * " >
             <Border Grid.ColumnSpan="2">
-                <TextBox TextWrapping="Wrap" x:Name="NameTextBox" Watermark="{Binding Localization.NameText}" Text="{Binding SubTaskToEdit.SubTask.Name}"/>
+                <TextBox TextWrapping="Wrap" x:Name="NameTextBox" Watermark="{Binding Localization.NameText}" Text="{Binding SubTaskToEdit.SubTask.Name, UpdateSourceTrigger=PropertyChanged}"/>
             </Border>
             <Border Grid.Row="1" >
                 <TextBox Text="{Binding SubTaskToEdit.SubTask.Description}" Watermark="{Binding Localization.DescriptionText}"/>

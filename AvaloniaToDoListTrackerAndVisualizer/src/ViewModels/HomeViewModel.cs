@@ -107,5 +107,19 @@ public partial class HomeViewModel : ViewModelBase
                         }
                 }
         }
+        
+        [RelayCommand]
+        private async Task ActionButtonPress(TaskViewModel taskToActOn)
+        {
+                switch (taskToActOn.ActionMode)
+                {
+                        case TaskViewModel.ActionButtonMode.Details:
+                                await WeakReferenceMessenger.Default.Send(new EditTaskMessage(taskToActOn, false, Tasks));
+                                break;
+                        case TaskViewModel.ActionButtonMode.Delete:
+                                WeakReferenceMessenger.Default.Send(new DeleteTaskViewModelRequest(taskToActOn));
+                                break;
+                }
+        }
 }
 

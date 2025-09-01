@@ -56,7 +56,7 @@ public partial class MainWindowViewModel: ViewModelBase
     {
         TaskViewModel? result =
             await WeakReferenceMessenger.Default.Send(
-                new EditTaskMessage(new TaskViewModel(new TaskModel(Localization.TaskDefaultName), Groups, Localization), true)
+                new EditTaskMessage(new TaskViewModel(new TaskModel(Localization.TaskDefaultName), Groups, Localization), true, Tasks)
                 );
         if (result is not null)
         {
@@ -108,6 +108,6 @@ public partial class MainWindowViewModel: ViewModelBase
     [RelayCommand]
     private void StartSession()
     {
-        
+        WeakReferenceMessenger.Default.Send(new StartSessionMessage(Tasks, Groups));
     }
 }

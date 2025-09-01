@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -14,10 +18,14 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
     [ObservableProperty] private int? _expectedHoursPicker;
 
     [ObservableProperty] private int? _expectedMinutesPicker;
+
+    private static bool FalseConstant { get; } = false;
     
     public TaskViewModel TaskToEdit { get; }
     
     public LocalizationProvider Localization { get; }
+    
+    public TaskListViewModel Tasks { get; }
     
     public bool NewTask { get; }
     
@@ -40,10 +48,11 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
         WeakReferenceMessenger.Default.Send(new CloseTaskEditMessage());
     }
 
-    public TaskEditViewModel(TaskViewModel taskToEdit, bool newTask)
+    public TaskEditViewModel(TaskViewModel taskToEdit, bool newTask, TaskListViewModel allTasks)
     {
         TaskToEdit = taskToEdit;
         NewTask = newTask;
+        Tasks = allTasks;
         TaskToEdit.TaskModel.PropertyChanged += NotifySaveAndExitChange;
         Localization = TaskToEdit.Localization;
         if (taskToEdit.TaskModel.TimeExpected is TimeSpan editTaskExpectedTime)
@@ -95,6 +104,17 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
             {
                 TaskToEdit.TaskModel.TimeExpected = null;
             }
+        }
+    }
+
+    [RelayCommand]
+    private async Task ManagePrerequisitesAsync()
+    {
+        IEnumerable<TaskModel>? NewPrerequisites = await WeakReferenceMessenger.Default.Send(new PrerequisiteTaskSelectionRequest(TaskToEdit, Tasks));
+        if (NewPrerequisites is not null)
+        {
+            TaskToEdit.TaskModel.Prerequisites.Collection.Clear();
+            TaskToEdit.TaskModel.Prerequisites.Collection.AddRange(NewPrerequisites);
         }
     }
 }

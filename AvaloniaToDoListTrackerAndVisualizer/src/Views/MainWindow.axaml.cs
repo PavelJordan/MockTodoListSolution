@@ -21,7 +21,7 @@ public partial class MainWindow : Window
         {
             var dialog = new TaskEditView()
             {
-                DataContext = new TaskEditViewModel(message.TaskToEdit, message.NewTask)
+                DataContext = new TaskEditViewModel(message.TaskToEdit, message.NewTask, message.AllTasks)
             };
             
             message.Reply(dialog.ShowDialog<TaskViewModel?>(window));
@@ -36,11 +36,22 @@ public partial class MainWindow : Window
             
             message.Reply(dialog.ShowDialog<Group?>(window));
         });
+
+        WeakReferenceMessenger.Default.Register<MainWindow, StartSessionMessage>(this, static (window, message) =>
+        {
+            window.Hide();
+            var sessionWindow = new SessionWindow(window)
+            {
+                DataContext = new SessionViewModel(message.Tasks, message.Groups)
+            };
+            sessionWindow.Show();
+        });
         
         Closed += (sender, e) =>
         {
             WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
             WeakReferenceMessenger.Default.Unregister<OpenGroupSelectionRequest>(this);
+            WeakReferenceMessenger.Default.Unregister<StartSessionMessage>(this);
         };
     }
 }

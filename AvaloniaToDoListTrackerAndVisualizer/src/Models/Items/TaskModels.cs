@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
@@ -14,10 +15,12 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 /// Everything is observable to reduce boilerplate by not repeating everything in ViewModel.
 /// All property modification must happen on the UI thread!
 /// </summary>
-public abstract partial class TaskBaseModel: ObservableObject, ICompletable
+public abstract partial class TaskBaseModel: ObservableValidator, ICompletable
 {
     
     [ObservableProperty]
+    [Required]
+    [NotifyDataErrorInfo]
     private string _name;
     
     [ObservableProperty]
