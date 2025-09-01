@@ -117,4 +117,16 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
             TaskToEdit.TaskModel.Prerequisites.Collection.AddRange(NewPrerequisites);
         }
     }
+
+    [RelayCommand]
+    private void MoveSubtaskUp(SubTaskModel subTask)
+    {
+        TaskToEdit.TaskModel.MoveSubtaskUp(subTask);
+    }
+    
+    [RelayCommand]
+    private void MoveSubtaskDown(SubTaskModel subTask)
+    {
+        TaskToEdit.TaskModel.MoveSubtaskDown(subTask);
+    }
 }

@@ -217,4 +217,22 @@ public sealed partial class TaskModel : TaskBaseModel, IDisposable, IHasId
             return BeginDate.Value.Date <= DateTime.Now.Date;
         }
     }
+
+    public void MoveSubtaskUp(SubTaskModel subtask)
+    {
+        int subtaskIndex = _subtasks.Collection.IndexOf(subtask);
+        if (subtaskIndex > 0)
+        {
+            _subtasks.Collection.Move(subtaskIndex, subtaskIndex - 1);
+        }
+    }
+    
+    public void MoveSubtaskDown(SubTaskModel subtask)
+    {
+        int subtaskIndex = _subtasks.Collection.IndexOf(subtask);
+        if (subtaskIndex < _subtasks.Collection.Count - 1 && subtaskIndex != -1)
+        {
+            _subtasks.Collection.Move(subtaskIndex, subtaskIndex + 1);
+        }
+    }
 }
