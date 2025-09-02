@@ -46,7 +46,7 @@
                     <ItemsControl ItemsSource="{Binding SelectedTasks}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Margin="5" Background="{Binding Group.GroupColor, FallbackValue='Gray', Converter={StaticResource ColorToBrushConverter}}" CornerRadius="5">
+                                <Border Margin="5" Background="{Binding Group.Argb, FallbackValue='Gray', Converter={StaticResource ColorToBrushConverter}}" CornerRadius="5">
                                     <Grid ColumnDefinitions="Auto *">
                                         <Button VerticalAlignment="Stretch" VerticalContentAlignment="Center" Content="Remove" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).RemoveFromTaskSelectionCommand}" CommandParameter="{Binding}"/>
                                         <TextBlock Margin="3" Grid.Column="1" Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" />

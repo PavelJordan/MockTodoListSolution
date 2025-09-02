@@ -5,13 +5,13 @@ using Avalonia.Media;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Converters;
 
-public class AvaloniaColorToSystemDrawingColorConverter: IValueConverter
+public class AvaloniaColorToArgbConverter: IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is System.Drawing.Color color)
+        if (value is uint argb)
         {
-            return Color.FromArgb(color.A, color.R, color.G, color.B);
+            return Color.FromUInt32(argb);
         }
         
 
@@ -22,7 +22,7 @@ public class AvaloniaColorToSystemDrawingColorConverter: IValueConverter
     {
         if (value is Color color)
         {
-            return System.Drawing.Color.FromArgb((int)color.ToUInt32());
+            return color.ToUInt32();
         }
 
         return null;

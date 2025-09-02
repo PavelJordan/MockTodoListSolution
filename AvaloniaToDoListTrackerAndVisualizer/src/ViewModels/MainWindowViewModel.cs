@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
@@ -82,15 +83,23 @@ public partial class MainWindowViewModel: ViewModelBase
     
     public async Task LoadFiles()
     {
-        var taskApplicationStateFromFile = await TaskApplicationFileService.LoadFromFileAsync();
-        if (taskApplicationStateFromFile is TaskApplicationState taskApplicationState)
+        try
         {
-            // First add groups so tasks can find them (verify that they have actual group selected)
-            Groups.AllGroups.Collection.AddRange(taskApplicationState.Groups);
-            Tasks.AllTasks.Collection.AddRange(taskApplicationState.Tasks.Select(item => new TaskViewModel(item, Groups, Localization)));
-            Sessions.AddRange(taskApplicationState.Sessions);
-            UserSettings.DailyGoal = taskApplicationState.UserSettings.DailyGoal;
-            _profile.RefreshSessionsCommand.Execute(null);
+            var taskApplicationStateFromFile = await TaskApplicationFileService.LoadFromFileAsync();
+            if (taskApplicationStateFromFile is TaskApplicationState taskApplicationState)
+            {
+                // First add groups so tasks can find them (verify that they have actual group selected)
+                Groups.AllGroups.Collection.AddRange(taskApplicationState.Groups);
+                Tasks.AllTasks.Collection.AddRange(
+                    taskApplicationState.Tasks.Select(item => new TaskViewModel(item, Groups, Localization)));
+                Sessions.AddRange(taskApplicationState.Sessions);
+                UserSettings.DailyGoal = taskApplicationState.UserSettings.DailyGoal;
+                _profile.RefreshSessionsCommand.Execute(null);
+            }
+        }
+        catch (JsonException jsonException)
+        {
+            // TODO Show error window. Now, the files are just ignored and will be overwritten next time
         }
     }
 

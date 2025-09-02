@@ -19,7 +19,7 @@
     </Design.DataContext>
     
     <Window.Resources>
-        <converters:AvaloniaColorToSystemDrawingColorConverter x:Key="AvaloniaColorToSystemDrawingColorConverter"/>
+        <converters:AvaloniaColorToArgbConverter x:Key="AvaloniaColorToSystemDrawingColorConverter"/>
     </Window.Resources>
     
     <Grid RowDefinitions="*, Auto, Auto" x:Name="ParentGrid">
@@ -30,7 +30,7 @@
                         <DataTemplate>
                             <Grid ColumnDefinitions="3*, *, Auto, Auto">
                                 <TextBox Grid.Column="0" Text="{Binding GroupName}" Watermark="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.GroupNameWatermark}"/>
-                                <ColorPicker Color="{Binding GroupColor, Mode=TwoWay, Converter={StaticResource AvaloniaColorToSystemDrawingColorConverter}}" Palette="" Grid.Column="1"/>
+                                <ColorPicker Color="{Binding Argb, Mode=TwoWay, Converter={StaticResource AvaloniaColorToSystemDrawingColorConverter}}" Palette="" Grid.Column="1"/>
                                 <Button Grid.Column="2" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).SelectGroupCommand}" CommandParameter="{Binding}" Content="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.SelectText}" />
                                 <Button Grid.Column="3" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).RemoveGroupCommand}" CommandParameter="{Binding}" Content="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.DeleteButton}" />
                             </Grid>

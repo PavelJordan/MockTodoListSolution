@@ -212,8 +212,8 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         {
             if (TaskModel.Group is not null)
             {
-                var groupColor = TaskModel.Group.GroupColor;
-                return new SolidColorBrush(Color.FromArgb(groupColor.A,  groupColor.R, groupColor.G, groupColor.B));
+                var argb = TaskModel.Group.Argb;
+                return new SolidColorBrush(Color.FromUInt32(argb));
             }
 
             return Brushes.Gray;

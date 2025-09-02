@@ -34,7 +34,7 @@
                             <Border Background="Gray" Margin="5" CornerRadius="5">
                                 <Grid ColumnDefinitions="* Auto Auto">
                                     <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding TaskModel.Name}" Margin="5"/>
-                                    <Border Grid.Column="1" CornerRadius="15" Padding="5" Margin="3" Background="{Binding TaskModel.Group.GroupColor, Converter={StaticResource ColorToBrushConverter}, FallbackValue='DimGray'}">
+                                    <Border Grid.Column="1" CornerRadius="15" Padding="5" Margin="3" Background="{Binding TaskModel.Group.Argb, Converter={StaticResource ColorToBrushConverter}, FallbackValue='DimGray'}">
                                         <TextBlock VerticalAlignment="Center" Text="{Binding TaskModel.Group.GroupName, FallbackValue='No group'}"/>
                                     </Border>
                                     <Button Command="{Binding #TopLevelGrid.((vm:SessionTaskSelectionViewModel)DataContext).SelectTaskCommand}" CommandParameter="{Binding}" Grid.Column="2" Content="Select" Margin="3" CornerRadius="3"/>

@@ -16,7 +16,7 @@ public partial class Group: ObservableValidator, IHasId
 
     // TODO remove coupling with avalonia
     [ObservableProperty]
-    private Color _groupColor;
+    private uint _argb;
     
     [ObservableProperty]
     [Required]
@@ -24,12 +24,12 @@ public partial class Group: ObservableValidator, IHasId
     
     // TODO subgroups (not in specification)
 
-    public Group(string groupName, Color groupColor) :  this(groupName, groupColor, Guid.NewGuid())
+    public Group(string groupName, uint groupColor) :  this(groupName, groupColor, Guid.NewGuid())
     { }
 
-    public Group(string groupName, Color groupColor, Guid id)
+    public Group(string groupName, uint argb, Guid id)
     {
-        _groupColor = groupColor;
+        _argb = argb;
         _groupName = groupName;
         Id = id;
     }

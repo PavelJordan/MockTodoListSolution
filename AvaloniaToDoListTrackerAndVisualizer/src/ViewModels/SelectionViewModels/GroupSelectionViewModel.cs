@@ -20,7 +20,7 @@ public partial class GroupSelectionViewModel(GroupListViewModel groups): ViewMod
     [RelayCommand]
     private void NewGroup()
     {
-        Groups.AllGroups.Collection.Add(new Group(Groups.Localization.NewGroupPlaceholderName, System.Drawing.Color.Gray));
+        Groups.AllGroups.Collection.Add(new Group(Groups.Localization.NewGroupPlaceholderName, (uint)System.Drawing.Color.Gray.ToArgb()));
     }
 
     [RelayCommand]

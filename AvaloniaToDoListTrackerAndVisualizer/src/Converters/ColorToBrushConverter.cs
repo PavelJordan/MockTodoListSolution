@@ -13,9 +13,9 @@ public class ColorToBrushConverter: IValueConverter
         {
             return new SolidColorBrush(color);
         }
-        else if (value is System.Drawing.Color systemColor)
+        else if (value is uint argb)
         {
-            return new SolidColorBrush(Color.FromArgb(systemColor.A, systemColor.R, systemColor.G, systemColor.B));
+            return new SolidColorBrush(Color.FromUInt32(argb));
         }
 
         return null;
