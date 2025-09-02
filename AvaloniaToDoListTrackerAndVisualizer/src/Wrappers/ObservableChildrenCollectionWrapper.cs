@@ -105,6 +105,7 @@ public class ObservableChildrenCollectionWrapper<TItems>: IDisposable where TIte
         foreach (var item in  _wired.Keys)
         {
             item.PropertyChanged -= OnManipulation;
+            
         }
         
         _wired.Clear();

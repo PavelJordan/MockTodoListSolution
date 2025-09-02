@@ -60,9 +60,10 @@
                     <Label Content="{Binding Localization.TimeExpectedText}" Target="TimeExpectedPanel"/>
                     <StackPanel Margin="10 1" Name="TimeExpectedPanel" Orientation="Horizontal">
                         <Label VerticalAlignment="Center" Target="ExpectedHours" Content="{Binding Localization.HoursText}"/>
-                        <NumericUpDown Value="{Binding ExpectedHoursPicker}" Name="ExpectedHours" Minimum="0" Watermark="{Binding Localization.HoursText}" VerticalContentAlignment="Center" Padding="15 0"/>
+                        <NumericUpDown FormatString="N0" Value="{Binding ExpectedHoursPicker}" Name="ExpectedHours" Minimum="0" Watermark="{Binding Localization.HoursText}" VerticalContentAlignment="Center" Padding="15 0"/>
                         <Label VerticalAlignment="Center" Target="ExpectedMinutes" Content="{Binding Localization.MinutesText}"/>
-                        <NumericUpDown Value="{Binding ExpectedMinutesPicker}" Name="ExpectedMinutes" Minimum="0" Watermark="{Binding Localization.MinutesText}" VerticalContentAlignment="Center" Maximum="59" Padding="10 0" Text="Minutes"/>
+                        <NumericUpDown FormatString="N0" Value="{Binding ExpectedMinutesPicker}" Name="ExpectedMinutes" Minimum="0" Watermark="{Binding Localization.MinutesText}" VerticalContentAlignment="Center" Maximum="59" Padding="10 0" Text="Minutes"/>
+                        <Button Margin="10 0" Content="Reset" Command="{Binding ResetTimeCommand}" />
                     </StackPanel>
                     <Button Command="{Binding ManagePrerequisitesCommand}" CornerRadius="10" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10" Content="Manage prerequisites" VerticalContentAlignment="Center"/>
                 </StackPanel>

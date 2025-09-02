@@ -96,9 +96,7 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
         {
             if (ExpectedHoursPicker is not null || ExpectedMinutesPicker is not null)
             {
-                ExpectedHoursPicker ??= 0;
-                ExpectedMinutesPicker ??= 0;
-                TaskToEdit.TaskModel.TimeExpected = new TimeSpan(ExpectedHoursPicker.Value, ExpectedMinutesPicker.Value, 0);
+                TaskToEdit.TaskModel.TimeExpected = new TimeSpan(ExpectedHoursPicker ?? 0, ExpectedMinutesPicker ?? 0, 0);
             }
             else
             {
@@ -128,5 +126,12 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
     private void MoveSubtaskDown(SubTaskModel subTask)
     {
         TaskToEdit.TaskModel.MoveSubtaskDown(subTask);
+    }
+
+    [RelayCommand]
+    private void ResetTime()
+    {
+        ExpectedHoursPicker = null;
+        ExpectedMinutesPicker= null;
     }
 }

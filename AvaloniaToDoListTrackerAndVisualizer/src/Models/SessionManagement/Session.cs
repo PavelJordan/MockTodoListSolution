@@ -1,10 +1,12 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
 public readonly record struct SessionPart
 {
+    [JsonConstructor]
     public SessionPart(DateTimeOffset partStart, DateTimeOffset partEnd)
     {
         PartStart = partStart;
@@ -18,6 +20,7 @@ public readonly record struct SessionPart
     public DateTimeOffset PartStart { get; }
     public DateTimeOffset PartEnd { get; }
     
+    [JsonIgnore]
     public TimeSpan Duration => PartEnd - PartStart;
 }
 
@@ -31,6 +34,8 @@ public readonly record struct SessionPart
 /// </summary>
 public sealed class Session
 {
+    [JsonInclude]
+    [JsonPropertyName(nameof(SessionParts))]
     private ObservableCollection<SessionPart> _parts = new();
     
     private RunningSessionPart? _runningSessionPart;
@@ -45,6 +50,7 @@ public sealed class Session
         _runningSessionPart = null;
     }
     
+    [JsonIgnore]
     public ReadOnlyObservableCollection<SessionPart> SessionParts { get; }
     
 

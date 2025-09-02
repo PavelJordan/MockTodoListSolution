@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using AvaloniaToDoListTrackerAndVisualizer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -19,6 +21,7 @@ public partial class MainWindowViewModel: ViewModelBase
 {
     public TaskListViewModel Tasks { get; } =  new();
     public GroupListViewModel Groups { get; }
+    public List<Session> Sessions { get; } = new();
     
     public ITaskApplicationFileService  TaskApplicationFileService { get; }
 
@@ -82,21 +85,15 @@ public partial class MainWindowViewModel: ViewModelBase
         if (taskApplicationStateFromFile is TaskApplicationState taskApplicationState)
         {
             // First add groups so tasks can find them (verify that they have actual group selected)
-            foreach (var item in taskApplicationState.Groups)
-            {
-                Groups.AllGroups.Collection.Add(item);
-            }
-            
-            foreach (var item in taskApplicationState.Tasks)
-            {
-                Tasks.AllTasks.Collection.Add(new TaskViewModel(item, Groups, Localization));
-            }
+            Groups.AllGroups.Collection.AddRange(taskApplicationState.Groups);
+            Tasks.AllTasks.Collection.AddRange(taskApplicationState.Tasks.Select(item => new TaskViewModel(item, Groups, Localization)));
+            Sessions.AddRange(taskApplicationState.Sessions);
         }
     }
 
     public async Task SaveFiles()
     {
-        await TaskApplicationFileService.SaveToFileAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection));
+        await TaskApplicationFileService.SaveToFileAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection, Sessions));
     }
 
     [RelayCommand(CanExecute = nameof(FalseConstant))]

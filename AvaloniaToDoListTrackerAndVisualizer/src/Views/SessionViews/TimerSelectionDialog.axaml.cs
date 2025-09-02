@@ -19,6 +19,11 @@ public partial class TimerSelectionDialog : Window
 
         Closing += (obj, args) =>
         {
+            if (DataContext is TimerViewModel timer)
+            {
+                timer.RefreshTimerProperties();
+            }
+            
             WeakReferenceMessenger.Default.Unregister<CloseTimerSelectionDialogMessage>(this);
         };
         

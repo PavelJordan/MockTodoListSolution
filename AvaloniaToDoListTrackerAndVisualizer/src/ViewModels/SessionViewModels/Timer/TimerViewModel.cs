@@ -8,10 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
-public enum TimerState
-{
-    Idle, Work, Break
-}
+
 
 public enum TimerType
 {
@@ -20,38 +17,39 @@ public enum TimerType
 
 public partial class TimerViewModel: ViewModelBase, IDisposable
 {
-
     private static bool FalseConstant { get; } = false;
     
-    public Session CurrentSession { get; } = new Session();
+    public Session CurrentSession { get; }
     
-    public TimerState State { get; private set; } = TimerState.Idle;
+    public Session BreakSessions { get; } = new Session();
     
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectedTimer))]
-    private bool _regularTimerSelected = true;
     
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectedTimer))]
-    private bool _pomodoroTimerSelected = false;
+    public bool Idle { get; private set; } = true;
+    
+    [ObservableProperty][NotifyPropertyChangedFor(nameof(SelectedTimer))] private TimerType _timerType = TimerType.RegularTimer;
 
-    private readonly RegularTimerViewModel _regularTimerViewModel;
-    private readonly PomodoroTimerViewModel _pomodoroTimerViewModel;
+    partial void OnTimerTypeChanging(TimerType value)
+    {
+        Stop();
+    }
+
+    public RegularTimerViewModel RegularTimerViewModel { get; }
+    public  PomodoroTimerViewModel PomodoroTimerViewModel { get; }
 
     public ViewModelBase SelectedTimer
     {
         get
         {
-            if (PomodoroTimerSelected)
+            if (TimerType == TimerType.RegularTimer)
             {
-
-                return _pomodoroTimerViewModel;
+                return RegularTimerViewModel;
             }
-            return _regularTimerViewModel;
+            return PomodoroTimerViewModel;
         }
     }
     
-    public Session.RunningSessionPart? RunningSessionPart { get; private set; }
+    public Session.RunningSessionPart? RunningWorkSessionPart { get; private set; }
+    public Session.RunningSessionPart? RunningBreakSessionPart { get; private set; }
     
     public TaskViewModel? TaskToWorkOn { get; private set; }
     public TaskViewModel? PreviewedTask { get; private set; }
@@ -72,7 +70,73 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         get
         {
             return (PreviewedTask?.TaskModel.TimeSpent ?? TimeSpan.Zero) +
-                   (RunningSessionPart?.TimeSoFar ?? TimeSpan.Zero);
+                   (RunningWorkSessionPart?.TimeSoFar ?? TimeSpan.Zero);
+        }
+    }
+
+    public TimeSpan TimeLeftOnBreak
+    {
+        get
+        {
+            // TODO what if on long break?
+            return TimeSpan.FromMinutes(PomodoroTimerViewModel.MinutesShortBreak) - (PomodoroTimerViewModel.BreakDone + (RunningBreakSessionPart?.TimeSoFar ?? TimeSpan.Zero)); 
+        }
+    }
+    
+    public TimeSpan TimeLeftOnWork
+    {
+        get
+        {
+            return TimeSpan.FromMinutes(PomodoroTimerViewModel.MinutesWork) - (PomodoroTimerViewModel.WorkDone + (RunningWorkSessionPart?.TimeSoFar ?? TimeSpan.Zero)); 
+        }
+    }
+
+    public string PomodoroInformationText
+    {
+        get
+        {
+            if (PomodoroTimerViewModel.State == TimerState.Work)
+            {
+                if (TimeLeftOnWork > TimeSpan.Zero)
+                {
+                    return "Work left: -" + FormatTimeSpan(TimeLeftOnWork);
+                }
+                else
+                {
+                    return "Overtime: +" + FormatTimeSpan(TimeLeftOnWork);
+                }
+            }
+            else if (PomodoroTimerViewModel.State == TimerState.Break)
+            {
+                if (TimeLeftOnBreak > TimeSpan.Zero)
+                {
+                    return "Break left: -" + FormatTimeSpan(TimeLeftOnBreak);
+                }
+                else
+                {
+                    return "Over break: +" + FormatTimeSpan(TimeLeftOnBreak);
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Unknown timer state");
+            }
+        }
+    }
+
+    public string PomodoroButtonText
+    {
+        get
+        {
+            if ((PomodoroTimerViewModel.State == TimerState.Work && TimeLeftOnWork <= TimeSpan.Zero)
+                || PomodoroTimerViewModel.State == TimerState.Break && TimeLeftOnBreak <= TimeSpan.Zero)
+            {
+                return "end";
+            }
+            else
+            {
+                return "skip";
+            }
         }
     }
 
@@ -80,7 +144,7 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     {
         get
         {
-            return CurrentSession.TotalSessionTime().ToString(@"hh\:mm\:ss");
+            return "Session total: " + CurrentSession.TotalSessionTime().ToString(@"hh\:mm\:ss");
         }
     }
     
@@ -88,11 +152,11 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     {
         get
         {
-            return formatTimeSpan(TimeOnTaskSoFar) + " / " +  formatTimeSpan(PreviewedTask?.TaskModel.TimeExpected);
+            return FormatTimeSpan(TimeOnTaskSoFar) + " / " +  FormatTimeSpan(PreviewedTask?.TaskModel.TimeExpected);
         }
     }
     
-    private string formatTimeSpan(TimeSpan? timeSpan)
+    private string FormatTimeSpan(TimeSpan? timeSpan)
     {
         if (timeSpan is null)
         {
@@ -105,10 +169,12 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     }
     
 
-    public TimerViewModel()
+    public TimerViewModel(Session session)
     {
-        _pomodoroTimerViewModel = new(this);
-        _regularTimerViewModel = new(this);
+        CurrentSession = session;
+        
+        PomodoroTimerViewModel = new(this);
+        RegularTimerViewModel = new(this);
         
         _refreshTimer = new DispatcherTimer()
         {
@@ -121,50 +187,70 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     public void Start(TaskViewModel taskToWorkOn)
     {
         PreviewedTask = TaskToWorkOn = taskToWorkOn;
-        State = TimerState.Work;
-        RunningSessionPart = CurrentSession.Start();
+        Idle = false;
+        
+        if (PomodoroTimerViewModel.State == TimerState.Work || TimerType == TimerType.RegularTimer)
+        {
+            RunningWorkSessionPart = CurrentSession.Start();
+        }
+        else
+        {
+            RunningBreakSessionPart = BreakSessions.Start();
+        }
+        
         _refreshTimer.Start();
-        OnPropertyChanged(nameof(SessionTimeInformationText));
-        OnPropertyChanged(nameof(TaskTimeInformationText));
+        RefreshTimerProperties();
     }
 
     public void SetPreviewTask(TaskViewModel taskToPreview)
     {
         PreviewedTask = taskToPreview;
-        OnPropertyChanged(nameof(TaskTimeInformationText));
+        RefreshTimerProperties();
     }
 
     public void Stop()
     {
-        if (State == TimerState.Idle)
+        if (Idle)
         {
             return;
         }
-        
-        State = TimerState.Idle;
-        var finishedSession = RunningSessionPart?.End();
-        RunningSessionPart = null;
-        if (finishedSession is not null && TaskToWorkOn is not null)
+
+
+        if (PomodoroTimerViewModel.State == TimerState.Work ||  TimerType == TimerType.RegularTimer)
         {
-            TaskToWorkOn.TaskModel.TimeSpent += finishedSession.Value.Duration;
-            TaskToWorkOn = null;
-            _refreshTimer.Stop();
-            OnPropertyChanged(nameof(SessionTimeInformationText));
-            OnPropertyChanged(nameof(TaskTimeInformationText));
+            var finishedSession = RunningWorkSessionPart!.End();
+            RunningWorkSessionPart = null;
+            TaskToWorkOn!.TaskModel.TimeSpent += finishedSession!.Value.Duration;
+            if (TimerType == TimerType.PomodoroTimer)
+            {
+                PomodoroTimerViewModel.AddToWork(finishedSession!.Value.Duration);
+            }
+        }
+        else if (PomodoroTimerViewModel.State == TimerState.Break)
+        {
+            var finishedSession = RunningBreakSessionPart!.End();
+            RunningBreakSessionPart = null;
+            PomodoroTimerViewModel.AddToBreak(finishedSession!.Value.Duration);
         }
         
+        Idle = true;
+        TaskToWorkOn = null;
+        _refreshTimer.Stop();
+        RefreshTimerProperties();
     }
 
     private void OnEveryRunningSecond(object? sender, EventArgs e)
     {
-        OnPropertyChanged(nameof(SessionTimeInformationText));
-        OnPropertyChanged(nameof(TaskTimeInformationText));
+        RefreshTimerProperties();
     }
     
     public void RefreshTimerProperties()
     {
+        OnPropertyChanged(nameof(SessionTimeInformationText));
         OnPropertyChanged(nameof(TaskTimeInformationText));
         OnPropertyChanged(nameof(SelectedTimer));
+        OnPropertyChanged(nameof(PomodoroInformationText));
+        OnPropertyChanged(nameof(PomodoroButtonText));
     }
 
     public void Dispose()

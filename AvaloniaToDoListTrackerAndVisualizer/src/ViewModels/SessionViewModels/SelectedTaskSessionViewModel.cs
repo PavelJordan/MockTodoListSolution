@@ -6,11 +6,7 @@ public class SelectedTaskSessionViewModel: ViewModelBase
     {
         ParentSession = parentSession;
     }
-
-    public SelectedTaskSessionViewModel()
-    {
-        ParentSession = new(new(), new(new()));
-    }
+    
 
     public SessionViewModel ParentSession { get;  }
 }

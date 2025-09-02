@@ -12,21 +12,24 @@ public record struct TaskApplicationState
 {
     public IEnumerable<TaskModel> Tasks { get; }
     public IEnumerable<Group> Groups { get; }
+    
+    public IEnumerable<Session> Sessions { get; }
 
-    public TaskApplicationState(IEnumerable<TaskModel> tasks, IEnumerable<Group> groups)
+    public TaskApplicationState(IEnumerable<TaskModel> tasks, IEnumerable<Group> groups, IEnumerable<Session> sessions)
     {
         Tasks = tasks;
         Groups = groups;
+        Sessions = sessions;
     }
 
-    public static TaskApplicationState CreateApplicationStateFromSaveAble(IEnumerable<SaveAbleTask> saveAbleTasks, IEnumerable<SaveAbleGroup> saveAbleGroups)
+    public static TaskApplicationState CreateApplicationStateFromSaveAble(IEnumerable<SaveAbleTask> saveAbleTasks, IEnumerable<SaveAbleGroup> saveAbleGroups, IEnumerable<Session> sessions)
     {
         Dictionary<Guid, Group> groupDictionary = new();
         foreach (var group in saveAbleGroups)
         {
             groupDictionary[group.Id] = group.ToGroup();
         }
-        return new TaskApplicationState(LinkSaveAbleTasks(saveAbleTasks, groupDictionary), groupDictionary.Values);
+        return new TaskApplicationState(LinkSaveAbleTasks(saveAbleTasks, groupDictionary), groupDictionary.Values, sessions);
     }
     
     private static IEnumerable<TaskModel> LinkSaveAbleTasks(IEnumerable<SaveAbleTask> tasks, Dictionary<Guid, Group> groupsDictionary)
