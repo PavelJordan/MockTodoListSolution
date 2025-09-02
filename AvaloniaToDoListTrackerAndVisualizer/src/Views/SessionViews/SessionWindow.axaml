@@ -14,8 +14,8 @@
         Icon="/Assets/avalonia-logo.ico"
         CanResize="False"
         >
-    <Grid ColumnDefinitions="Auto *">
-        <TextBlock VerticalAlignment="Center" FontSize="19" Margin="5 10" HorizontalAlignment="Center" Text="{Binding TimeInformationText}"/>
+    <Grid ColumnDefinitions="175 *">
+        <ContentControl Content="{Binding Timer}"/>
         <TransitioningContentControl Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding CurrentSessionPage}"/>
     </Grid>
 </Window>

@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views.SelectionViewModels;
+using AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews;
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Views;
@@ -39,11 +40,27 @@ public partial class SessionWindow : Window
                     dialogWindow.ShowDialog(window).ContinueWith(_ => sessionViewModel.EnsureSelectedTaskIsValid());
                 }
             });
+        
+        WeakReferenceMessenger.Default.Register<SessionWindow, SetupTimerRequest>(this,
+            static void (window, message) =>
+            {
+                var dialogWindow = new TimerSelectionDialog()
+                {
+                    DataContext = message.Timer
+                };
+                
+                dialogWindow.ShowDialog(window);
+            });
 
         Closed += (sender,  e) =>
         {
             WeakReferenceMessenger.Default.Unregister<SessionTaskSelectionRequest>(this);
             WeakReferenceMessenger.Default.Unregister<EditTaskInSessionMessage>(this);
+            WeakReferenceMessenger.Default.Unregister<SetupTimerRequest>(this);
+            if (DataContext is SessionViewModel sessionViewModel)
+            {
+                sessionViewModel.Timer.Stop();
+            }
             WindowToGoBackTo!.Show();
         };
         

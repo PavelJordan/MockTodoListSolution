@@ -45,6 +45,10 @@
           <DependentUpon>PrerequisiteTaskSelectionDialog.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="src\Views\SessionViews\Timer\TimerView.axaml.cs">
+          <DependentUpon>TimerView.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>

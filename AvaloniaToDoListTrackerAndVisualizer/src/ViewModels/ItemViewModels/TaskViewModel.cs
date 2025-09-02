@@ -279,7 +279,7 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
             OnPropertyChanged(nameof(DeadlineInfoText));
         }
 
-        if (e.PropertyName is nameof(TaskModel.TimeExpected))
+        if (e.PropertyName is nameof(TaskModel.TimeExpected) or nameof(TaskModel.TimeSpent))
         {
             OnPropertyChanged(nameof(TimeLeftText));
         }

@@ -21,11 +21,27 @@
                 <Border DockPanel.Dock="Left" Classes="main_menu">
                 <Grid RowDefinitions="* * * * * * * * *" ColumnDefinitions="* *" Background="LightGray">
                         <Button Content="{Binding Localization.HomeButton}" Command="{Binding GoHomeCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" />
-                        <Button Content="{Binding Localization.TreeButton}" Command="{Binding GoTreeViewCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        <Button Command="{Binding GoTreeViewCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+                        <Grid RowDefinitions="* *">
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Localization.TreeButton}"/>
+                                <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="(coming soon)"/>
+                        </Grid>
+                        </Button>
+                        
                         <Button Content="{Binding Localization.ProfileButton}" Command="{Binding GoProfileCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
-                        <Button Content="{Binding Localization.SettingsButton}" Command="{Binding GoSettingsCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"/>
+                        <Button Command="{Binding GoSettingsCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3">
+                                <Grid RowDefinitions="* *">
+                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Localization.SettingsButton}"/>
+                                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="(coming soon)"/>
+                                </Grid>
+                        </Button>
                         <Button Content="{Binding Localization.AddTaskButton}" Command="{Binding AddNewTaskCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
-                        <Button Content="{Binding Localization.AddEventButton}" Command="{Binding AddNewEventCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"/>
+                        <Button Command="{Binding AddNewEventCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5">
+                                <Grid RowDefinitions="* *">
+                                        <TextBlock HorizontalAlignment="Center" Text="{Binding Localization.AddEventButton}"/>
+                                        <TextBlock HorizontalAlignment="Center" Grid.Row="1" Text="(coming soon)"/>
+                                </Grid>
+                        </Button>
                         <Button Content="{Binding Localization.StartSessionButton}" Command="{Binding StartSessionCommand}" Classes="main_menu" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"/>
                         <Button Content="EN" Command="{Binding SetLocalizationCommand}" CommandParameter="en-US" Classes="main_menu" Grid.Column="0" Grid.Row="7"/>
                         <Button Content="CZ" Command="{Binding SetLocalizationCommand}" CommandParameter="cs-CZ" Classes="main_menu" Grid.Column="1" Grid.Row="7"/>
