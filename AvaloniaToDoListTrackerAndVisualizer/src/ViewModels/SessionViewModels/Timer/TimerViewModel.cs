@@ -1,6 +1,10 @@
 using System;
 using Avalonia.Threading;
+using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -16,11 +20,20 @@ public enum TimerType
 
 public partial class TimerViewModel: ViewModelBase, IDisposable
 {
+
+    private static bool FalseConstant { get; } = false;
+    
     public Session CurrentSession { get; } = new Session();
     
     public TimerState State { get; private set; } = TimerState.Idle;
     
-    public TimerType TimerType { get; private set; } = TimerType.RegularTimer;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedTimer))]
+    private bool _regularTimerSelected = true;
+    
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedTimer))]
+    private bool _pomodoroTimerSelected = false;
 
     private readonly RegularTimerViewModel _regularTimerViewModel;
     private readonly PomodoroTimerViewModel _pomodoroTimerViewModel;
@@ -29,15 +42,12 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     {
         get
         {
-            switch (TimerType)
+            if (PomodoroTimerSelected)
             {
-                case TimerType.RegularTimer:
-                    return _regularTimerViewModel;
-                case TimerType.PomodoroTimer:
-                    return _pomodoroTimerViewModel;
-                default:
-                    throw new ArgumentOutOfRangeException("Invalid TimerType");
+
+                return _pomodoroTimerViewModel;
             }
+            return _regularTimerViewModel;
         }
     }
     
@@ -151,14 +161,27 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         OnPropertyChanged(nameof(TaskTimeInformationText));
     }
     
-    public void RefreshTaskInfo()
+    public void RefreshTimerProperties()
     {
         OnPropertyChanged(nameof(TaskTimeInformationText));
+        OnPropertyChanged(nameof(SelectedTimer));
     }
 
     public void Dispose()
     {
         _refreshTimer.Tick -= OnEveryRunningSecond;
         _refreshTimer.Stop();
+    }
+
+    [RelayCommand]
+    private void CloseTimerSelectionDialog()
+    {
+        WeakReferenceMessenger.Default.Send(new CloseTimerSelectionDialogMessage());
+    }
+    
+    [RelayCommand(CanExecute = nameof(FalseConstant))]
+    private void NotificationSound()
+    {
+        // TODO
     }
 }

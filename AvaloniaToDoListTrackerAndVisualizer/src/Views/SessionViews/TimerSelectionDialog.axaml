@@ -3,18 +3,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="480"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews.TimerSelectionDialog"
         x:DataType="vm:TimerViewModel"
         Title="TimerSelectionDialog"
         WindowStartupLocation="CenterScreen"
         Width="400"
-        Height="400"
+        Height="470"
+        Background="LightGray"
+        CanResize="False"
         >
     
     <Design.DataContext>
         <vm:TimerViewModel/>
     </Design.DataContext>
-    
-    Timer selection...
+    <StackPanel Margin="10">
+        <Border Background="DarkGray" Padding="5" CornerRadius="10" Margin="5">
+            <RadioButton IsChecked="{Binding RegularTimerSelected}" GroupName="TimerSelection" Content="Regular timer"/>
+        </Border>
+        <Border Background="DarkGray" Padding="5" CornerRadius="10" Margin="5">
+            <StackPanel>
+                <RadioButton IsChecked="{Binding PomodoroTimerSelected}" GroupName="TimerSelection" Content="Pomodoro timer"/>
+                <Label Target="WorkTimePicker" Content="Work time"/>
+                <NumericUpDown x:Name="WorkTimePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10"/>
+                <Label Target="ShortPauseTimePicker" Content="Short pause time"/>
+                <NumericUpDown x:Name="ShortPauseTimePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10"/>
+                <Label Target="LongPauseTimePicker" Content="Long pause time"/>
+                <NumericUpDown x:Name="LongPauseTimePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10"/>
+                <Label Target="WorkTimeBeforeLongPausePicker" Content="Short breaks before long break"/>
+                <NumericUpDown x:Name="WorkTimeBeforeLongPausePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10" />
+                <Button Command="{Binding CloseTimerSelectionDialogCommand}" Margin="5" Content="Back" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                <Button Command="{Binding NotificationSoundCommand}" Margin="5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" Text="Test notification sound"/>
+                        <TextBlock HorizontalAlignment="Center" Text="(Coming soon)"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+    </StackPanel>
 </Window>

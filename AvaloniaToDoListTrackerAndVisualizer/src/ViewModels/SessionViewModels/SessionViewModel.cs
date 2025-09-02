@@ -114,7 +114,7 @@ public partial class SessionViewModel: ViewModelBase
         else
         {
             OnPropertyChanged(nameof(NextSubtaskOrTask));
-            Timer.RefreshTaskInfo();
+            Timer.RefreshTimerProperties();
         }
     }
 
