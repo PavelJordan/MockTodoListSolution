@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using Avalonia.Media;
+using System.Drawing;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;

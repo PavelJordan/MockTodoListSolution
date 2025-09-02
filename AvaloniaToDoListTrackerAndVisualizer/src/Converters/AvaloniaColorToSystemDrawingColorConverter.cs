@@ -5,24 +5,26 @@ using Avalonia.Media;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Converters;
 
-public class ColorToBrushConverter: IValueConverter
+public class AvaloniaColorToSystemDrawingColorConverter: IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is Color color)
+        if (value is System.Drawing.Color color)
         {
-            return new SolidColorBrush(color);
+            return Color.FromArgb(color.A, color.R, color.G, color.B);
         }
-        else if (value is System.Drawing.Color systemColor)
-        {
-            return new SolidColorBrush(Color.FromArgb(systemColor.A, systemColor.R, systemColor.G, systemColor.B));
-        }
+        
 
         return null;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
+        if (value is Color color)
+        {
+            return System.Drawing.Color.FromArgb((int)color.ToUInt32());
+        }
+
         return null;
     }
 }

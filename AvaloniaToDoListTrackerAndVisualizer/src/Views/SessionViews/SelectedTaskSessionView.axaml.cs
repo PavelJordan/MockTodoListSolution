@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews;
+namespace AvaloniaToDoListTrackerAndVisualizer.Views;
 
 public partial class SelectedTaskSessionView : UserControl
 {

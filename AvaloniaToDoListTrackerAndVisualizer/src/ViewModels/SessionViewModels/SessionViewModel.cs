@@ -39,11 +39,11 @@ public partial class SessionViewModel: ViewModelBase
         }
     }
 
-    private readonly NotSelectedTaskSessionView _notSelectedView;
+    private readonly NotSelectedTaskSessionViewModel _notSelectedView;
     
-    private readonly SelectedTaskSessionView _selectedView;
+    private readonly SelectedTaskSessionViewModel _selectedView;
 
-    [ObservableProperty] private UserControl _currentSessionPage;
+    [ObservableProperty] private ViewModelBase _currentSessionPage;
     
 
     public SessionViewModel(TaskListViewModel tasks, GroupListViewModel groups)
@@ -51,16 +51,10 @@ public partial class SessionViewModel: ViewModelBase
         Tasks = tasks;
         Groups = groups;
         Timer = new TimerViewModel();
-        
-        _notSelectedView = new NotSelectedTaskSessionView()
-        {
-            DataContext = this
-        };
-        
-        _selectedView = new SelectedTaskSessionView()
-        {
-            DataContext = this
-        };
+
+        _notSelectedView = new(this);
+
+        _selectedView = new(this);
 
         _currentSessionPage = _notSelectedView;
     }
@@ -120,6 +114,7 @@ public partial class SessionViewModel: ViewModelBase
         else
         {
             OnPropertyChanged(nameof(NextSubtaskOrTask));
+            Timer.RefreshTaskInfo();
         }
     }
 

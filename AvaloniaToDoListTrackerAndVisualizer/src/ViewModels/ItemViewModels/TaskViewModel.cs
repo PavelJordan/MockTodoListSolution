@@ -208,7 +208,16 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     
     public ISolidColorBrush GroupColor
     {
-        get { return TaskModel.Group is null ? Brushes.Gray : new SolidColorBrush(TaskModel.Group.GroupColor); }
+        get
+        {
+            if (TaskModel.Group is not null)
+            {
+                var groupColor = TaskModel.Group.GroupColor;
+                return new SolidColorBrush(Color.FromArgb(groupColor.A,  groupColor.R, groupColor.G, groupColor.B));
+            }
+
+            return Brushes.Gray;
+        }
     }
     
     public bool CanChangeCompleteness => TaskModel.CanChangeCompleteness;

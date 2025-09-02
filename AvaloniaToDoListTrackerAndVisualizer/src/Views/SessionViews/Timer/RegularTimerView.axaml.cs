@@ -1,12 +1,13 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Views;
 
-public partial class NotSelectedTaskSessionView : UserControl
+public partial class RegularTimerView : UserControl
 {
-    public NotSelectedTaskSessionView()
+    public RegularTimerView()
     {
         InitializeComponent();
     }

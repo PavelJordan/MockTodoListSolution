@@ -1,9 +1,6 @@
 using System;
-using Avalonia.Controls;
 using Avalonia.Threading;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
-using AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews.Timer;
-using DynamicData.Kernel;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
@@ -17,25 +14,37 @@ public enum TimerType
     RegularTimer, PomodoroTimer
 }
 
-public class TimerViewModel: ViewModelBase, IDisposable
+public partial class TimerViewModel: ViewModelBase, IDisposable
 {
     public Session CurrentSession { get; } = new Session();
-    
-    public TimeWithButton TimeWithButton { get; }
-    public TimeWithoutButton TimeWithoutButton { get; }
     
     public TimerState State { get; private set; } = TimerState.Idle;
     
     public TimerType TimerType { get; private set; } = TimerType.RegularTimer;
+
+    private readonly RegularTimerViewModel _regularTimerViewModel;
+    private readonly PomodoroTimerViewModel _pomodoroTimerViewModel;
+
+    public ViewModelBase SelectedTimer
+    {
+        get
+        {
+            switch (TimerType)
+            {
+                case TimerType.RegularTimer:
+                    return _regularTimerViewModel;
+                case TimerType.PomodoroTimer:
+                    return _pomodoroTimerViewModel;
+                default:
+                    throw new ArgumentOutOfRangeException("Invalid TimerType");
+            }
+        }
+    }
     
     public Session.RunningSessionPart? RunningSessionPart { get; private set; }
     
-    
     public TaskViewModel? TaskToWorkOn { get; private set; }
     public TaskViewModel? PreviewedTask { get; private set; }
-    
-    
-    public UserControl TimeStyle { get; }
 
     private readonly DispatcherTimer _refreshTimer;
 
@@ -47,13 +56,6 @@ public class TimerViewModel: ViewModelBase, IDisposable
         }
     }
 
-    public string SessionTimeInformationText
-    {
-        get
-        {
-            return CurrentSession.TotalSessionTime().ToString(@"hh\:mm\:ss");
-        }
-    }
 
     public TimeSpan TimeOnTaskSoFar
     {
@@ -64,6 +66,14 @@ public class TimerViewModel: ViewModelBase, IDisposable
         }
     }
 
+    public string SessionTimeInformationText
+    {
+        get
+        {
+            return CurrentSession.TotalSessionTime().ToString(@"hh\:mm\:ss");
+        }
+    }
+    
     public string TaskTimeInformationText
     {
         get
@@ -87,10 +97,9 @@ public class TimerViewModel: ViewModelBase, IDisposable
 
     public TimerViewModel()
     {
-        TimeWithButton = new TimeWithButton(this);
-        TimeWithoutButton = new TimeWithoutButton(this);
-        TimeStyle = TimeWithoutButton;
-
+        _pomodoroTimerViewModel = new(this);
+        _regularTimerViewModel = new(this);
+        
         _refreshTimer = new DispatcherTimer()
         {
             Interval = TimeSpan.FromSeconds(1)
@@ -139,6 +148,11 @@ public class TimerViewModel: ViewModelBase, IDisposable
     private void OnEveryRunningSecond(object? sender, EventArgs e)
     {
         OnPropertyChanged(nameof(SessionTimeInformationText));
+        OnPropertyChanged(nameof(TaskTimeInformationText));
+    }
+    
+    public void RefreshTaskInfo()
+    {
         OnPropertyChanged(nameof(TaskTimeInformationText));
     }
 

@@ -13,6 +13,6 @@
     </Design.DataContext>
     
     <Grid>
-        <TransitioningContentControl Content="{Binding TimeStyle}" Margin="10 10 3 10"/>
+        <TransitioningContentControl Content="{Binding SelectedTimer}"  Margin="10 10 3 10"/>
     </Grid>
 </UserControl>

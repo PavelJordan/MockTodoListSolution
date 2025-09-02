@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:SessionViewModel"
-             x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews.NotSelectedTaskSessionView">
-    <Button Command="{Binding SelectTaskCommand}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" CornerRadius="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Select task" FontSize="17"></Button>
+             x:DataType="vm:NotSelectedTaskSessionViewModel"
+             x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.NotSelectedTaskSessionView">
+    
+    <Button Command="{Binding ParentSession.SelectTaskCommand}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" CornerRadius="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Select task" FontSize="17"></Button>
+    
 </UserControl>

@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+        xmlns:converters="using:AvaloniaToDoListTrackerAndVisualizer.Converters"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.GroupSelectionWindow"
         x:DataType="vm:GroupSelectionViewModel"
@@ -17,6 +18,10 @@
         <vm:MockGroupSelectionViewModel/>
     </Design.DataContext>
     
+    <Window.Resources>
+        <converters:AvaloniaColorToSystemDrawingColorConverter x:Key="AvaloniaColorToSystemDrawingColorConverter"/>
+    </Window.Resources>
+    
     <Grid RowDefinitions="*, Auto, Auto" x:Name="ParentGrid">
         <Border Margin="3 10" Grid.Row="0" Background="Gray" CornerRadius="5">
             <ScrollViewer Margin="5">
@@ -25,7 +30,7 @@
                         <DataTemplate>
                             <Grid ColumnDefinitions="3*, *, Auto, Auto">
                                 <TextBox Grid.Column="0" Text="{Binding GroupName}" Watermark="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.GroupNameWatermark}"/>
-                                <ColorPicker Color="{Binding GroupColor, Mode=TwoWay}" Palette="" Grid.Column="1"/>
+                                <ColorPicker Color="{Binding GroupColor, Mode=TwoWay, Converter={StaticResource AvaloniaColorToSystemDrawingColorConverter}}" Palette="" Grid.Column="1"/>
                                 <Button Grid.Column="2" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).SelectGroupCommand}" CommandParameter="{Binding}" Content="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.SelectText}" />
                                 <Button Grid.Column="3" Command="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).RemoveGroupCommand}" CommandParameter="{Binding}" Content="{Binding #ParentGrid.((vm:GroupSelectionViewModel)DataContext).Groups.Localization.DeleteButton}" />
                             </Grid>

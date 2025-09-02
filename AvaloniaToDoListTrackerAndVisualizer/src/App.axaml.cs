@@ -7,6 +7,7 @@ using Avalonia.Markup.Xaml;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views;
 using System.Globalization;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Services;
 using Microsoft.Extensions.DependencyInjection;

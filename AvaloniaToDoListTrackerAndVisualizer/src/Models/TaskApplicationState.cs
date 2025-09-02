@@ -8,10 +8,16 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 /// <summary>
 /// Not for long term storage
 /// </summary>
-public struct TaskApplicationState(IEnumerable<TaskModel> tasks, IEnumerable<Group> groups)
+public record struct TaskApplicationState
 {
-    public IEnumerable<TaskModel> Tasks = tasks;
-    public IEnumerable<Group> Groups = groups;
+    public IEnumerable<TaskModel> Tasks { get; }
+    public IEnumerable<Group> Groups { get; }
+
+    public TaskApplicationState(IEnumerable<TaskModel> tasks, IEnumerable<Group> groups)
+    {
+        Tasks = tasks;
+        Groups = groups;
+    }
 
     public static TaskApplicationState CreateApplicationStateFromSaveAble(IEnumerable<SaveAbleTask> saveAbleTasks, IEnumerable<SaveAbleGroup> saveAbleGroups)
     {

@@ -3,18 +3,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews.Timer.TimeWithoutButton"
+             x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.RegularTimerView"
              xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
-             x:DataType="vm:TimerViewModel"
+             x:DataType="vm:RegularTimerViewModel"
              >
     
     <Design.DataContext>
-        <vm:TimerViewModel/>
+        <vm:RegularTimerViewModel/>
     </Design.DataContext>
     
     <Grid RowDefinitions="* *">
-        <TextBlock FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding SessionTimeInformationText}"/>
-        <TextBlock Grid.Row="1" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding TaskTimeInformationText}"/>
+        <TextBlock FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Timer.SessionTimeInformationText}"/>
+        <TextBlock Grid.Row="1" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Timer.TaskTimeInformationText}"/>
     </Grid>
     
 </UserControl>
