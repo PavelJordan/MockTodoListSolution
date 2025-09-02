@@ -20,15 +20,16 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 public partial class MainWindowViewModel: ViewModelBase
 {
     public TaskListViewModel Tasks { get; } =  new();
+    public UserSettings UserSettings { get; } = new();
     public GroupListViewModel Groups { get; }
     public ObservableCollection<Session> Sessions { get; } = new();
     
     public ITaskApplicationFileService  TaskApplicationFileService { get; }
 
-    private readonly ViewModelBase _home;
-    private readonly ViewModelBase _settings = new SettingsViewModel();
-    private readonly ViewModelBase _profile;
-    private readonly ViewModelBase _treeView;
+    private readonly HomeViewModel _home;
+    private readonly SettingsViewModel _settings = new SettingsViewModel();
+    private readonly ProfileViewModel _profile;
+    private readonly TreeViewModel _treeView;
 
     private static bool FalseConstant { get; } = false;
 
@@ -72,7 +73,7 @@ public partial class MainWindowViewModel: ViewModelBase
         Groups = new GroupListViewModel(Localization);
         _home = new HomeViewModel(Tasks, Groups, Localization);
         _treeView = new TreeViewModel(Localization);
-        _profile = new ProfileViewModel(Localization, Sessions);
+        _profile = new ProfileViewModel(Localization, Sessions, UserSettings);
         CurrentPage = _home;
         
         TaskApplicationFileService = taskApplicationFileService;
@@ -88,12 +89,14 @@ public partial class MainWindowViewModel: ViewModelBase
             Groups.AllGroups.Collection.AddRange(taskApplicationState.Groups);
             Tasks.AllTasks.Collection.AddRange(taskApplicationState.Tasks.Select(item => new TaskViewModel(item, Groups, Localization)));
             Sessions.AddRange(taskApplicationState.Sessions);
+            UserSettings.DailyGoal = taskApplicationState.UserSettings.DailyGoal;
+            _profile.RefreshSessionsCommand.Execute(null);
         }
     }
 
     public async Task SaveFiles()
     {
-        await TaskApplicationFileService.SaveToFileAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection, Sessions));
+        await TaskApplicationFileService.SaveToFileAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection, Sessions, UserSettings));
     }
 
     [RelayCommand(CanExecute = nameof(FalseConstant))]

@@ -23,6 +23,6 @@ public partial class MockProfileViewModel: ProfileViewModel
         return sessions;
     }
 
-    public MockProfileViewModel() : base(new LocalizationProvider(), _getDefaultSessions())
+    public MockProfileViewModel() : base(new LocalizationProvider(), _getDefaultSessions(), new UserSettings())
     { } 
 }

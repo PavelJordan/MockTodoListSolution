@@ -14,16 +14,17 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 public partial class ProfileViewModel: ViewModelBase
 {
-        public ProfileViewModel(LocalizationProvider localization, ObservableCollection<Session> sessions)
+        public ProfileViewModel(LocalizationProvider localization, ObservableCollection<Session> sessions, UserSettings userSettings)
         {
                 Localization = localization;
                 Sessions = sessions;
+                UserSettings = userSettings;
                 GoalHours = (uint)UserSettings.DailyGoal.Hours;
                 GoalMinutes = (uint)UserSettings.DailyGoal.Minutes;
         }
         
         public LocalizationProvider Localization { get; }
-        public UserSettings UserSettings { get; } = new();
+        public UserSettings UserSettings { get; }
         public ObservableCollection<Session> Sessions { get; }
 
         public TimeSpan TotalTimeWorked
@@ -49,7 +50,7 @@ public partial class ProfileViewModel: ViewModelBase
                         {
                                 foreach (SessionPart part in session.SessionParts)
                                 {
-                                        if (part.PartEnd.UtcDateTime == DateTimeOffset.UtcNow.Date)
+                                        if (part.PartEnd.UtcDateTime.Date == DateTimeOffset.UtcNow.Date)
                                         {
                                                 ts += part.Duration;
                                         }
@@ -69,9 +70,9 @@ public partial class ProfileViewModel: ViewModelBase
                         {
                                 foreach (SessionPart part in session.SessionParts)
                                 {
-                                        if (!dayTimes.TryAdd(DateOnly.FromDateTime(part.PartEnd.UtcDateTime), part.Duration))
+                                        if (!dayTimes.TryAdd(DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date), part.Duration))
                                         {
-                                                dayTimes[DateOnly.FromDateTime(part.PartEnd.UtcDateTime)] += part.Duration;
+                                                dayTimes[DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date)] += part.Duration;
                                         }
                                 }
                         }
@@ -95,9 +96,9 @@ public partial class ProfileViewModel: ViewModelBase
                         {
                                 foreach (SessionPart part in session.SessionParts)
                                 {
-                                        if (!dayTimes.TryAdd(DateOnly.FromDateTime(part.PartEnd.UtcDateTime), part.Duration))
+                                        if (!dayTimes.TryAdd(DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date), part.Duration))
                                         {
-                                                dayTimes[DateOnly.FromDateTime(part.PartEnd.UtcDateTime)] += part.Duration;
+                                                dayTimes[DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date)] += part.Duration;
                                         }
                                 }
                         }
@@ -201,6 +202,8 @@ public partial class ProfileViewModel: ViewModelBase
         [RelayCommand]
         private void RefreshSessions()
         {
+                GoalHours = (uint)UserSettings.DailyGoal.Hours;
+                GoalMinutes = (uint)UserSettings.DailyGoal.Minutes;
                 OnPropertyChanged(String.Empty);
         }
 }
