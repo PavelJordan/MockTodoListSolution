@@ -3,6 +3,7 @@ using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
+using AvaloniaToDoListTrackerAndVisualizer.Views.ConfirmationDialogs;
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Views;
@@ -55,11 +56,21 @@ public partial class MainWindow : Window
             sessionWindow.Show();
         });
         
+        WeakReferenceMessenger.Default.Register<MainWindow, SessionDeletionRequest>(this, static (window, message) =>
+        {
+            var dialog = new SessionDeletionDialog()
+            {
+                DataContext = new SessionDeletionViewModel()
+            };
+            message.Reply(dialog.ShowDialog<bool?>(window));
+        });
+        
         Closed += (sender, e) =>
         {
             WeakReferenceMessenger.Default.Unregister<EditTaskMessage>(this);
             WeakReferenceMessenger.Default.Unregister<OpenGroupSelectionRequest>(this);
             WeakReferenceMessenger.Default.Unregister<StartSessionMessage>(this);
+            WeakReferenceMessenger.Default.Unregister<SessionDeletionRequest>(this);
         };
     }
 }

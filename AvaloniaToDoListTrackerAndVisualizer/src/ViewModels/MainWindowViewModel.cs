@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ public partial class MainWindowViewModel: ViewModelBase
 {
     public TaskListViewModel Tasks { get; } =  new();
     public GroupListViewModel Groups { get; }
-    public List<Session> Sessions { get; } = new();
+    public ObservableCollection<Session> Sessions { get; } = new();
     
     public ITaskApplicationFileService  TaskApplicationFileService { get; }
 
@@ -42,7 +42,7 @@ public partial class MainWindowViewModel: ViewModelBase
     [RelayCommand(CanExecute = nameof(FalseConstant))]
     private void GoSettings () => CurrentPage = _settings;
     
-    [RelayCommand(CanExecute = nameof(FalseConstant))]
+    [RelayCommand]
     private void GoProfile () => CurrentPage = _profile;
     
     [RelayCommand(CanExecute = nameof(FalseConstant))]
@@ -72,7 +72,7 @@ public partial class MainWindowViewModel: ViewModelBase
         Groups = new GroupListViewModel(Localization);
         _home = new HomeViewModel(Tasks, Groups, Localization);
         _treeView = new TreeViewModel(Localization);
-        _profile = new ProfileViewModel(Localization);
+        _profile = new ProfileViewModel(Localization, Sessions);
         CurrentPage = _home;
         
         TaskApplicationFileService = taskApplicationFileService;

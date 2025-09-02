@@ -34,9 +34,24 @@ public readonly record struct SessionPart
 /// </summary>
 public sealed class Session
 {
+    [JsonIgnore]
+    private ObservableCollection<SessionPart> _partsBackingField = new ObservableCollection<SessionPart>();
+    
     [JsonInclude]
     [JsonPropertyName(nameof(SessionParts))]
-    private ObservableCollection<SessionPart> _parts = new();
+    private ObservableCollection<SessionPart> _parts
+    {
+        get
+        {
+            return _partsBackingField;
+        }
+
+        set
+        {
+            _partsBackingField = value;
+            SessionParts = new ReadOnlyObservableCollection<SessionPart>(_partsBackingField);
+        }
+    }
     
     private RunningSessionPart? _runningSessionPart;
     
@@ -51,7 +66,7 @@ public sealed class Session
     }
     
     [JsonIgnore]
-    public ReadOnlyObservableCollection<SessionPart> SessionParts { get; }
+    public ReadOnlyObservableCollection<SessionPart> SessionParts { get; private set; }
     
 
     public Session():this(TimeProvider.System)

@@ -2,9 +2,108 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+             xmlns:converters="using:AvaloniaToDoListTrackerAndVisualizer.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.ProfileView">
+             x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.ProfileView"
+             x:DataType="vm:ProfileViewModel"
+             >
+    
+    <Design.DataContext>
+        <vm:MockProfileViewModel/>
+    </Design.DataContext>
+    
+    <UserControl.Resources>
+        <converters:NullToDefaultConverter x:Key="NullToDefaultConverter"/>
+    </UserControl.Resources>
+    
     <Panel Classes="right_hand_content">
-        <TextBlock> Profile </TextBlock>
+        <Grid RowDefinitions="* Auto Auto">
+        <ScrollViewer>
+            <StackPanel Margin="5">
+                <StackPanel.Styles>
+                    <Style Selector="TextBlock.row">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="FontSize" Value="18"/>
+                    </Style>
+                    
+                    <Style Selector="TextBox.row">
+                        <Setter Property="Margin" Value="1 5"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="FontSize" Value="18"></Setter>
+                    </Style>
+                    
+                    <Style Selector="Border.row:nth-child(even)">
+                        <Setter Property="Background" Value="Gray"/>
+                    </Style>
+                    
+                    <Style Selector="Border.row">
+                        <Setter Property="Padding" Value="10 0 0 0"/>
+                    </Style>
+                    
+                    <Style Selector="Border.row:nth-child(odd)">
+                        <Setter Property="Background" Value="DarkGray"/>
+                    </Style>
+                    
+                    <Style Selector="Border.row:nth-child(1)">
+                        <Setter Property="CornerRadius" Value="5 5 0 0"></Setter>
+                        <Setter Property="Padding" Value="10 0 0 0"></Setter>
+                    </Style>
+                    
+                    <Style Selector="Border.row:nth-last-child(1)">
+                        <Setter Property="CornerRadius" Value="0 0 5 5"></Setter>
+                        <Setter Property="Padding" Value="0 0 0 5"></Setter>
+                    </Style>
+                    
+                </StackPanel.Styles>
+                
+                <Border Classes="row">
+                    <Grid ColumnDefinitions="* *">
+                        <TextBlock Classes="row" Grid.Column="0" Text="Total time:"/>
+                        <TextBlock Classes="row" Grid.Column="1" Text="{Binding TotalTimeText}"/>
+                    </Grid>
+                </Border>
+                <Border Classes="row">
+                    <Grid ColumnDefinitions="* *">
+                        <TextBlock Classes="row" Grid.Column="0" Text="Most productive day:"/>
+                        <TextBlock Classes="row" Grid.Column="1" Text="{Binding MostProductiveDayText}"/>
+                    </Grid>
+                </Border>
+                <Border Classes="row">
+                    <Grid ColumnDefinitions="* *">
+                        <TextBlock Classes="row" Grid.Column="0" Text="Worked today:"/>
+                        <TextBlock Classes="row" Grid.Column="1" Text="{Binding WorkedTodayText}"/>
+                    </Grid>
+                </Border>
+                <Border Classes="row">
+                    <Grid ColumnDefinitions="* *">
+                        <TextBlock Classes="row" Grid.Column="0" Text="Average per day:"/>
+                        <TextBlock Classes="row" Grid.Column="1" Text="{Binding AveragePerDayText}"/>
+                    </Grid>
+                </Border>
+                <Border Classes="row">
+                    <Grid ColumnDefinitions="* *">
+                        <TextBlock Classes="row" Grid.Column="0" Text="Goal:"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1">
+                            <Label VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="16" Target="HoursPicker" Content="Hours"/>
+                            <NumericUpDown Value="{Binding GoalHours, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=0}" Width="120" FontSize="16" FormatString="N0" Minimum="0" x:Name="HoursPicker"/>
+                            <Label VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="16" Target="MinutesPicker" Content="Minutes"/>
+                            <NumericUpDown Value="{Binding GoalMinutes, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=0}" Width="120" FontSize="16" FormatString="N0" Minimum="0" Maximum="59" x:Name="MinutesPicker"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <Border Classes="row">
+                    <Grid>
+                        <TextBlock VerticalAlignment="Center" FontSize="18" HorizontalAlignment="Center" Margin="5" Text="{Binding GoalNotification}"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+            <Button Command="{Binding DeleteSessionsCommand}" FontSize="18" Content="Delete sessions data" Padding="30 10" Margin="5" Grid.Row="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Command="{Binding RefreshSessionsCommand}" FontSize="18" Content="Refresh" Padding="30 10" Margin="5" Grid.Row="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
     </Panel>
 </UserControl>
