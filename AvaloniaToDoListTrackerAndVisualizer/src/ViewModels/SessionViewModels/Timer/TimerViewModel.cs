@@ -2,6 +2,7 @@ using System;
 using Avalonia.Threading;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -22,6 +23,8 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     public Session CurrentSession { get; }
     
     public Session BreakSessions { get; } = new Session();
+    
+    public LocalizationProvider Localization { get; }
     
     
     public bool Idle { get; private set; } = true;
@@ -60,7 +63,7 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     {
         get
         {
-            return "Skip work";
+            return Localization.SkipWorkText;
         }
     }
 
@@ -99,22 +102,22 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
             {
                 if (TimeLeftOnWork > TimeSpan.Zero)
                 {
-                    return "Work left: -" + FormatTimeSpan(TimeLeftOnWork);
+                    return Localization.WorkLeftText + ": -" + FormatTimeSpan(TimeLeftOnWork);
                 }
                 else
                 {
-                    return "Overtime: +" + FormatTimeSpan(TimeLeftOnWork);
+                    return Localization.OvertimeText + ": +" + FormatTimeSpan(TimeLeftOnWork);
                 }
             }
             else if (PomodoroTimerViewModel.State == TimerState.Break)
             {
                 if (TimeLeftOnBreak > TimeSpan.Zero)
                 {
-                    return "Break left: -" + FormatTimeSpan(TimeLeftOnBreak);
+                    return Localization.BreakLeftText +": -" + FormatTimeSpan(TimeLeftOnBreak);
                 }
                 else
                 {
-                    return "Over break: +" + FormatTimeSpan(TimeLeftOnBreak);
+                    return Localization.OverBreakText + ": +" + FormatTimeSpan(TimeLeftOnBreak);
                 }
             }
             else
@@ -131,11 +134,15 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
             if ((PomodoroTimerViewModel.State == TimerState.Work && TimeLeftOnWork <= TimeSpan.Zero)
                 || PomodoroTimerViewModel.State == TimerState.Break && TimeLeftOnBreak <= TimeSpan.Zero)
             {
-                return "end";
+                return Localization.EndText;
             }
             else
             {
-                return "skip";
+                if (PomodoroTimerViewModel.State == TimerState.Break)
+                {
+                    return Localization.SkipBreakText;
+                }
+                return Localization.SkipWorkText;
             }
         }
     }
@@ -144,7 +151,7 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     {
         get
         {
-            return "Session total: " + CurrentSession.TotalSessionTime().ToString(@"hh\:mm\:ss");
+            return Localization.SessionTotalText + ": " + CurrentSession.TotalSessionTime().ToString(@"hh\:mm\:ss");
         }
     }
     
@@ -160,7 +167,7 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     {
         if (timeSpan is null)
         {
-            return "Not set"; //Localization.NotSetText;
+            return Localization.NotSetText;
         }
         else
         {
@@ -169,9 +176,10 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     }
     
 
-    public TimerViewModel(Session session)
+    public TimerViewModel(Session session, LocalizationProvider localization)
     {
         CurrentSession = session;
+        Localization = localization;
         
         PomodoroTimerViewModel = new(this);
         RegularTimerViewModel = new(this);
@@ -269,5 +277,21 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     private void NotificationSound()
     {
         // TODO
+    }
+
+    public string ShortBreaksBeforeLongText
+    {
+        get
+        {
+            return Localization.ShortBreaksBeforeLongText + " " + Localization.ComingSoonText;
+        }
+    }
+    
+    public string LongBreakTimeText
+    {
+        get
+        {
+            return Localization.LongBreakTimeText + " " + Localization.ComingSoonText;
+        }
     }
 }

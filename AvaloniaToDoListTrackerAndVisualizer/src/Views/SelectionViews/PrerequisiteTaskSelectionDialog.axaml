@@ -9,7 +9,7 @@
         x:DataType="vm:PrerequisiteTaskSelectionViewModel"
         WindowStartupLocation="CenterOwner"
         Icon="/Assets/avalonia-logo.ico"
-        Title="PrerequisiteTaskSelectionDialog"
+        Title="{Binding  AllTasks.Localization.PrerequisitesSelectionDialog}"
         Width="700"
         Height="600"
         Background="Gray"
@@ -22,14 +22,14 @@
     <Grid RowDefinitions="* Auto" ColumnDefinitions="* *" x:Name="ParentGrid">
         <Border Background="LightGray" CornerRadius="5" Margin="5">
             <Grid RowDefinitions="Auto *">
-                <TextBlock HorizontalAlignment="Center" Text="Select task" Margin="5"/>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding AllTasks.Localization.SelectTaskText}" Margin="5"/>
                 <ScrollViewer Grid.Row="1">
                     <ItemsControl ItemsSource="{Binding AllTasks.AllTasks.Collection}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Margin="5" Background="{Binding GroupColor}" CornerRadius="5">
                                     <Grid ColumnDefinitions="Auto *">
-                                        <Button VerticalAlignment="Stretch" VerticalContentAlignment="Center" Margin="3" Content="Toggle selection" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).ToggleTaskSelectionCommand}" CommandParameter="{Binding}"/>
+                                        <Button VerticalAlignment="Stretch" VerticalContentAlignment="Center" Margin="3" Content="{Binding Localization.ToggleSelectionButton}" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).ToggleTaskSelectionCommand}" CommandParameter="{Binding}"/>
                                         <TextBlock Margin="3" TextWrapping="Wrap" Grid.Column="1" Text="{Binding TaskModel.Name}" VerticalAlignment="Center"/>
                                     </Grid>
                                 </Border>
@@ -41,14 +41,14 @@
         </Border>
         <Border Grid.Column="1" Grid.Row="0" Background="LightGray" CornerRadius="5" Margin="5">
             <Grid Grid.RowDefinitions="Auto *">
-                <TextBlock HorizontalAlignment="Center" Text="Selected tasks" Margin="5"/>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding AllTasks.Localization.SelectedTasksText}" Margin="5"/>
                 <ScrollViewer Grid.Row="1">
                     <ItemsControl ItemsSource="{Binding SelectedTasks}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Margin="5" Background="{Binding Group.Argb, FallbackValue='Gray', Converter={StaticResource ColorToBrushConverter}}" CornerRadius="5">
                                     <Grid ColumnDefinitions="Auto *">
-                                        <Button VerticalAlignment="Stretch" VerticalContentAlignment="Center" Content="Remove" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).RemoveFromTaskSelectionCommand}" CommandParameter="{Binding}"/>
+                                        <Button VerticalAlignment="Stretch" VerticalContentAlignment="Center" Content="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).AllTasks.Localization.RemoveButton}" Command="{Binding #ParentGrid.((vm:PrerequisiteTaskSelectionViewModel)DataContext).RemoveFromTaskSelectionCommand}" CommandParameter="{Binding}"/>
                                         <TextBlock Margin="3" Grid.Column="1" Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" />
                                     </Grid>
                                 </Border>
@@ -58,6 +58,6 @@
                 </ScrollViewer>
             </Grid>
         </Border>
-        <Button Margin="5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" CornerRadius="10" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Content="Back" Command="{Binding CloseCommand}"/>
+        <Button Margin="5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" CornerRadius="10" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Content="{Binding AllTasks.Localization.GoBackButton}" Command="{Binding CloseCommand}"/>
     </Grid>
 </Window>

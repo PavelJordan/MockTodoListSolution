@@ -134,4 +134,12 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
         ExpectedHoursPicker = null;
         ExpectedMinutesPicker= null;
     }
+
+    public string SpentTimeText
+    {
+        get
+        {
+            return TaskToEdit.TaskModel.TimeSpent.ToString(@"hh\:mm\:ss");
+        }
+    }
 }

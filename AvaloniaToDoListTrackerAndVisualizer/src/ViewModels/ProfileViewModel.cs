@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
@@ -12,7 +13,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
-public partial class ProfileViewModel: ViewModelBase
+public partial class ProfileViewModel: ViewModelBase, IDisposable
 {
         public ProfileViewModel(LocalizationProvider localization, ObservableCollection<Session> sessions, UserSettings userSettings)
         {
@@ -21,6 +22,8 @@ public partial class ProfileViewModel: ViewModelBase
                 UserSettings = userSettings;
                 GoalHours = (uint)UserSettings.DailyGoal.Hours;
                 GoalMinutes = (uint)UserSettings.DailyGoal.Minutes;
+
+                Localization.PropertyChanged += UpdateLocal;
         }
         
         public LocalizationProvider Localization { get; }
@@ -168,11 +171,11 @@ public partial class ProfileViewModel: ViewModelBase
                 {
                         if (TimeSpan.FromMinutes(GoalMinutes) + TimeSpan.FromHours(GoalHours) >= WorkedToday)
                         {
-                                return "Goal not yet achieved.";
+                                return Localization.GoalNotYetAchievedText;
                         }
                         else
                         {
-                                return "Goal achieved!";
+                                return Localization.GoalAchievedText;
                         }
                 }
         }
@@ -205,5 +208,15 @@ public partial class ProfileViewModel: ViewModelBase
                 GoalHours = (uint)UserSettings.DailyGoal.Hours;
                 GoalMinutes = (uint)UserSettings.DailyGoal.Minutes;
                 OnPropertyChanged(String.Empty);
+        }
+        
+        private void UpdateLocal(object? sender, PropertyChangedEventArgs e)
+        {
+                OnPropertyChanged(nameof(GoalNotification));
+        }
+
+        public void Dispose()
+        {
+                Localization.PropertyChanged -= UpdateLocal;
         }
 }

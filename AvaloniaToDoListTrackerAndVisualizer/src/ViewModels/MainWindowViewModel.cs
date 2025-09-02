@@ -20,7 +20,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 /// </summary>
 public partial class MainWindowViewModel: ViewModelBase
 {
-    public TaskListViewModel Tasks { get; } =  new();
+    public TaskListViewModel Tasks { get; }
     public UserSettings UserSettings { get; } = new();
     public GroupListViewModel Groups { get; }
     public ObservableCollection<Session> Sessions { get; } = new();
@@ -71,6 +71,7 @@ public partial class MainWindowViewModel: ViewModelBase
 
     public MainWindowViewModel(ITaskApplicationFileService taskApplicationFileService)
     {
+        Tasks = new TaskListViewModel(Localization);
         Groups = new GroupListViewModel(Localization);
         _home = new HomeViewModel(Tasks, Groups, Localization);
         _treeView = new TreeViewModel(Localization);
@@ -97,7 +98,7 @@ public partial class MainWindowViewModel: ViewModelBase
                 _profile.RefreshSessionsCommand.Execute(null);
             }
         }
-        catch (JsonException jsonException)
+        catch (JsonException)
         {
             // TODO Show error window. Now, the files are just ignored and will be overwritten next time
         }

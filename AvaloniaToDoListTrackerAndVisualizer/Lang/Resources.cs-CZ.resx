@@ -121,7 +121,7 @@
         <value>Uplynulá doba práce:</value>
     </data>
     <data name="NotSetText" xml:space="preserve">
-        <value>neznámo</value>
+        <value>Nenastaveno</value>
     </data>
     <data name="SubTaskEditWindowName" xml:space="preserve">
         <value>Úprava podúlohy</value>
@@ -158,5 +158,140 @@
     </data>
     <data name="NewGroupPlaceholderName" xml:space="preserve">
         <value>Nová skupina</value>
+    </data>
+    <data name="EndText" xml:space="preserve">
+        <value>Ukončit</value>
+    </data>
+    <data name="LongBreakTimeText" xml:space="preserve">
+        <value>Trvání dlouhé přestávky</value>
+    </data>
+    <data name="ManagePrerequisitesText" xml:space="preserve">
+        <value>Spravovat prerekvizity</value>
+    </data>
+    <data name="NoGroupText" xml:space="preserve">
+        <value>Bez skupiny</value>
+    </data>
+    <data name="OverBreakText" xml:space="preserve">
+        <value>Přes přestávku</value>
+    </data>
+    <data name="OvertimeText" xml:space="preserve">
+        <value>Práce navíc</value>
+    </data>
+    <data name="PomodoroTimerText" xml:space="preserve">
+        <value>Pomodoro časovač (nastavení v minutách)</value>
+    </data>
+    <data name="PrerequisiteSelectionDialog" xml:space="preserve">
+        <value>Vybírání prerekvizit</value>
+    </data>
+    <data name="RegularTimerText" xml:space="preserve">
+        <value>Obyčejný časovač</value>
+    </data>
+    <data name="RemoveButton" xml:space="preserve">
+        <value>Odebrat</value>
+    </data>
+    <data name="ResetButton" xml:space="preserve">
+        <value>Resetovat</value>
+    </data>
+    <data name="SelectedTasksText" xml:space="preserve">
+        <value>Vybrané úlohy</value>
+    </data>
+    <data name="SelectTasksText" xml:space="preserve">
+        <value>Vybrat úlohy</value>
+    </data>
+    <data name="SelectTaskText" xml:space="preserve">
+        <value>Vybrat úlohu</value>
+    </data>
+    <data name="SelectTaskToWorkOnText" xml:space="preserve">
+        <value>Vyber jednu z připravených úloh</value>
+    </data>
+    <data name="SessionTaskSelectionDialog" xml:space="preserve">
+        <value>Vybírání úlohy pro práci</value>
+    </data>
+    <data name="SessionTotalText" xml:space="preserve">
+        <value>Doba práce</value>
+    </data>
+    <data name="SessionWindow" xml:space="preserve">
+        <value>Pracovní okno</value>
+    </data>
+    <data name="ShortBreaksBeforeLongText" xml:space="preserve">
+        <value>Počet krátkých pauz před dlouhou</value>
+    </data>
+    <data name="ShortBreakTimeText" xml:space="preserve">
+        <value>Trvání krátké pauzy</value>
+    </data>
+    <data name="SkipBreakText" xml:space="preserve">
+        <value>Přeskočit pauzu</value>
+    </data>
+    <data name="SkipWorkText" xml:space="preserve">
+        <value>Přeskočit práci</value>
+    </data>
+    <data name="SubtaskText" xml:space="preserve">
+        <value>Podúloha</value>
+    </data>
+    <data name="TaskText" xml:space="preserve">
+        <value>Úloha</value>
+    </data>
+    <data name="TestNotificationSoundText" xml:space="preserve">
+        <value>Otestovat zvuk notifikace</value>
+    </data>
+    <data name="BreakLeftText" xml:space="preserve">
+        <value>Přestávka</value>
+    </data>
+    <data name="CancelButton" xml:space="preserve">
+        <value>Zrušit</value>
+    </data>
+    <data name="ComingSoonText" xml:space="preserve">
+        <value>(Již brzy)</value>
+    </data>
+    <data name="TimerSelectionDialog" xml:space="preserve">
+        <value>Výběr nastavení časovače</value>
+    </data>
+    <data name="ToggleSelectionButton" xml:space="preserve">
+        <value>Přepnout výběr</value>
+    </data>
+    <data name="WorkLeftText" xml:space="preserve">
+        <value>Práce zbývá</value>
+    </data>
+    <data name="WorkTimeText" xml:space="preserve">
+        <value>Doba práce</value>
+    </data>
+    <data name="AveragePerDay" xml:space="preserve">
+        <value>Průměr za den:</value>
+    </data>
+    <data name="DeleteSessionsDataText" xml:space="preserve">
+        <value>Odstranit záznamy prací</value>
+    </data>
+    <data name="GoalAchievedText" xml:space="preserve">
+        <value>Denní cíl splněn!</value>
+    </data>
+    <data name="GoalNotYetAchievedText" xml:space="preserve">
+        <value>Denní cíl zatím není splněn.</value>
+    </data>
+    <data name="GoalText" xml:space="preserve">
+        <value>Denní cíl:</value>
+    </data>
+    <data name="MostProductiveDayText" xml:space="preserve">
+        <value>Nejproduktivnější den:</value>
+    </data>
+    <data name="No" xml:space="preserve">
+        <value>Ne</value>
+    </data>
+    <data name="RefreshButtonText" xml:space="preserve">
+        <value>Aktualizovat data</value>
+    </data>
+    <data name="SessionDeletionDialog" xml:space="preserve">
+        <value>Odstranit záznamy práce</value>
+    </data>
+    <data name="SessionDeletionVerification" xml:space="preserve">
+        <value>Jste si jisti že chcete odstranit všechny záznamy práce? Úlohy budou nedotčeny.</value>
+    </data>
+    <data name="TotalTimeText" xml:space="preserve">
+        <value>Čas dohromady:</value>
+    </data>
+    <data name="WorkedTodayText" xml:space="preserve">
+        <value>Dnes odpracováno:</value>
+    </data>
+    <data name="Yes" xml:space="preserve">
+        <value>Ano</value>
     </data>
 </root>

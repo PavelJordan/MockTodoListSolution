@@ -7,6 +7,7 @@ using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
 using AvaloniaToDoListTrackerAndVisualizer.Extensions;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
@@ -38,16 +39,19 @@ public class TaskListViewModel: ViewModelBase, IDisposable
     /// </summary>
     public ReadOnlyObservableCollection<TaskViewModel> CompletedTasks { get; }
     
+    public LocalizationProvider Localization { get; }
+    
     
     private readonly ObservableCollection<TaskViewModel> _readyTasks = new();
     
     private readonly ObservableCollection<TaskViewModel> _completedTasks = new();
     
-    public TaskListViewModel()
+    public TaskListViewModel(LocalizationProvider localization)
     {
         ReadyTasks = new (_readyTasks);
         CompletedTasks = new (_completedTasks);
         AllTasksReadOnly = new (AllTasks.Collection);
+        Localization = localization;
 
         AllTasks.Collection.CollectionChanged += OnAllTasksManipulation;
         AllTasks.ChildrenPropertyChanged += OnTaskManipulation;

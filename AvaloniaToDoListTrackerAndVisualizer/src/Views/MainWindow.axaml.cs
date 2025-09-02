@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using AvaloniaToDoListTrackerAndVisualizer.Views.ConfirmationDialogs;
 using CommunityToolkit.Mvvm.Messaging;
@@ -58,9 +59,18 @@ public partial class MainWindow : Window
         
         WeakReferenceMessenger.Default.Register<MainWindow, SessionDeletionRequest>(this, static (window, message) =>
         {
+            LocalizationProvider local;
+            if (window.DataContext is MainWindowViewModel mainWindowViewModel)
+            {
+                local = mainWindowViewModel.Localization;
+            }
+            else
+            {
+                local = new LocalizationProvider();
+            }
             var dialog = new SessionDeletionDialog()
             {
-                DataContext = new SessionDeletionViewModel()
+                DataContext = new SessionDeletionViewModel(local)
             };
             message.Reply(dialog.ShowDialog<bool?>(window));
         });

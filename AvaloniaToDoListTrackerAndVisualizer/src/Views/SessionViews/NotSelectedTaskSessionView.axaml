@@ -7,6 +7,6 @@
              x:DataType="vm:NotSelectedTaskSessionViewModel"
              x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.NotSelectedTaskSessionView">
     
-    <Button Command="{Binding ParentSession.SelectTaskCommand}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" CornerRadius="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Select task" FontSize="17"></Button>
+    <Button Command="{Binding ParentSession.SelectTaskCommand}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" CornerRadius="20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding ParentSession.Groups.Localization.SelectTaskText}" FontSize="17"></Button>
     
 </UserControl>

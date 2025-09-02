@@ -62,35 +62,35 @@
                 
                 <Border Classes="row">
                     <Grid ColumnDefinitions="* *">
-                        <TextBlock Classes="row" Grid.Column="0" Text="Total time:"/>
+                        <TextBlock Classes="row" Grid.Column="0" Text="{Binding Localization.TotalTimeText}"/>
                         <TextBlock Classes="row" Grid.Column="1" Text="{Binding TotalTimeText}"/>
                     </Grid>
                 </Border>
                 <Border Classes="row">
                     <Grid ColumnDefinitions="* *">
-                        <TextBlock Classes="row" Grid.Column="0" Text="Most productive day:"/>
+                        <TextBlock Classes="row" Grid.Column="0" Text="{Binding Localization.MostProductiveDayText}"/>
                         <TextBlock Classes="row" Grid.Column="1" Text="{Binding MostProductiveDayText}"/>
                     </Grid>
                 </Border>
                 <Border Classes="row">
                     <Grid ColumnDefinitions="* *">
-                        <TextBlock Classes="row" Grid.Column="0" Text="Worked today:"/>
+                        <TextBlock Classes="row" Grid.Column="0" Text="{Binding Localization.WorkedTodayText}"/>
                         <TextBlock Classes="row" Grid.Column="1" Text="{Binding WorkedTodayText}"/>
                     </Grid>
                 </Border>
                 <Border Classes="row">
                     <Grid ColumnDefinitions="* *">
-                        <TextBlock Classes="row" Grid.Column="0" Text="Average per day:"/>
+                        <TextBlock Classes="row" Grid.Column="0" Text="{Binding Localization.AveragePerDay}"/>
                         <TextBlock Classes="row" Grid.Column="1" Text="{Binding AveragePerDayText}"/>
                     </Grid>
                 </Border>
                 <Border Classes="row">
                     <Grid ColumnDefinitions="* *">
-                        <TextBlock Classes="row" Grid.Column="0" Text="Goal:"/>
+                        <TextBlock Classes="row" Grid.Column="0" Text="{Binding Localization.GoalText}"/>
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <Label VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="16" Target="HoursPicker" Content="Hours"/>
+                            <Label VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="16" Target="HoursPicker" Content="{Binding Localization.HoursText}"/>
                             <NumericUpDown Value="{Binding GoalHours, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=0}" Width="120" FontSize="16" FormatString="N0" Minimum="0" x:Name="HoursPicker"/>
-                            <Label VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="16" Target="MinutesPicker" Content="Minutes"/>
+                            <Label VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="16" Target="MinutesPicker" Content="{Binding Localization.MinutesText}"/>
                             <NumericUpDown Value="{Binding GoalMinutes, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=0}" Width="120" FontSize="16" FormatString="N0" Minimum="0" Maximum="59" x:Name="MinutesPicker"/>
                         </StackPanel>
                     </Grid>
@@ -102,8 +102,8 @@
                 </Border>
             </StackPanel>
         </ScrollViewer>
-            <Button Command="{Binding DeleteSessionsCommand}" FontSize="18" Content="Delete sessions data" Padding="30 10" Margin="5" Grid.Row="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Button Command="{Binding RefreshSessionsCommand}" FontSize="18" Content="Refresh" Padding="30 10" Margin="5" Grid.Row="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Command="{Binding DeleteSessionsCommand}" FontSize="18" Content="{Binding Localization.DeleteSessionsDataText}" Padding="30 10" Margin="5" Grid.Row="1" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Command="{Binding RefreshSessionsCommand}" FontSize="18" Content="{Binding Localization.RefreshButtonText}" Padding="30 10" Margin="5" Grid.Row="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
     </Panel>
 </UserControl>

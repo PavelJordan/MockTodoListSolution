@@ -326,5 +326,275 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Lang {
                 return ResourceManager.GetString("NewGroupPlaceholderName", resourceCulture);
             }
         }
+        
+        public static string ManagePrerequisitesText {
+            get {
+                return ResourceManager.GetString("ManagePrerequisitesText", resourceCulture);
+            }
+        }
+        
+        public static string ResetButton {
+            get {
+                return ResourceManager.GetString("ResetButton", resourceCulture);
+            }
+        }
+        
+        public static string PrerequisiteSelectionDialog {
+            get {
+                return ResourceManager.GetString("PrerequisiteSelectionDialog", resourceCulture);
+            }
+        }
+        
+        public static string SelectTasksText {
+            get {
+                return ResourceManager.GetString("SelectTasksText", resourceCulture);
+            }
+        }
+        
+        public static string SelectedTasksText {
+            get {
+                return ResourceManager.GetString("SelectedTasksText", resourceCulture);
+            }
+        }
+        
+        public static string ToggleSelectionButton {
+            get {
+                return ResourceManager.GetString("ToggleSelectionButton", resourceCulture);
+            }
+        }
+        
+        public static string SessionWindow {
+            get {
+                return ResourceManager.GetString("SessionWindow", resourceCulture);
+            }
+        }
+        
+        public static string SessionTotalText {
+            get {
+                return ResourceManager.GetString("SessionTotalText", resourceCulture);
+            }
+        }
+        
+        public static string SelectTaskText {
+            get {
+                return ResourceManager.GetString("SelectTaskText", resourceCulture);
+            }
+        }
+        
+        public static string SessionTaskSelectionDialog {
+            get {
+                return ResourceManager.GetString("SessionTaskSelectionDialog", resourceCulture);
+            }
+        }
+        
+        public static string SelectTaskToWorkOnText {
+            get {
+                return ResourceManager.GetString("SelectTaskToWorkOnText", resourceCulture);
+            }
+        }
+        
+        public static string CancelButton {
+            get {
+                return ResourceManager.GetString("CancelButton", resourceCulture);
+            }
+        }
+        
+        public static string TaskText {
+            get {
+                return ResourceManager.GetString("TaskText", resourceCulture);
+            }
+        }
+        
+        public static string SubtaskText {
+            get {
+                return ResourceManager.GetString("SubtaskText", resourceCulture);
+            }
+        }
+        
+        public static string TimerSelectionDialog {
+            get {
+                return ResourceManager.GetString("TimerSelectionDialog", resourceCulture);
+            }
+        }
+        
+        public static string RegularTimerText {
+            get {
+                return ResourceManager.GetString("RegularTimerText", resourceCulture);
+            }
+        }
+        
+        public static string PomodoroTimerText {
+            get {
+                return ResourceManager.GetString("PomodoroTimerText", resourceCulture);
+            }
+        }
+        
+        public static string WorkTimeText {
+            get {
+                return ResourceManager.GetString("WorkTimeText", resourceCulture);
+            }
+        }
+        
+        public static string ShortBreakTimeText {
+            get {
+                return ResourceManager.GetString("ShortBreakTimeText", resourceCulture);
+            }
+        }
+        
+        public static string LongBreakTimeText {
+            get {
+                return ResourceManager.GetString("LongBreakTimeText", resourceCulture);
+            }
+        }
+        
+        public static string ShortBreaksBeforeLongText {
+            get {
+                return ResourceManager.GetString("ShortBreaksBeforeLongText", resourceCulture);
+            }
+        }
+        
+        public static string ComingSoonText {
+            get {
+                return ResourceManager.GetString("ComingSoonText", resourceCulture);
+            }
+        }
+        
+        public static string TestNotificationSoundText {
+            get {
+                return ResourceManager.GetString("TestNotificationSoundText", resourceCulture);
+            }
+        }
+        
+        public static string RemoveButton {
+            get {
+                return ResourceManager.GetString("RemoveButton", resourceCulture);
+            }
+        }
+        
+        public static string SkipWorkText {
+            get {
+                return ResourceManager.GetString("SkipWorkText", resourceCulture);
+            }
+        }
+        
+        public static string SkipBreakText {
+            get {
+                return ResourceManager.GetString("SkipBreakText", resourceCulture);
+            }
+        }
+        
+        public static string EndText {
+            get {
+                return ResourceManager.GetString("EndText", resourceCulture);
+            }
+        }
+        
+        public static string WorkLeftText {
+            get {
+                return ResourceManager.GetString("WorkLeftText", resourceCulture);
+            }
+        }
+        
+        public static string OvertimeText {
+            get {
+                return ResourceManager.GetString("OvertimeText", resourceCulture);
+            }
+        }
+        
+        public static string BreakLeftText {
+            get {
+                return ResourceManager.GetString("BreakLeftText", resourceCulture);
+            }
+        }
+        
+        public static string OverBreakText {
+            get {
+                return ResourceManager.GetString("OverBreakText", resourceCulture);
+            }
+        }
+        
+        public static string NoGroupText {
+            get {
+                return ResourceManager.GetString("NoGroupText", resourceCulture);
+            }
+        }
+        
+        public static string TotalTimeText {
+            get {
+                return ResourceManager.GetString("TotalTimeText", resourceCulture);
+            }
+        }
+        
+        public static string MostProductiveDayText {
+            get {
+                return ResourceManager.GetString("MostProductiveDayText", resourceCulture);
+            }
+        }
+        
+        public static string WorkedTodayText {
+            get {
+                return ResourceManager.GetString("WorkedTodayText", resourceCulture);
+            }
+        }
+        
+        public static string AveragePerDay {
+            get {
+                return ResourceManager.GetString("AveragePerDay", resourceCulture);
+            }
+        }
+        
+        public static string GoalText {
+            get {
+                return ResourceManager.GetString("GoalText", resourceCulture);
+            }
+        }
+        
+        public static string GoalNotYetAchievedText {
+            get {
+                return ResourceManager.GetString("GoalNotYetAchievedText", resourceCulture);
+            }
+        }
+        
+        public static string DeleteSessionsDataText {
+            get {
+                return ResourceManager.GetString("DeleteSessionsDataText", resourceCulture);
+            }
+        }
+        
+        public static string RefreshButtonText {
+            get {
+                return ResourceManager.GetString("RefreshButtonText", resourceCulture);
+            }
+        }
+        
+        public static string SessionDeletionDialog {
+            get {
+                return ResourceManager.GetString("SessionDeletionDialog", resourceCulture);
+            }
+        }
+        
+        public static string SessionDeletionVerification {
+            get {
+                return ResourceManager.GetString("SessionDeletionVerification", resourceCulture);
+            }
+        }
+        
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        public static string GoalAchievedText {
+            get {
+                return ResourceManager.GetString("GoalAchievedText", resourceCulture);
+            }
+        }
     }
 }

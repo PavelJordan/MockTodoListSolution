@@ -61,7 +61,7 @@
         <value>Edit task</value>
     </data>
     <data name="GoBackButton" xml:space="preserve">
-        <value>Go back</value>
+        <value>Back</value>
     </data>
     <data name="TaskDefaultName" xml:space="preserve">
         <value>Untitled</value>
@@ -121,7 +121,7 @@
         <value>Time spent:</value>
     </data>
     <data name="NotSetText" xml:space="preserve">
-        <value>not set</value>
+        <value>Not set</value>
     </data>
     <data name="SubTaskEditWindowName" xml:space="preserve">
         <value>Edit subtask</value>
@@ -158,5 +158,140 @@
     </data>
     <data name="NewGroupPlaceholderName" xml:space="preserve">
         <value>New group</value>
+    </data>
+    <data name="BreakLeftText" xml:space="preserve">
+        <value>Break left</value>
+    </data>
+    <data name="CancelButton" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="ComingSoonText" xml:space="preserve">
+        <value>(Coming soon)</value>
+    </data>
+    <data name="EndText" xml:space="preserve">
+        <value>End</value>
+    </data>
+    <data name="LongBreakTimeText" xml:space="preserve">
+        <value>Long break time</value>
+    </data>
+    <data name="ManagePrerequisitesText" xml:space="preserve">
+        <value>Manage prerequisites</value>
+    </data>
+    <data name="NoGroupText" xml:space="preserve">
+        <value>No group</value>
+    </data>
+    <data name="OverBreakText" xml:space="preserve">
+        <value>Over break</value>
+    </data>
+    <data name="OvertimeText" xml:space="preserve">
+        <value>Overtime</value>
+    </data>
+    <data name="PomodoroTimerText" xml:space="preserve">
+        <value>Pomodoro timer (settings in minutes)</value>
+    </data>
+    <data name="PrerequisiteSelectionDialog" xml:space="preserve">
+        <value>Prerequisite task selection dialog</value>
+    </data>
+    <data name="RegularTimerText" xml:space="preserve">
+        <value>Regular timer</value>
+    </data>
+    <data name="RemoveButton" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="ResetButton" xml:space="preserve">
+        <value>Reset</value>
+    </data>
+    <data name="SelectedTasksText" xml:space="preserve">
+        <value>Selected tasks</value>
+    </data>
+    <data name="SelectTasksText" xml:space="preserve">
+        <value>Select tasks</value>
+    </data>
+    <data name="SelectTaskText" xml:space="preserve">
+        <value>Select task</value>
+    </data>
+    <data name="SelectTaskToWorkOnText" xml:space="preserve">
+        <value>Select one of the ready tasks to work on</value>
+    </data>
+    <data name="SessionTaskSelectionDialog" xml:space="preserve">
+        <value>Session task selection dialog</value>
+    </data>
+    <data name="SessionTotalText" xml:space="preserve">
+        <value>Session total</value>
+    </data>
+    <data name="SessionWindow" xml:space="preserve">
+        <value>Session window</value>
+    </data>
+    <data name="ShortBreaksBeforeLongText" xml:space="preserve">
+        <value>Short breaks before long break</value>
+    </data>
+    <data name="ShortBreakTimeText" xml:space="preserve">
+        <value>Short break time</value>
+    </data>
+    <data name="SkipBreakText" xml:space="preserve">
+        <value>Skip break</value>
+    </data>
+    <data name="SkipWorkText" xml:space="preserve">
+        <value>Skip work</value>
+    </data>
+    <data name="SubtaskText" xml:space="preserve">
+        <value>Subtask</value>
+    </data>
+    <data name="TaskText" xml:space="preserve">
+        <value>Task</value>
+    </data>
+    <data name="TestNotificationSoundText" xml:space="preserve">
+        <value>Test notification sound</value>
+    </data>
+    <data name="TimerSelectionDialog" xml:space="preserve">
+        <value>Timer selection dialog</value>
+    </data>
+    <data name="ToggleSelectionButton" xml:space="preserve">
+        <value>Toggle selection</value>
+    </data>
+    <data name="WorkLeftText" xml:space="preserve">
+        <value>Work left</value>
+    </data>
+    <data name="WorkTimeText" xml:space="preserve">
+        <value>Work time</value>
+    </data>
+    <data name="AveragePerDay" xml:space="preserve">
+        <value>Average per day:</value>
+    </data>
+    <data name="DeleteSessionsDataText" xml:space="preserve">
+        <value>Delete sessions data</value>
+    </data>
+    <data name="GoalAchievedText" xml:space="preserve">
+        <value>Daily goal achieved!</value>
+    </data>
+    <data name="GoalNotYetAchievedText" xml:space="preserve">
+        <value>Daily goal not yet achieved.</value>
+    </data>
+    <data name="GoalText" xml:space="preserve">
+        <value>Daily goal:</value>
+    </data>
+    <data name="MostProductiveDayText" xml:space="preserve">
+        <value>Most productive day:</value>
+    </data>
+    <data name="No" xml:space="preserve">
+        <value>No</value>
+    </data>
+    <data name="RefreshButtonText" xml:space="preserve">
+        <value>Refresh</value>
+    </data>
+    <data name="SessionDeletionVerification" xml:space="preserve">
+        <value>Are you sure that you want to delete all sessions? Tasks will remain in tact.</value>
+    </data>
+    <data name="TotalTimeText" xml:space="preserve">
+        <value>Total time:</value>
+    </data>
+    <data name="WorkedTodayText" xml:space="preserve">
+        <value>Worked today:</value>
+    </data>
+    <data name="Yes" xml:space="preserve">
+        <value>Yes</value>
+    </data>
+    <data name="SessionDeletionDialog" xml:space="preserve">
+        <value>Delete sessions</value>
     </data>
 </root>

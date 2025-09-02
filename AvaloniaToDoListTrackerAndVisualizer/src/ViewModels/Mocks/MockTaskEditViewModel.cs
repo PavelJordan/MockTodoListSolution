@@ -6,7 +6,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 public class MockTaskEditViewModel: TaskEditViewModel
 {
-    public MockTaskEditViewModel() : base(new TaskViewModel(new TaskModel("Hello, World!") { Description = "Some basic description. \n Hello!" }, new GroupListViewModel(new LocalizationProvider()), new LocalizationProvider()), true, new TaskListViewModel())
+    public MockTaskEditViewModel() : base(new TaskViewModel(new TaskModel("Hello, World!") { Description = "Some basic description. \n Hello!" }, new GroupListViewModel(new LocalizationProvider()), new LocalizationProvider()), true, new TaskListViewModel(new LocalizationProvider()))
     {
         TaskToEdit.TaskModel.AddSubtask(new SubTaskModel("Test Subtask 1"));
         TaskToEdit.TaskModel.AddSubtask(new SubTaskModel("Test Subtask 2"));

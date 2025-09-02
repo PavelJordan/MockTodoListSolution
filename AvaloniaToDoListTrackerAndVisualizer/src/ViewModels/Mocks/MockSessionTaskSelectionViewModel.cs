@@ -5,7 +5,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 public partial class MockSessionTaskSelectionViewModel: SessionTaskSelectionViewModel
 {
-    public MockSessionTaskSelectionViewModel() : base(new TaskListViewModel())
+    public MockSessionTaskSelectionViewModel() : base(new TaskListViewModel(new LocalizationProvider()))
     {
         LocalizationProvider localization = new();
         GroupListViewModel groups = new(localization);

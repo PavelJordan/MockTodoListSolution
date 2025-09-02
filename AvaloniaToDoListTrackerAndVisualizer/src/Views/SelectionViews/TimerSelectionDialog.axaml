@@ -1,0 +1,52 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
+        xmlns:converters="using:AvaloniaToDoListTrackerAndVisualizer.Converters"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="480"
+        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews.TimerSelectionDialog"
+        x:DataType="vm:TimerViewModel"
+        Title="{Binding Localization.TimerSelectionDialog}"
+        WindowStartupLocation="CenterScreen"
+        Width="400"
+        Height="480"
+        Background="LightGray"
+        CanResize="False"
+        >
+    
+    <Design.DataContext>
+        <vm:TimerViewModel/>
+    </Design.DataContext>
+    
+    <Window.Resources>
+        <converters:NullToDefaultConverter x:Key="NullToDefaultConverter"/>
+        <converters:EnumBoolConverter x:Key="EnumBoolConverter"/>
+    </Window.Resources>
+    
+    <StackPanel Margin="10">
+        <Border Background="DarkGray" Padding="5" CornerRadius="10" Margin="5">
+            <RadioButton IsChecked="{Binding TimerType, Converter={StaticResource EnumBoolConverter}, ConverterParameter=RegularTimer}" GroupName="TimerSelection" Content="{Binding Localization.RegularTimerText}"/>
+        </Border>
+        <Border Background="DarkGray" Padding="5" CornerRadius="10" Margin="5">
+            <StackPanel>
+                <RadioButton IsChecked="{Binding TimerType, Converter={StaticResource EnumBoolConverter}, ConverterParameter=PomodoroTimer}" GroupName="TimerSelection" Content="{Binding Localization.PomodoroTimerText}"/>
+                <Label Target="WorkTimePicker" Content="{Binding Localization.WorkTimeText}"/>
+                <NumericUpDown IsEnabled="{Binding TimerType, Converter={StaticResource EnumBoolConverter}, ConverterParameter=PomodoroTimer, Mode=OneWay}" Watermark="{Binding Localization.MinutesText}" FormatString="N0" Minimum="1" Value="{Binding PomodoroTimerViewModel.MinutesWork, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=1}" x:Name="WorkTimePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10"/>
+                <Label Target="ShortPauseTimePicker" Content="{Binding Localization.ShortBreakTimeText}"/>
+                <NumericUpDown IsEnabled="{Binding TimerType, Converter={StaticResource EnumBoolConverter}, ConverterParameter=PomodoroTimer, Mode=OneWay}" Watermark="{Binding Localization.MinutesText}" FormatString="N0" Minimum="1" Value="{Binding PomodoroTimerViewModel.MinutesShortBreak, Converter={StaticResource NullToDefaultConverter}, ConverterParameter=1}" x:Name="ShortPauseTimePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10"/>
+                <Label Target="LongPauseTimePicker" Content="{Binding LongBreakTimeText}"/>
+                <NumericUpDown IsEnabled="False" Watermark="{Binding Localization.MinutesText}" FormatString="N0" Minimum="1" Value="{Binding PomodoroTimerViewModel.MinutesLongBreak}" x:Name="LongPauseTimePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10"/>
+                <Label Target="WorkTimeBeforeLongPausePicker" Content="{Binding ShortBreaksBeforeLongText}"/>
+                <NumericUpDown IsEnabled="False" Watermark="{Binding Localization.MinutesText}" FormatString="N0" Minimum="1" Value="{Binding PomodoroTimerViewModel.ShortBeforeLong}" x:Name="WorkTimeBeforeLongPausePicker" HorizontalAlignment="Left" Width="150" Margin="10 1 10 10" />
+                <Button Command="{Binding CloseTimerSelectionDialogCommand}" Margin="5" Content="{Binding Localization.GoBackButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                <Button Command="{Binding NotificationSoundCommand}" Margin="5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Localization.TestNotificationSoundText}"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Localization.ComingSoonText}"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</Window>

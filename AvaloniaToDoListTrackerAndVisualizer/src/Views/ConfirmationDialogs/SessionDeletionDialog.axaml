@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.ConfirmationDialogs.SessionDeletionDialog"
         x:DataType="vm:SessionDeletionViewModel"
-        Title="Session deletion dialog"
+        Title="{Binding Localization.SessionDeletionDialog}"
         Width="200"
         Height="100"
         WindowStartupLocation="CenterOwner"
@@ -14,9 +14,9 @@
         >
     <Grid ColumnDefinitions="* *" RowDefinitions="* Auto">
         <Border Grid.ColumnSpan="2" Background="DarkGray" CornerRadius="10" Padding="5" Margin="5">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Are you sure that you want to delete all sessions? Tasks will remain in tact"/>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Localization.SessionDeletionVerification}"/>
         </Border>
-        <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Command="{Binding YesCommand}" Grid.Row="1" Grid.Column="0" Margin="5" Content="Yes"/>
-        <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Command="{Binding NoCommand}" Grid.Row="1" Grid.Column="1" Margin="5" Content="No"/>
+        <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Command="{Binding YesCommand}" Grid.Row="1" Grid.Column="0" Margin="5" Content="{Binding Localization.Yes}"/>
+        <Button HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Command="{Binding NoCommand}" Grid.Row="1" Grid.Column="1" Margin="5" Content="{Binding Localization.No}"/>
     </Grid>
 </Window>

@@ -49,6 +49,10 @@
           <DependentUpon>TimerView.axaml</DependentUpon>
           <SubType>Code</SubType>
         </Compile>
+        <Compile Update="src\Views\SelectionViews\TimerSelectionDialog.axaml.cs">
+          <DependentUpon>TimerSelectionDialog.axaml</DependentUpon>
+          <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
