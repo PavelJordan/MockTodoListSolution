@@ -91,4 +91,5 @@ _subTaskViewModelsPipeline = taskModel.Subtasks
 ReadOnly variants, like `ReadyTasks` or `CompletedTasks`. TaskListViewModel needs to keep all of these
 in sync, which is achieved thanks to the `ObservableChildrenCollectionWrapper`.
 
-Again, look into the code to have the whole picture.
+You can, again, either go through the code to better understand everything, or, as recommended, you can go through
+[Views](ViewsDocs.md).

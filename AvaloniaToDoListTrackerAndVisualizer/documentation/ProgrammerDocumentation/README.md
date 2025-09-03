@@ -3,12 +3,6 @@
 Welcome to the programmer documentation! Here, you will find architectural overview of the application,
 with some brief explanation of some important classes.
 
-Note: this documentation is short for now. You can checkout
-[AI generated programmer documentation](../AIGeneratedProgrammerDocumentationFallback.md), which is a little
-longer and more complete, but lacks the understanding and ideas I have about this application. For this reason,
-I recommend you first read my programmer documentation, and after that, you can go over the AI generated one.
-After that, feel free to browse the code, as I populated it with many helpful documentation comments.
-
 ## Before you start
 
 I highly recommend you first [learn some basics about avalonia](https://docs.avaloniaui.net/docs/get-started/). At least
@@ -179,6 +173,6 @@ It rewires subscriptions when items are added, removed or replaced.
 Next, depending on what you want to learn, you can check out the following files. They teach you more in detail about
 the specific subjects and how it works in this application:
 
- - [TodoList Models](ModelsDocs.md)
- - [TodoList ViewModels](ViewModelsDocs.md)
- - [TodoListViews, messages and converters](ViewsDocs.md)
+ - [TodoList Models](ModelsDocs.md) (recommended first)
+ - [TodoList ViewModels](ViewModelsDocs.md) (recommended second)
+ - [TodoListViews](ViewsDocs.md) (recommended last)

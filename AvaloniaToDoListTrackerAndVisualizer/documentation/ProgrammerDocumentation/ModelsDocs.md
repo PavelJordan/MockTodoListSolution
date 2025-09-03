@@ -90,3 +90,5 @@ use it to visualize, whether deadline is around the corner.
 The statistics is computed in the [SessionStatistics](../../src/Models/SessionManagement/SessionStatistics.cs) class.
 It is a static class, it only needs IEnumerable of sessions. It also uses UTC.
 
+You can now either go through the code to better understand everything, or, as recommended, you can go through
+[ViewModels](ViewModelsDocs.md).
