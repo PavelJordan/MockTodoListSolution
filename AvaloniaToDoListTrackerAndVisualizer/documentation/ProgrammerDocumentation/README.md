@@ -162,6 +162,18 @@ The code is from [this file](../../src/App.axaml.cs). You can learn more about i
 For now, there is no way to restore corrupted files. Right now, they are just overwritten. If you want, you can
 contribute!
 
+## Collection wrapper
+
+Because there are a lot of collections, many times, the application required to subscribe to
+events of all the elements of those collections. This would get tedious very fast. For this reason,
+we have this class:
+
+[ObservableChildrenCollectionWrapper<T>](../../src/Wrappers/ObservableChildrenCollectionWrapper.cs),
+which wraps on `ObservableCollection<T>`.
+
+It exposes `ChildrenPropertyChanged event` so users can listen for property changes on its items very easily.
+It rewires subscriptions when items are added, removed or replaced.
+
 ## Next sections
 
 Next, depending on what you want to learn, you can check out the following files. They teach you more in detail about
@@ -169,4 +181,4 @@ the specific subjects and how it works in this application:
 
  - [TodoList Models](ModelsDocs.md)
  - [TodoList ViewModels](ViewModelsDocs.md)
- - [TodoListViews](ViewsDocs.md)
+ - [TodoListViews, messages and converters](ViewsDocs.md)
