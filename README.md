@@ -1,4 +1,4 @@
-# Avalonia to-do list tracker and visualizer
+# Avalonia to-do list tracker and visualizer 1.0
 
 Welcome to my to-do list, made in avalonia!
 
@@ -25,6 +25,10 @@ sure that it is SDK.
 After installing .NET SDK 9, you can download this project. You can do so through `git clone`, or you can simply 
 click code -> Download source code -> zip (or other). Then navigate to the `AvaloniaToDoListTrackerAndVisualizer` folder,
 where you should be able to open the terminal and input `dotnet run`. Your .NET SDK 9 will compile it and run it.
+
+I plan to update the app in the future. After that happens, there will be another section on how to update your app, without losing your data.
+
+Stay tuned!
 
 ## How to use the app
 
