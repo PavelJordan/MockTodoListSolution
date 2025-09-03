@@ -1,5 +1,5 @@
 using System.Drawing;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;

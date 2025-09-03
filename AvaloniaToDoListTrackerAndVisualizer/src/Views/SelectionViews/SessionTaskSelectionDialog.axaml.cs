@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Views.SelectionViewModels;
+namespace AvaloniaToDoListTrackerAndVisualizer.Views;
 
 public partial class SessionTaskSelectionDialog : Window
 {

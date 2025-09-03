@@ -5,7 +5,7 @@ using AvaloniaToDoListTrackerAndVisualizer.Providers;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
-public partial class MockProfileViewModel: ProfileViewModel
+public class MockProfileViewModel: ProfileViewModel
 {
     private static ObservableCollection<Session>_getDefaultSessions()
     {

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 

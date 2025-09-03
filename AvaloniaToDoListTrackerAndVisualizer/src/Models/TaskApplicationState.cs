@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 

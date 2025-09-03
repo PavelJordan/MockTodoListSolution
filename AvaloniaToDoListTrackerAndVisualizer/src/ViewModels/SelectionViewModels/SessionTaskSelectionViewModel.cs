@@ -1,5 +1,4 @@
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
-using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -14,12 +13,18 @@ public partial class SessionTaskSelectionViewModel: ViewModelBase
         AllTasks = allTasks;
     }
 
+    /// <summary>
+    /// Close gracefully while sending back the selected tasks
+    /// </summary>
     [RelayCommand]
     private void SelectTask(TaskViewModel task)
     {
         WeakReferenceMessenger.Default.Send(new CloseSessionTaskSelectionMessage(task));
     }
 
+    /// <summary>
+    /// Send back null - unselect
+    /// </summary>
     [RelayCommand]
     private void Cancel()
     {

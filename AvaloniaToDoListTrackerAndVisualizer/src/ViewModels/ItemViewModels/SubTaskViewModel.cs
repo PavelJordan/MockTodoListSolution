@@ -2,9 +2,8 @@ using System;
 using System.ComponentModel;
 using Avalonia.Media;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -66,11 +65,17 @@ public partial class SubTaskViewModel: ViewModelBase, IDisposable
         }
     }
 
+    /// <summary>
+    /// For ObservableChildrenCollection
+    /// </summary>
     private void ForwardPropertyChangedEvent(object? sender, PropertyChangedEventArgs e)
     {
         OnPropertyChanged(e.PropertyName);
     }
 
+    /// <summary>
+    /// Update text and background if IsCompleted was changed in subtask
+    /// </summary>
     private void UpdateViewModelProperties(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(SubTask.IsCompleted))

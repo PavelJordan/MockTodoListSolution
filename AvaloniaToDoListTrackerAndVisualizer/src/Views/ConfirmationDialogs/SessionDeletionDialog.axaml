@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.ConfirmationDialogs.SessionDeletionDialog"
+        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionDeletionDialog"
         x:DataType="vm:SessionDeletionViewModel"
         Title="{Binding Localization.SessionDeletionDialog}"
         Width="200"

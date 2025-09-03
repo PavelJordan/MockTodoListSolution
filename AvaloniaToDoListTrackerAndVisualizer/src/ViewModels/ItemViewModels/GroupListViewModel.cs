@@ -1,10 +1,10 @@
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
-public partial class GroupListViewModel(LocalizationProvider localization): ViewModelBase
+public class GroupListViewModel(LocalizationProvider localization): ViewModelBase
 {
     public LocalizationProvider Localization { get; } = localization;
     

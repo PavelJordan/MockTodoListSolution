@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -19,6 +18,7 @@ public partial class SubTaskEditViewModel: ViewModelBase, IDisposable
         SubTaskToEdit = subTaskToEdit;
         Localization =  subTaskToEdit.Localization;
 
+        // If name was changed, check, if it's not empty. If it is, you cannot close the edit window
         SubTaskToEdit.SubTask.PropertyChanged += CheckIfCanExistChanged;
     }
     
@@ -36,6 +36,11 @@ public partial class SubTaskEditViewModel: ViewModelBase, IDisposable
         WeakReferenceMessenger.Default.Send(new CloseSubTaskEditMessage());
     }
 
+    /// <summary>
+    /// If name was changed, check, if it's not empty. If it is, you cannot close the edit window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CheckIfCanExistChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(SubTaskToEdit.SubTask.Name))

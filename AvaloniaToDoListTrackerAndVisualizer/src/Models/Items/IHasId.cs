@@ -1,6 +1,6 @@
 using System;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
 /// <summary>
 /// Wherever an object has id for persistent storage purposes.

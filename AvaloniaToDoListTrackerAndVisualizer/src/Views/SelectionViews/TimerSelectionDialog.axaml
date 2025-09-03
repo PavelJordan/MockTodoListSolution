@@ -5,7 +5,7 @@
         xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
         xmlns:converters="using:AvaloniaToDoListTrackerAndVisualizer.Converters"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="480"
-        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews.TimerSelectionDialog"
+        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.TimerSelectionDialog"
         x:DataType="vm:TimerViewModel"
         Title="{Binding Localization.TimerSelectionDialog}"
         WindowStartupLocation="CenterScreen"

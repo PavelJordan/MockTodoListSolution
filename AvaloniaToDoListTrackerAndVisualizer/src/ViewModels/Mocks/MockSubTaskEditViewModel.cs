@@ -1,9 +1,9 @@
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
-public partial class MockSubTaskEditViewModel: SubTaskEditViewModel
+public class MockSubTaskEditViewModel: SubTaskEditViewModel
 {
     public MockSubTaskEditViewModel(): base(new SubTaskViewModel(new SubTaskModel("Test task"), new LocalizationProvider()))
     {

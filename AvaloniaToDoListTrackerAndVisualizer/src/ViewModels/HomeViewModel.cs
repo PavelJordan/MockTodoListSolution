@@ -1,9 +1,7 @@
-
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Media;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;

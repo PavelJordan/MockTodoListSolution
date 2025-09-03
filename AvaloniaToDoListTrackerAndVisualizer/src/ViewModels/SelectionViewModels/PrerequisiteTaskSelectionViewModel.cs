@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
-using AvaloniaToDoListTrackerAndVisualizer.Providers;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -19,12 +18,18 @@ public partial class PrerequisiteTaskSelectionViewModel: ViewModelBase
         AllTasks = allTasks;
     }
 
+    /// <summary>
+    /// Close gracefully while sending back the selected tasks
+    /// </summary>
     [RelayCommand]
     private void Close()
     {
         WeakReferenceMessenger.Default.Send(new ClosePrerequisiteSelectionMessage(SelectedTasks));
     }
 
+    /// <summary>
+    /// Add or remove task from selected list
+    /// </summary>
     [RelayCommand]
     private void ToggleTaskSelection(TaskViewModel task)
     {

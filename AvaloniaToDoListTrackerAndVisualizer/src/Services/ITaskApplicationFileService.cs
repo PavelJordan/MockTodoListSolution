@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Services;
 

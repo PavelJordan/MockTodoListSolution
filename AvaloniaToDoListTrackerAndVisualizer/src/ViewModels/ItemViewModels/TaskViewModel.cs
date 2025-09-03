@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using Avalonia.Media;
-using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
 using DynamicData.Binding;
 
@@ -28,6 +24,9 @@ namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 public partial class TaskViewModel: ViewModelBase, IDisposable
 {
     
+    /// <summary>
+    /// Whether action button should show details in TaskEditView, or delete this TaskModel (and TaskViewModel)
+    /// </summary>
     public enum ActionButtonMode {
         Details, Delete
     }
@@ -36,9 +35,16 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
     
     public GroupListViewModel Groups { get; }
 
+    /// <summary>
+    /// To have readonly collection of subtaskViewModels from subtasksModels without too much work
+    /// </summary>
     private readonly IDisposable _subTaskViewModelsPipeline;
 
+    /// <summary>
+    /// Assigned through pipeline in constructor
+    /// </summary>
     private readonly ReadOnlyObservableCollection<SubTaskViewModel> _subTasksViewModels;
+    
     public ReadOnlyObservableCollection<SubTaskViewModel> SubTasksViewModels => _subTasksViewModels;
 
     public LocalizationProvider Localization { get; }
@@ -206,6 +212,9 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         get { return TaskModel.Group is null ? Localization.SelectGroupText : TaskModel.Group.GroupName; }
     }
     
+    /// <summary>
+    /// Color of group of this task, or Gray as default if group is null
+    /// </summary>
     public ISolidColorBrush GroupColor
     {
         get
@@ -220,25 +229,33 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         }
     }
     
+    /// <summary>
+    /// To know if CompleteButtonClicked can execute
+    /// </summary>
     public bool CanChangeCompleteness => TaskModel.CanChangeCompleteness;
     
 
+    /// <summary>
+    /// Only if TaskModel can change completeness
+    /// </summary>
     [RelayCommand(CanExecute = nameof(CanChangeCompleteness))]
     private void CompleteButtonClicked()
     {
         TaskModel.IsCompleted = !TaskModel.IsCompleted;
     }
 
-    public TaskViewModel(TaskModel taskModel, GroupListViewModel groups, LocalizationProvider localization)
+    public TaskViewModel(TaskModel taskModel, GroupListViewModel groups)
     {
         TaskModel = taskModel;
         Groups = groups;
-        Localization = localization;
+        Localization = groups.Localization;
         TaskModel.PropertyChanged += UpdateViewModelProperties;
+        
         // For ObservableChildrenCollection
         TaskModel.PropertyChanged += ForwardPropertyChangedEvent;
         Localization.PropertyChanged += UpdateLocal;
 
+        // Pipeline to transform subtasks models to ViewModels. Later disposed in Dispose method
         _subTaskViewModelsPipeline = taskModel.Subtasks
             .ToObservableChangeSet()
             .Transform(subTaskModel => new SubTaskViewModel(subTaskModel, Localization))
@@ -251,6 +268,9 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
 
     }
 
+    /// <summary>
+    /// For observable children collection - as this TaskViewModel will be a child for it
+    /// </summary>
     private void ForwardPropertyChangedEvent(object? sender, PropertyChangedEventArgs e)
     {
         OnPropertyChanged(e.PropertyName);
@@ -324,11 +344,5 @@ public partial class TaskViewModel: ViewModelBase, IDisposable
         TaskModel.PropertyChanged -= ForwardPropertyChangedEvent;
         Localization.PropertyChanged -= UpdateLocal;
         _subTaskViewModelsPipeline.Dispose();
-    }
-
-    public List<TaskViewModel> FindCyclingNeighbors()
-    {
-        // TODO implement
-        return [];
     }
 }

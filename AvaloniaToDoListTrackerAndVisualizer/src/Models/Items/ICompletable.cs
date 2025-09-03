@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
 /// <summary>
 /// Item which can be completed. As it is designed for UI application, it has to be

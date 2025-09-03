@@ -1,10 +1,8 @@
 using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
-using AvaloniaToDoListTrackerAndVisualizer.Views.ConfirmationDialogs;
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Views;

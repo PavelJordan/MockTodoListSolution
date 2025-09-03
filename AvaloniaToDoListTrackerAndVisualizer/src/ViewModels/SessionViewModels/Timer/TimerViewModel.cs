@@ -18,19 +18,36 @@ public enum TimerType
 
 public partial class TimerViewModel: ViewModelBase, IDisposable
 {
-    private static bool FalseConstant { get; } = false;
-    
+    private static bool FalseConstant => false;
+
+    /// <summary>
+    /// Session with work session parts - used on regular timer or pomodoro timer while working
+    /// </summary>
     public Session CurrentSession { get; }
     
+    /// <summary>
+    /// Session with break session parts - used with pomodoro timer while on break.
+    /// This is not saved later. It is used only to compute time on break.
+    /// </summary>
     public Session BreakSessions { get; } = new Session();
     
     public LocalizationProvider Localization { get; }
     
-    
+    /// <summary>
+    /// Whether timer is not running (not working nor on break)
+    /// </summary>
     public bool Idle { get; private set; } = true;
     
+    /// <summary>
+    /// Whether timer is regular or pomodoro
+    /// </summary>
     [ObservableProperty][NotifyPropertyChangedFor(nameof(SelectedTimer))] private TimerType _timerType = TimerType.RegularTimer;
 
+    // ReSharper disable once UnusedParameterInPartialMethod
+    /// <summary>
+    /// If timer type changes, it needs to stop beforehand to record stats to pomodoro or regular timer
+    /// </summary>
+    /// <param name="value"></param>
     partial void OnTimerTypeChanging(TimerType value)
     {
         Stop();
@@ -39,6 +56,9 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
     public RegularTimerViewModel RegularTimerViewModel { get; }
     public  PomodoroTimerViewModel PomodoroTimerViewModel { get; }
 
+    /// <summary>
+    /// Maps regular or pomodoro timer to their actual ViewModels
+    /// </summary>
     public ViewModelBase SelectedTimer
     {
         get
@@ -51,12 +71,32 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         }
     }
     
+    /// <summary>
+    /// Not null if user is currently working (regular or pomodoro work)
+    /// </summary>
     public Session.RunningSessionPart? RunningWorkSessionPart { get; private set; }
+    
+    /// <summary>
+    /// Not null if user is currently on break (pomodoro only)
+    /// </summary>
     public Session.RunningSessionPart? RunningBreakSessionPart { get; private set; }
     
+    
+    /// <summary>
+    /// That that is being worked on. Not the displayed one (even though it is automatically set,
+    /// unless user tampers with it)
+    /// </summary>
     public TaskViewModel? TaskToWorkOn { get; private set; }
+    
+    /// <summary>
+    /// Task that is previewed. Timer does not need to be running for it. If work on some task begins,
+    /// this is set automatically
+    /// </summary>
     public TaskViewModel? PreviewedTask { get; private set; }
 
+    /// <summary>
+    /// Timer to refresh the timer displayed (refreshing on UI thread)
+    /// </summary>
     private readonly DispatcherTimer _refreshTimer;
 
     public string ButtonText
@@ -77,15 +117,21 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         }
     }
 
+    /// <summary>
+    /// Computed by break already done in pomodoro time by before session parts and current break session part
+    /// </summary>
     public TimeSpan TimeLeftOnBreak
     {
         get
         {
-            // TODO what if on long break?
+            // TODO implement long break
             return TimeSpan.FromMinutes(PomodoroTimerViewModel.MinutesShortBreak) - (PomodoroTimerViewModel.BreakDone + (RunningBreakSessionPart?.TimeSoFar ?? TimeSpan.Zero)); 
         }
     }
     
+    /// <summary>
+    /// Computed by work already done in pomodoro time by before session parts and current break session part
+    /// </summary>
     public TimeSpan TimeLeftOnWork
     {
         get
@@ -94,6 +140,9 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         }
     }
 
+    /// <summary>
+    /// Show time and if working / on break
+    /// </summary>
     public string PomodoroInformationText
     {
         get
@@ -127,6 +176,9 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         }
     }
 
+    /// <summary>
+    /// Show skip work/break text or end text
+    /// </summary>
     public string PomodoroButtonText
     {
         get
@@ -147,6 +199,9 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         }
     }
 
+    /// <summary>
+    /// Show information about current session - total time
+    /// </summary>
     public string SessionTimeInformationText
     {
         get
@@ -155,6 +210,10 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         }
     }
     
+    
+    /// <summary>
+    /// Show information about previewed task - how long user worked on it / how long is expected
+    /// </summary>
     public string TaskTimeInformationText
     {
         get
@@ -192,10 +251,23 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         _refreshTimer.Tick += OnEveryRunningSecond;
     }
 
+    /// <summary>
+    /// Start working on task. Set it as previewed. Based on timer type and pomodoro state,
+    /// decide whether work session part or break session part should be used.
+    /// Start refresh timer. Use this method ONLY on UI thread
+    /// </summary>
+    /// <exception cref="ApplicationException"> If user starts another task before the last one is stopped </exception>
     public void Start(TaskViewModel taskToWorkOn)
     {
-        PreviewedTask = TaskToWorkOn = taskToWorkOn;
+        if (!Idle)
+        {
+            throw new ApplicationException("User started to work on another task simultaneously with different task");
+        }
+        
         Idle = false;
+        
+        PreviewedTask = TaskToWorkOn = taskToWorkOn;
+        
         
         if (PomodoroTimerViewModel.State == TimerState.Work || TimerType == TimerType.RegularTimer)
         {
@@ -210,12 +282,21 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
         RefreshTimerProperties();
     }
 
+    /// <summary>
+    /// Set previewed task, overriding empty/working on. This will be visible now.
+    /// This is the only way to preview task before starting timer for it.
+    /// </summary>
     public void SetPreviewTask(TaskViewModel taskToPreview)
     {
         PreviewedTask = taskToPreview;
         RefreshTimerProperties();
     }
 
+    /// <summary>
+    /// If timer is already idle, do nothing. Otherwise, based on timer type
+    /// and pomodoro state, decide, whether work was done, or break. Add it to correct
+    /// properties (task model time spent, pomodoro work/break).
+    /// </summary>
     public void Stop()
     {
         if (Idle)
@@ -226,25 +307,37 @@ public partial class TimerViewModel: ViewModelBase, IDisposable
 
         if (PomodoroTimerViewModel.State == TimerState.Work ||  TimerType == TimerType.RegularTimer)
         {
+            // We are either pomodoro work or regular timer - add worked time to Task we worked on
             var finishedSession = RunningWorkSessionPart!.End();
-            RunningWorkSessionPart = null;
             TaskToWorkOn!.TaskModel.TimeSpent += finishedSession!.Value.Duration;
             if (TimerType == TimerType.PomodoroTimer)
             {
-                PomodoroTimerViewModel.AddToWork(finishedSession!.Value.Duration);
+                // If on pomodoro, register the work
+                PomodoroTimerViewModel.AddToWork(finishedSession.Value.Duration);
             }
         }
         else if (PomodoroTimerViewModel.State == TimerState.Break)
         {
+            // We are pomodoro on break. Only add break time to pomodoro.
             var finishedSession = RunningBreakSessionPart!.End();
-            RunningBreakSessionPart = null;
             PomodoroTimerViewModel.AddToBreak(finishedSession!.Value.Duration);
         }
         
+        // Set all appropriate properties to null and stop refresh timers
+        EnsureNoSessionIsRunning();
+        RefreshTimerProperties();
+    }
+
+    /// <summary>
+    /// Clear running sessions and worked-on task to null, set timer as idle and stop refresh timer.
+    /// </summary>
+    private void EnsureNoSessionIsRunning()
+    {
+        RunningWorkSessionPart = null;
+        RunningBreakSessionPart = null;
         Idle = true;
         TaskToWorkOn = null;
         _refreshTimer.Stop();
-        RefreshTimerProperties();
     }
 
     private void OnEveryRunningSecond(object? sender, EventArgs e)

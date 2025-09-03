@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
 /// <summary>
 /// Task which can be saved (is very similar to regular TaskBaseModel class, but has no observable properties

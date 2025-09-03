@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
 
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
 /// <summary>
 /// Abstract class for both regular task (with group assigned, prerequisites and subtasks) and subtasks.

@@ -6,7 +6,7 @@ using System.Linq;
 using AvaloniaToDoListTrackerAndVisualizer.Wrappers;
 using AvaloniaToDoListTrackerAndVisualizer.Extensions;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -73,6 +73,8 @@ public class TaskListViewModel: ViewModelBase, IDisposable
     {
         if (e.Child is TaskViewModel taskViewModel)
         {
+            
+            // If child IsCompleted changed -> add or remove from CompletedTasks
             if (e.ChildrenEventArgs.PropertyName == nameof(TaskModel.IsCompleted))
             {
                 if (taskViewModel.TaskModel.IsCompleted)
@@ -85,6 +87,7 @@ public class TaskListViewModel: ViewModelBase, IDisposable
                 }
             }
             
+            // If Child Ready changed -> add or remove from ReadyTasks
             if (e.ChildrenEventArgs.PropertyName == nameof(TaskModel.Ready))
             {
                 if (taskViewModel.TaskModel.Ready)
@@ -160,8 +163,7 @@ public class TaskListViewModel: ViewModelBase, IDisposable
         }
     }
     
-
-    // TODO: Dispose when window closes
+    
     public void Dispose()
     {
         foreach (var item in AllTasksReadOnly)

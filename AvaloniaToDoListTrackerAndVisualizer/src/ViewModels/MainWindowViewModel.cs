@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.Models;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 using AvaloniaToDoListTrackerAndVisualizer.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -61,7 +60,7 @@ public partial class MainWindowViewModel: ViewModelBase
     {
         TaskViewModel? result =
             await WeakReferenceMessenger.Default.Send(
-                new EditTaskMessage(new TaskViewModel(new TaskModel(Localization.TaskDefaultName), Groups, Localization), true, Tasks)
+                new EditTaskMessage(new TaskViewModel(new TaskModel(Localization.TaskDefaultName), Groups), true, Tasks)
                 );
         if (result is not null)
         {
@@ -92,7 +91,7 @@ public partial class MainWindowViewModel: ViewModelBase
                 // First add groups so tasks can find them (verify that they have actual group selected)
                 Groups.AllGroups.Collection.AddRange(taskApplicationState.Groups);
                 Tasks.AllTasks.Collection.AddRange(
-                    taskApplicationState.Tasks.Select(item => new TaskViewModel(item, Groups, Localization)));
+                    taskApplicationState.Tasks.Select(item => new TaskViewModel(item, Groups)));
                 Sessions.AddRange(taskApplicationState.Sessions);
                 UserSettings.DailyGoal = taskApplicationState.UserSettings.DailyGoal;
                 _profile.RefreshSessionsCommand.Execute(null);

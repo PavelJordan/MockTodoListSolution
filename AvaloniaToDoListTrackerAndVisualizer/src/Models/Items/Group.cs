@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
 /// <summary>
 /// Represents a group of tasks. Can have color and name assigned.

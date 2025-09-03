@@ -1,6 +1,6 @@
 using System;
 
-namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
 /// <summary>
 /// Group which can be saved (is very similar to regular Group class, but has no observable properties

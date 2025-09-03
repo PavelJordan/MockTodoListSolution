@@ -1,10 +1,6 @@
-using System;
-using System.Threading.Tasks;
 using Avalonia.Controls;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
 using AvaloniaToDoListTrackerAndVisualizer.ViewModels;
-using AvaloniaToDoListTrackerAndVisualizer.Views.SelectionViewModels;
-using AvaloniaToDoListTrackerAndVisualizer.Views.SessionViews;
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Views;

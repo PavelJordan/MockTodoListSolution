@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using AvaloniaToDoListTrackerAndVisualizer.Messages;
-using AvaloniaToDoListTrackerAndVisualizer.Models.Items;
+using AvaloniaToDoListTrackerAndVisualizer.Models;
 using AvaloniaToDoListTrackerAndVisualizer.Providers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -53,17 +52,25 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
         TaskToEdit = taskToEdit;
         NewTask = newTask;
         Tasks = allTasks;
+        
+        // Whether window can be closed or task can be saved
         TaskToEdit.TaskModel.PropertyChanged += NotifySaveAndExitChange;
+        
         Localization = TaskToEdit.Localization;
+        
         if (taskToEdit.TaskModel.TimeExpected is TimeSpan editTaskExpectedTime)
         {
             ExpectedHoursPicker = (int)editTaskExpectedTime.TotalHours;
             ExpectedMinutesPicker = editTaskExpectedTime.Minutes;
         }
 
+        // Expected time picker -> model
         PropertyChanged += UpdateUnderlyingModel;
     }
 
+    /// <summary>
+    /// Used to know whether the new task can be saved, or window with existing task closed
+    /// </summary>
     private void NotifySaveAndExitChange(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(TaskToEdit.TaskModel.Name))
@@ -90,6 +97,9 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
         PropertyChanged -= UpdateUnderlyingModel;
     }
     
+    /// <summary>
+    /// Upload the picked expected hours and minutes to the underlying model 
+    /// </summary>
     private void UpdateUnderlyingModel(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName is nameof(ExpectedHoursPicker) or nameof(ExpectedMinutesPicker))
@@ -105,6 +115,9 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
         }
     }
 
+    /// <summary>
+    /// Open dialog to choose prerequisites, and if successful, replace the old prerequisites with the new ones
+    /// </summary>
     [RelayCommand]
     private async Task ManagePrerequisitesAsync()
     {
@@ -128,6 +141,9 @@ public partial class TaskEditViewModel: ViewModelBase, IDisposable
         TaskToEdit.TaskModel.MoveSubtaskDown(subTask);
     }
 
+    /// <summary>
+    /// Set time pickers to nothing
+    /// </summary>
     [RelayCommand]
     private void ResetTime()
     {

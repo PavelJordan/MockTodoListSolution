@@ -5,7 +5,7 @@
         xmlns:vm="using:AvaloniaToDoListTrackerAndVisualizer.ViewModels"
         xmlns:converters="clr-namespace:AvaloniaToDoListTrackerAndVisualizer.Converters"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
-        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SelectionViewModels.SessionTaskSelectionDialog"
+        x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SessionTaskSelectionDialog"
         x:DataType="vm:SessionTaskSelectionViewModel"
         Title="{Binding AllTasks.Localization.SessionTaskSelectionDialog}"
         Width="600"
