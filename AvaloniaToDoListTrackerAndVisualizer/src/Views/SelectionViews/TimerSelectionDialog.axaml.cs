@@ -11,22 +11,38 @@ public partial class TimerSelectionDialog : Window
 {
     public TimerSelectionDialog()
     {
+        InitializeComponent();
         
-        WeakReferenceMessenger.Default.Register<TimerSelectionDialog, CloseTimerSelectionDialogMessage>(this, static (window, message) =>
+        if (Design.IsDesignMode)
         {
-            window.Close();
-        });
+            return;
+        }
+        
+        RegisterToEvents();
 
         Closing += (obj, args) =>
         {
             if (DataContext is TimerViewModel timer)
             {
+                // Timer might now be set to something different - refresh
                 timer.RefreshTimerProperties();
             }
-            
-            WeakReferenceMessenger.Default.Unregister<CloseTimerSelectionDialogMessage>(this);
+
+            UnregisterFromEvents();
         };
         
-        InitializeComponent();
+    }
+
+    private void UnregisterFromEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<CloseTimerSelectionDialogMessage>(this);
+    }
+
+    private void RegisterToEvents()
+    {
+        WeakReferenceMessenger.Default.Register<TimerSelectionDialog, CloseTimerSelectionDialogMessage>(this, static (window, message) =>
+        {
+            window.Close();
+        });
     }
 }

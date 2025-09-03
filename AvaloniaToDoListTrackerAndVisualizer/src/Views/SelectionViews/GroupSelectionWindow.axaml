@@ -10,6 +10,7 @@
         WindowStartupLocation="CenterOwner"
         Width="400"
         Height="400"
+        Icon="/Assets/TimeManagementLogo.ico"
         Title="{Binding Groups.Localization.GroupSelectionWindowName}"
         Background="DarkGray">
     

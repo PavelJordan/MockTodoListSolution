@@ -13,7 +13,40 @@ public partial class TaskEditView : Window
     public TaskEditView()
     {
         InitializeComponent();
+        
+        if (Design.IsDesignMode)
+        {
+            return;
+        }
 
+        RegisterToEvents();
+
+        Closing += (sender, e) =>
+        {
+            if (DataContext is not null && !((TaskEditViewModel)DataContext).CanCloseAndSave && !((TaskEditViewModel)DataContext).NewTask)
+            {
+                e.Cancel = true;
+            }
+        };
+
+        Loaded += (sender, e) =>
+        {
+            // The name box should be selected when opening the window
+            NameTextBox.Focus(NavigationMethod.Tab);
+        };
+
+        Closed += (sender, e) => { UnregisterFromEvents(); };
+    }
+
+    private void UnregisterFromEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<EditSubTaskMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<PrerequisiteTaskSelectionRequest>(this);
+    }
+
+    private void RegisterToEvents()
+    {
         WeakReferenceMessenger.Default.Register<TaskEditView, CloseTaskEditMessage>(this, static (window, message) =>
         {
             window.Close(((TaskEditViewModel?)window.DataContext)?.TaskToEdit);
@@ -36,25 +69,5 @@ public partial class TaskEditView : Window
             };
             message.Reply(prerequisiteSelectDialog.ShowDialog<IEnumerable<TaskModel>?>(window));
         });
-
-        Closing += (sender, e) =>
-        {
-            if (DataContext is not null && !((TaskEditViewModel)DataContext).CanCloseAndSave && !((TaskEditViewModel)DataContext).NewTask)
-            {
-                e.Cancel = true;
-            }
-        };
-
-        Loaded += (sender, e) =>
-        {
-            NameTextBox.Focus(NavigationMethod.Tab);
-        };
-
-        Closed += (sender, e) =>
-        {
-            WeakReferenceMessenger.Default.Unregister<CloseTaskEditMessage>(this);
-            WeakReferenceMessenger.Default.Unregister<EditSubTaskMessage>(this);
-            WeakReferenceMessenger.Default.Unregister<PrerequisiteTaskSelectionRequest>(this);
-        };
     }
 }

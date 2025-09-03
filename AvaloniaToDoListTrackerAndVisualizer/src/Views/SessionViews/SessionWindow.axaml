@@ -11,7 +11,7 @@
         Title="{Binding  Groups.Localization.SessionWindow}"
         Background="Gray"
         WindowStartupLocation="CenterScreen"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/TimeManagementLogo.ico"
         CanResize="False"
         >
     <Grid ColumnDefinitions="200 *">

@@ -8,6 +8,7 @@
         x:DataType="vm:SessionDeletionViewModel"
         Title="{Binding Localization.SessionDeletionDialog}"
         Width="200"
+        Icon="/Assets/TimeManagementLogo.ico"
         Height="100"
         WindowStartupLocation="CenterOwner"
         Background="LightGray"

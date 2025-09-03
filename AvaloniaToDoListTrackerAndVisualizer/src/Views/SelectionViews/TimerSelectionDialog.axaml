@@ -9,6 +9,7 @@
         x:DataType="vm:TimerViewModel"
         Title="{Binding Localization.TimerSelectionDialog}"
         WindowStartupLocation="CenterScreen"
+        Icon="/Assets/TimeManagementLogo.ico"
         Width="400"
         Height="480"
         Background="LightGray"

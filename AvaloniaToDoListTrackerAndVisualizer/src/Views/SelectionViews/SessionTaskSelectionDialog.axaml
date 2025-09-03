@@ -10,7 +10,7 @@
         Title="{Binding AllTasks.Localization.SessionTaskSelectionDialog}"
         Width="600"
         Height="500"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/TimeManagementLogo.ico"
         WindowStartupLocation="CenterScreen"
         Background="LightGray">
     

@@ -20,6 +20,21 @@ public partial class MainWindow : Window
             return;
         }
 
+        RegisterToEvents();
+
+        Closed += (sender, e) => { UnregisterFromEvents(); };
+    }
+
+    private void UnregisterFromEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<EditTaskMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<OpenGroupSelectionRequest>(this);
+        WeakReferenceMessenger.Default.Unregister<StartSessionMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<SessionDeletionRequest>(this);
+    }
+
+    private void RegisterToEvents()
+    {
         WeakReferenceMessenger.Default.Register<MainWindow, EditTaskMessage>(this, static (window, message) =>
         {
             var dialog = new TaskEditView()
@@ -74,13 +89,5 @@ public partial class MainWindow : Window
             };
             message.Reply(dialog.ShowDialog<bool?>(window));
         });
-        
-        Closed += (sender, e) =>
-        {
-            WeakReferenceMessenger.Default.Unregister<EditTaskMessage>(this);
-            WeakReferenceMessenger.Default.Unregister<OpenGroupSelectionRequest>(this);
-            WeakReferenceMessenger.Default.Unregister<StartSessionMessage>(this);
-            WeakReferenceMessenger.Default.Unregister<SessionDeletionRequest>(this);
-        };
     }
 }

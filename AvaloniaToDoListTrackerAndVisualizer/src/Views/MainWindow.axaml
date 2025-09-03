@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="700"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/TimeManagementLogo.ico"
         Height="700"
         Width="1300"
         Title="Avalonia to-do list tracker and visualizer"

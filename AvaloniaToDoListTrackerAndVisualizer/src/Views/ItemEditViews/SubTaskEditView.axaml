@@ -6,6 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
         x:Class="AvaloniaToDoListTrackerAndVisualizer.Views.SubTaskEditView"
         x:DataType="vm:SubTaskEditViewModel"
+        Icon="/Assets/TimeManagementLogo.ico"
         Background="Gray"
         Width="600"
         Height="400"

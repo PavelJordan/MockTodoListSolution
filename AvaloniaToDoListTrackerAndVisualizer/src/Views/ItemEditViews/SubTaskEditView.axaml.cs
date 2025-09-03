@@ -11,18 +11,33 @@ public partial class SubTaskEditView : Window
     {
         InitializeComponent();
         
-        WeakReferenceMessenger.Default.Register<SubTaskEditView, CloseSubTaskEditMessage>(this, static (window, message) =>
+        if (Design.IsDesignMode)
         {
-            window.Close();
-        });
+            return;
+        }
+        
+        RegisterToEvents();
 
         Closing += CheckIfCanClose;
         
         Closed += (sender, e) =>
         {
-            WeakReferenceMessenger.Default.Unregister<CloseSubTaskEditMessage>(this);
+            UnregisterFromEvents();
             Closing -= CheckIfCanClose;
         };
+    }
+
+    private void UnregisterFromEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<CloseSubTaskEditMessage>(this);
+    }
+
+    private void RegisterToEvents()
+    {
+        WeakReferenceMessenger.Default.Register<SubTaskEditView, CloseSubTaskEditMessage>(this, static (window, message) =>
+        {
+            window.Close();
+        });
     }
 
     private void CheckIfCanClose(object? sender, WindowClosingEventArgs args)

@@ -15,8 +15,34 @@ public partial class SessionWindow : Window
     
     public SessionWindow(Window windowToGoBackTo)
     {
+        InitializeComponent();
+        
         WindowToGoBackTo = windowToGoBackTo;
         
+        RegisterToEvents();
+
+        Closed += (sender,  e) =>
+        {
+            UnregisterFromEvents();
+            if (DataContext is SessionViewModel sessionViewModel)
+            {
+                // Dispose
+                sessionViewModel.Timer.Stop();
+            }
+            WindowToGoBackTo!.Show();
+        };
+        
+    }
+
+    private void UnregisterFromEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<SessionTaskSelectionRequest>(this);
+        WeakReferenceMessenger.Default.Unregister<EditTaskInSessionMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<SetupTimerRequest>(this);
+    }
+
+    private void RegisterToEvents()
+    {
         WeakReferenceMessenger.Default.Register<SessionWindow, SessionTaskSelectionRequest>(this,
             static (window, message) =>
             {
@@ -51,22 +77,11 @@ public partial class SessionWindow : Window
                 
                 dialogWindow.ShowDialog(window);
             });
-
-        Closed += (sender,  e) =>
-        {
-            WeakReferenceMessenger.Default.Unregister<SessionTaskSelectionRequest>(this);
-            WeakReferenceMessenger.Default.Unregister<EditTaskInSessionMessage>(this);
-            WeakReferenceMessenger.Default.Unregister<SetupTimerRequest>(this);
-            if (DataContext is SessionViewModel sessionViewModel)
-            {
-                sessionViewModel.Timer.Stop();
-            }
-            WindowToGoBackTo!.Show();
-        };
-        
-        InitializeComponent();
     }
 
+    /// <summary>
+    /// For design mode
+    /// </summary>
     public SessionWindow()
     {
         
