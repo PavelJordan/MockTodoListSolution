@@ -10,14 +10,14 @@ public partial class GroupSelectionWindow : Window
     {
         InitializeComponent();
         
-        WeakReferenceMessenger.Default.Register<GroupSelectionWindow, CloseGroupSelection>(this, static (window, message) =>
+        WeakReferenceMessenger.Default.Register<GroupSelectionWindow, CloseGroupSelectionMessage>(this, static (window, message) =>
             {
                 window.Close(message.GroupToSelect);
             });
 
         Closed += (sender, e) =>
         {
-            WeakReferenceMessenger.Default.Unregister<CloseGroupSelection>(this);
+            WeakReferenceMessenger.Default.Unregister<CloseGroupSelectionMessage>(this);
         };
     }
 }

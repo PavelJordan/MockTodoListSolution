@@ -5,6 +5,11 @@ using Avalonia.Media;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Converters;
 
+/// <summary>
+/// Can convert avalonia color or uint argb color to avalonia solid color brush.
+/// Used mostly when you want to draw with that color (backgrounds, text, etc).
+/// Only one way (incoming)
+/// </summary>
 public class ColorToBrushConverter: IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -13,7 +18,8 @@ public class ColorToBrushConverter: IValueConverter
         {
             return new SolidColorBrush(color);
         }
-        else if (value is uint argb)
+        
+        if (value is uint argb)
         {
             return new SolidColorBrush(Color.FromUInt32(argb));
         }

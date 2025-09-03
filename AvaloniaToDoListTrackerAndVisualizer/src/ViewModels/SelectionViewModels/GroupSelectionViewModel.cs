@@ -14,7 +14,7 @@ public partial class GroupSelectionViewModel(GroupListViewModel groups): ViewMod
     [RelayCommand]
     private void AssignNoGroup()
     {
-        WeakReferenceMessenger.Default.Send(new CloseGroupSelection(null));
+        WeakReferenceMessenger.Default.Send(new CloseGroupSelectionMessage(null));
     }
 
     [RelayCommand]
@@ -32,6 +32,6 @@ public partial class GroupSelectionViewModel(GroupListViewModel groups): ViewMod
     [RelayCommand]
     private void SelectGroup(Group groupToSelect)
     {
-        WeakReferenceMessenger.Default.Send(new CloseGroupSelection(groupToSelect));
+        WeakReferenceMessenger.Default.Send(new CloseGroupSelectionMessage(groupToSelect));
     }
 }
