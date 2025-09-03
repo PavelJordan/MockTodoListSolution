@@ -29,97 +29,13 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         public LocalizationProvider Localization { get; }
         public UserSettings UserSettings { get; }
         public ObservableCollection<Session> Sessions { get; }
-
-        public TimeSpan TotalTimeWorked
-        {
-                get
-                {
-                        TimeSpan ts = TimeSpan.Zero;
-                        foreach (Session session in Sessions)
-                        {
-                                ts += session.TotalSessionTime();
-                        }
-
-                        return ts;
-                }
-        }
         
-        public TimeSpan WorkedToday
-        {
-                get
-                {
-                        TimeSpan ts = TimeSpan.Zero;
-                        foreach (Session session in Sessions)
-                        {
-                                foreach (SessionPart part in session.SessionParts)
-                                {
-                                        if (part.PartEnd.UtcDateTime.Date == DateTimeOffset.UtcNow.Date)
-                                        {
-                                                ts += part.Duration;
-                                        }
-                                }
-                        }
-
-                        return ts;
-                }
-        }
-
-        public TimeSpan MostProductiveDay
-        {
-                get
-                {
-                        Dictionary<DateOnly, TimeSpan> dayTimes = new();
-                        foreach (Session session in Sessions)
-                        {
-                                foreach (SessionPart part in session.SessionParts)
-                                {
-                                        if (!dayTimes.TryAdd(DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date), part.Duration))
-                                        {
-                                                dayTimes[DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date)] += part.Duration;
-                                        }
-                                }
-                        }
-
-                        if (dayTimes.Count == 0)
-                        {
-                                return TimeSpan.Zero;
-                        }
-                        
-                        return dayTimes.Values.Max();
-                }
-        }
-        
-        public TimeSpan AveragePerDay
-        {
-                get
-                {
-                        Dictionary<DateOnly, TimeSpan> dayTimes = new();
-                        
-                        foreach (Session session in Sessions)
-                        {
-                                foreach (SessionPart part in session.SessionParts)
-                                {
-                                        if (!dayTimes.TryAdd(DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date), part.Duration))
-                                        {
-                                                dayTimes[DateOnly.FromDateTime(part.PartEnd.UtcDateTime.Date)] += part.Duration;
-                                        }
-                                }
-                        }
-
-                        if (dayTimes.Count == 0)
-                        {
-                                return TimeSpan.Zero;
-                        }
-                        
-                        return TimeSpan.FromSeconds(dayTimes.Values.Sum(x => x.TotalSeconds) /  dayTimes.Count);
-                }
-        }
         
         public string TotalTimeText
         {
                 get
                 {
-                        return FormatTimeSpan(TotalTimeWorked);
+                        return FormatTimeSpan(SessionStatistics.TotalTimeWorked(Sessions));
                 }
         }
 
@@ -127,7 +43,7 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         {
                 get
                 {
-                        return FormatTimeSpan(MostProductiveDay);
+                        return FormatTimeSpan(SessionStatistics.MostProductiveDay(Sessions));
                 }
         }
 
@@ -135,7 +51,7 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         {
                 get
                 {
-                        return FormatTimeSpan(WorkedToday);
+                        return FormatTimeSpan(SessionStatistics.WorkedToday(Sessions));
                 }
         }
 
@@ -143,7 +59,7 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         {
                 get
                 {
-                        return FormatTimeSpan(AveragePerDay);
+                        return FormatTimeSpan(SessionStatistics.AveragePerDay(Sessions));
                 }
         }
 
@@ -169,7 +85,7 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         {
                 get
                 {
-                        if (TimeSpan.FromMinutes(GoalMinutes) + TimeSpan.FromHours(GoalHours) >= WorkedToday)
+                        if (TimeSpan.FromMinutes(GoalMinutes) + TimeSpan.FromHours(GoalHours) >= SessionStatistics.WorkedToday(Sessions))
                         {
                                 return Localization.GoalNotYetAchievedText;
                         }

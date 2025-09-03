@@ -4,8 +4,15 @@ using System.Text.Json.Serialization;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Models;
 
+/// <summary>
+/// One part of a session, with start and end time without any breaks.
+/// Uses UTC time in case user decides to cross the borders.
+/// </summary>
 public readonly record struct SessionPart
 {
+    private const string END_TIME_MUST_BE_GREATER_OR_EQUAL_TO_START_TIME = "End time must be greater or equal to start time.";
+    
+    /// <exception cref="ArgumentOutOfRangeException"> if end date is earlier than start date </exception>
     [JsonConstructor]
     public SessionPart(DateTimeOffset partStart, DateTimeOffset partEnd)
     {
@@ -13,7 +20,8 @@ public readonly record struct SessionPart
         PartEnd = partEnd;
         if (PartEnd < partStart)
         {
-            throw  new ArgumentOutOfRangeException(nameof(partEnd), "End time must be greater or equal to start time.");
+            
+            throw  new ArgumentOutOfRangeException(nameof(partEnd), END_TIME_MUST_BE_GREATER_OR_EQUAL_TO_START_TIME);
         }
     }
 
@@ -31,12 +39,17 @@ public readonly record struct SessionPart
 /// Only one session part can be running at any time, but you can add any custom part with
 /// AddPart(SessionPart part). Disposing the running session part automatically ends
 /// it correctly, but starting a new one while a different one is in progress cancels the different one.
+/// Uses UTC time in case user decides to cross the borders.
 /// </summary>
 public sealed class Session
 {
     [JsonIgnore]
     private ObservableCollection<SessionPart> _partsBackingField = new ObservableCollection<SessionPart>();
     
+    /// <summary>
+    /// When Json loads this up, it assigns new ObservableCollection - so it needs to be refreshed,
+    /// hence the custom setter. The public readonly for this is SessionParts.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName(nameof(SessionParts))]
     private ObservableCollection<SessionPart> _parts
@@ -53,6 +66,10 @@ public sealed class Session
         }
     }
     
+    /// <summary>
+    /// Part that is running - to cancel it if user decides to start new one or read time.
+    /// Must be null if no part is running!!!
+    /// </summary>
     private RunningSessionPart? _runningSessionPart;
     
     private TimeProvider SessionTimeProvider { get; }
@@ -65,6 +82,9 @@ public sealed class Session
         _runningSessionPart = null;
     }
     
+    /// <summary>
+    /// All parts that are finished so far. Do not need to be in order
+    /// </summary>
     [JsonIgnore]
     public ReadOnlyObservableCollection<SessionPart> SessionParts { get; private set; }
     
@@ -83,7 +103,7 @@ public sealed class Session
     }
 
     /// <summary>
-    /// Add arbitrary session part (can overlap, but that's not recommended)
+    /// Add arbitrary session part (can overlap, but that is not recommended)
     /// </summary>
     public void AddPart(SessionPart part)
     {
@@ -93,8 +113,10 @@ public sealed class Session
     /// <summary>
     /// Start new session part (and cancel old one if still running).
     /// Can be used with using().
+    /// Also returns the RunningSessionPart, where you can see,
+    /// how long it is running. It is also used to stop or cancel the session,
+    /// which then automatically adds it to this session as new part session.
     /// </summary>
-    /// <returns></returns>
     public RunningSessionPart Start()
     {
         if (_runningSessionPart is RunningSessionPart previousPart)
@@ -105,6 +127,9 @@ public sealed class Session
         return _runningSessionPart;
     }
 
+    /// <summary>
+    /// Counts total session time (finished and plus running if it exists)
+    /// </summary>
     public TimeSpan TotalSessionTime()
     {
         TimeSpan time = TimeSpan.Zero;
@@ -116,16 +141,35 @@ public sealed class Session
         return time + (_runningSessionPart?.TimeSoFar ?? TimeSpan.Zero);
     }
     
+    /// <summary>
+    /// Class that holds currently running session part with known Session parent.
+    /// It can be ended (which then assigns the finished session part into Session),
+    /// canceled, and you can read time that it is running.
+    /// Uses UTC time in case user decides to cross the borders.
+    /// </summary>
     public sealed class RunningSessionPart: IDisposable
     {
         private DateTimeOffset PartStart { get; }
+        
+        /// <summary>
+        /// If this session ended, the Finished session is saved here for retrieval of total duration.
+        /// </summary>
         private SessionPart? FinishedSession { get; set; }
+        
+        /// <summary>
+        /// Where to save the finished session
+        /// </summary>
         private Session ParentSession { get; }
 
+        /// <summary>
+        /// Task can be cancelled only if it is not finished already. After this,
+        /// it cannot be finished anymore
+        /// </summary>
         public bool Cancelled { get; private set; } = false;
 
         /// <summary>
         /// Time so far. If cancelled, returns zero, if finished, returns the total time it took.
+        /// Otherwise, returns the current time so far in progress.
         /// </summary>
         public TimeSpan TimeSoFar
         {
@@ -191,7 +235,9 @@ public sealed class Session
             }
         }
         
-        
+        /// <summary>
+        /// Create the running session part manually. Can't recommend.
+        /// </summary>
         public RunningSessionPart(DateTimeOffset partStart, Session parentSession)
         {
             PartStart = partStart;

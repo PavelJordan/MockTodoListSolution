@@ -4,6 +4,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Providers;
 
+/// <summary>
+/// Use for localization - invokes OnPropertyChanged for all if culture changes
+/// (via SetCulture). Also, keep only one instance of this - it should be singleton
+/// because of the SetCulture method.
+/// </summary>
 public class LocalizationProvider: ObservableObject
 {
     public string AddEventButton => Resources.AddEventButton;
@@ -105,6 +110,10 @@ public class LocalizationProvider: ObservableObject
     public string WorkedTodayText =>  Resources.WorkedTodayText;
     public string GoalAchievedText => Resources.GoalAchievedText;
 
+    /// <summary>
+    /// Notifies every subscriber that the properties changed
+    /// </summary>
+    /// <param name="culture"> New language (culture) to use </param>
     public void SetCulture(CultureInfo culture)
     {
         Resources.Culture = culture;

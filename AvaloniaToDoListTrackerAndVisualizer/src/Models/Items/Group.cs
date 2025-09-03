@@ -1,32 +1,38 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 
 /// <summary>
-/// Represents a group of tasks and subgroups. Can have color assigned.
-/// Task assignment to group is inside task class. Each group can be
-/// a subgroup of only one group, and each group can have multiple subgroups.
+/// Represents a group of tasks. Can have color and name assigned.
+/// Task assignment to group is inside TaskModel class.
 /// </summary>
 public partial class Group: ObservableValidator, IHasId
 {
+    /// <summary>
+    /// For persistent storage - SaveAbleTaskModels only remember this id
+    /// </summary>
     public Guid Id { get; }
 
-    // TODO remove coupling with avalonia
     [ObservableProperty]
     private uint _argb;
     
     [ObservableProperty]
-    [Required]
+    [Required] // TODO actually enforce required in app
     private string _groupName;
     
     // TODO subgroups (not in specification)
 
+    /// <summary>
+    /// Construct new group with new id
+    /// </summary>
     public Group(string groupName, uint groupColor) :  this(groupName, groupColor, Guid.NewGuid())
     { }
 
+    /// <summary>
+    /// Reconstruct old group with specified id
+    /// </summary>
     public Group(string groupName, uint argb, Guid id)
     {
         _argb = argb;
@@ -34,4 +40,3 @@ public partial class Group: ObservableValidator, IHasId
         Id = id;
     }
 }
-

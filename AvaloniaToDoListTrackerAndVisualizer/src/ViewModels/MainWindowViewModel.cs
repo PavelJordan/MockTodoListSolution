@@ -86,7 +86,7 @@ public partial class MainWindowViewModel: ViewModelBase
     {
         try
         {
-            var taskApplicationStateFromFile = await TaskApplicationFileService.LoadFromFileAsync();
+            var taskApplicationStateFromFile = await TaskApplicationFileService.LoadAsync();
             if (taskApplicationStateFromFile is TaskApplicationState taskApplicationState)
             {
                 // First add groups so tasks can find them (verify that they have actual group selected)
@@ -106,7 +106,7 @@ public partial class MainWindowViewModel: ViewModelBase
 
     public async Task SaveFiles()
     {
-        await TaskApplicationFileService.SaveToFileAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection, Sessions, UserSettings));
+        await TaskApplicationFileService.SaveAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection, Sessions, UserSettings));
     }
 
     [RelayCommand(CanExecute = nameof(FalseConstant))]

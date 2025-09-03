@@ -4,7 +4,7 @@ namespace AvaloniaToDoListTrackerAndVisualizer.Models.Items;
 
 /// <summary>
 /// Wherever an object has id for persistent storage purposes.
-/// You should always call Guid.NewGuid as initializer.
+/// You should always call Guid.NewGuid as initializer for new items.
 /// </summary>
 public interface IHasId
 {
