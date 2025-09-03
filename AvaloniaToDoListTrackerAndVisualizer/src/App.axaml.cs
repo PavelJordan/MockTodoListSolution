@@ -70,6 +70,9 @@ public class App : Application
     
     private bool _canClose = false;
     
+    /// <summary>
+    /// Save files safely
+    /// </summary>
     private async void DesktopOnShutDownRequested(object? sender, ShutdownRequestedEventArgs e)
     {
         try

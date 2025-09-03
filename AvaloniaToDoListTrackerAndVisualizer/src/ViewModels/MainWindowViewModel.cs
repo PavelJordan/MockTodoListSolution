@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -15,7 +16,10 @@ using DynamicData;
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
 /// <summary>
-/// The main window view model. The CurrentPage property is what is displayed.
+/// The main window view model. The CurrentPage property is what is displayed on the right side.
+/// On the left side, there are buttons. This class creates and loads User settings, sessions, groups and tasks via
+/// ITaskApplicationFileService. It creates all ViewModels, the corresponding views are then found with ViewLocator in
+/// Avalonia.
 /// </summary>
 public partial class MainWindowViewModel: ViewModelBase
 {
@@ -55,6 +59,9 @@ public partial class MainWindowViewModel: ViewModelBase
         Localization.SetCulture(new CultureInfo(cultureInfoString));
     }
 
+    /// <summary>
+    /// Add new task through the TaskEditViewModel dialog.
+    /// </summary>
     [RelayCommand]
     private async Task AddNewTask()
     {
@@ -81,18 +88,30 @@ public partial class MainWindowViewModel: ViewModelBase
         
     }
     
+    /// <summary>
+    /// Load everything from files. Should be invoked after construction (in Avalonia, from App.axaml.cs).
+    /// Warning - data in runtime will be replaced!!!
+    /// </summary>
     public async Task LoadFiles()
     {
         try
         {
+            Groups.AllGroups.Collection.Clear();
+            Tasks.AllTasks.Collection.Clear();
+            Sessions.Clear();
+            UserSettings.DailyGoal = TimeSpan.Zero;
+            
             var taskApplicationStateFromFile = await TaskApplicationFileService.LoadAsync();
             if (taskApplicationStateFromFile is TaskApplicationState taskApplicationState)
             {
                 // First add groups so tasks can find them (verify that they have actual group selected)
                 Groups.AllGroups.Collection.AddRange(taskApplicationState.Groups);
+                // Tasks
                 Tasks.AllTasks.Collection.AddRange(
                     taskApplicationState.Tasks.Select(item => new TaskViewModel(item, Groups)));
+                // Sessions
                 Sessions.AddRange(taskApplicationState.Sessions);
+                // User settings
                 UserSettings.DailyGoal = taskApplicationState.UserSettings.DailyGoal;
                 _profile.RefreshSessionsCommand.Execute(null);
             }
@@ -103,17 +122,27 @@ public partial class MainWindowViewModel: ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Save all files. Can be done multiple times if you want to save files continuously.
+    /// Mainly should be called on main window closed.
+    /// </summary>
     public async Task SaveFiles()
     {
         await TaskApplicationFileService.SaveAsync(new TaskApplicationState(Tasks.AllTasks.Collection.Select(tvm => tvm.TaskModel), Groups.AllGroups.Collection, Sessions, UserSettings));
     }
 
+    /// <summary>
+    /// For future events - not yet implemented
+    /// </summary>
     [RelayCommand(CanExecute = nameof(FalseConstant))]
     private void AddNewEvent()
     {
         
     }
 
+    /// <summary>
+    /// Open the session window and let the user do work
+    /// </summary>
     [RelayCommand]
     private void StartSession()
     {

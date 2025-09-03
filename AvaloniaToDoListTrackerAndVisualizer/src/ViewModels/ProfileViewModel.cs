@@ -11,6 +11,10 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaToDoListTrackerAndVisualizer.ViewModels;
 
+/// <summary>
+/// This ViewModel is used to show some very basic statistics. // TODO Do super interesting statistics
+/// Uses SessionStatistics static class for methods.
+/// </summary>
 public partial class ProfileViewModel: ViewModelBase, IDisposable
 {
         public ProfileViewModel(LocalizationProvider localization, ObservableCollection<Session> sessions, UserSettings userSettings)
@@ -26,6 +30,10 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         
         public LocalizationProvider Localization { get; }
         public UserSettings UserSettings { get; }
+        
+        /// <summary>
+        /// Must be modifiable - there is button to clear them
+        /// </summary>
         public ObservableCollection<Session> Sessions { get; }
         
         
@@ -64,21 +72,29 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         [ObservableProperty][NotifyPropertyChangedFor(nameof(GoalNotification))] private uint _goalHours;
         [ObservableProperty][NotifyPropertyChangedFor(nameof(GoalNotification))] private uint _goalMinutes;
 
+        // ReSharper disable once UnusedParameterInPartialMethod
         partial void OnGoalHoursChanged(uint value)
         {
                 UpdateUserSettings();
         }
 
+        // ReSharper disable once UnusedParameterInPartialMethod
         partial void OnGoalMinutesChanged(uint value)
         {
                 UpdateUserSettings();
         }
 
+        /// <summary>
+        /// For now, only daily goal is updated
+        /// </summary>
         private void UpdateUserSettings()
         {
                 UserSettings.DailyGoal = TimeSpan.FromMinutes(GoalMinutes) + TimeSpan.FromHours(GoalHours);
         }
 
+        /// <summary>
+        /// Show congratulations text if user achieved goal, or information that they did not yet. 
+        /// </summary>
         public string GoalNotification
         {
                 get
@@ -98,7 +114,8 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
         {
                 if (timeSpan is null)
                 {
-                        return "Unknown"; //Localization.NotSetText;
+                        // Should not happen
+                        return "Unknown";
                 }
                 else
                 {
@@ -106,6 +123,10 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
                 }
         }
 
+        /// <summary>
+        /// First, show dialog, whether user is sure. If they are, delete all sessions.
+        /// Task and groups and everything remains in-tact.
+        /// </summary>
         [RelayCommand]
         private async Task DeleteSessionsAsync()
         {
@@ -116,6 +137,10 @@ public partial class ProfileViewModel: ViewModelBase, IDisposable
                 }
         }
 
+        /// <summary>
+        /// Refresh Goal minutes, goal hours and all other properties from the underlying UserSettings model
+        /// and sessions. 
+        /// </summary>
         [RelayCommand]
         private void RefreshSessions()
         {
